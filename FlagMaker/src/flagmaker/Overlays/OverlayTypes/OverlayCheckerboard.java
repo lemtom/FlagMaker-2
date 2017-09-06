@@ -4,6 +4,7 @@ import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
 import java.util.ArrayList;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -114,7 +115,7 @@ public class OverlayCheckerboard extends Overlay
 			{
 				if ((x + y) % 2 != 0) continue;
 
-				sb.append(String.format("<rect width=\"%.3f\" height=\"%.3f\" %s x=\"%.3f\" y=\"%.3f\"/>",
+				sb.append(String.format(Locale.US, "<rect width=\"%.3f\" height=\"%.3f\" %s x=\"%.3f\" y=\"%.3f\"/>",
 						blockWidth, blockHeight,
 						ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")),
 						left + x * blockWidth, top + y * blockHeight));

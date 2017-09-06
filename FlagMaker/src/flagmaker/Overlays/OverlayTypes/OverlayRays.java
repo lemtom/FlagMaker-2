@@ -5,6 +5,7 @@ import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
 import flagmaker.Data.Vector;
 import java.util.ArrayList;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
@@ -65,7 +66,7 @@ public class OverlayRays extends Overlay
 
 		for (String path : GetPaths(width, height))
 		{
-			sb.append(String.format("<path d=\"%s\" %s />",
+			sb.append(String.format(Locale.US, "<path d=\"%s\" %s />",
 				path, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color"))));
 		}
 
@@ -98,19 +99,19 @@ public class OverlayRays extends Overlay
 				}
 				else if (point1.X == 0)
 				{
-					point3 = String.format("0,%.3f ", height);
+					point3 = String.format(Locale.US, "0,%.3f ", height);
 				}
 				else if (point1.Y == height)
 				{
-					point3 = String.format("%.3f,%.3f ", width, height);
+					point3 = String.format(Locale.US, "%.3f,%.3f ", width, height);
 				}
 				else if (point1.X == width)
 				{
-					point3 = String.format("%.3f,0 ", width);
+					point3 = String.format(Locale.US, "%.3f,0 ", width);
 				}
 			}
 
-			returnValue.add(String.format("M %.3f,%.3f %.3f,%.3f %s%.3f,%.3f Z",
+			returnValue.add(String.format(Locale.US, "M %.3f,%.3f %.3f,%.3f %s%.3f,%.3f Z",
 				centerX, centerY,
 				point1.X, point1.Y,
 				point3,

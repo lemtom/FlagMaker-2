@@ -4,6 +4,7 @@ import flagmaker.Data.Flag;
 import flagmaker.Overlays.OverlayTypes.RepeaterTypes.OverlayRepeater;
 import flagmaker.Files.FileHandler;
 import java.io.File;
+import java.util.Locale;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -97,7 +98,7 @@ public class OverlayFlag extends OverlaySpecial
 	{
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.format("<g transform=\"translate(%.3f,%.3f) scale(%.3f %.3f)\">\n",
+		sb.append(String.format(Locale.US, "<g transform=\"translate(%.3f,%.3f) scale(%.3f %.3f)\">\n",
 			width * (GetDoubleAttribute("X") / MaximumX),
 			height * (GetDoubleAttribute("Y") / MaximumY),
 			GetDoubleAttribute("Width") / MaximumX,

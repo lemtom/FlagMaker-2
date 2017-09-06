@@ -1,6 +1,7 @@
 package flagmaker.Overlays.OverlayTypes.RepeaterTypes;
 
 import flagmaker.Overlays.Attributes.*;
+import java.util.Locale;
 import java.util.UUID;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -111,17 +112,17 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 		UUID id = UUID.randomUUID();
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.format("<defs><g id=\"%s\">%s</g></defs>\n",
+		sb.append(String.format(Locale.US, "<defs><g id=\"%s\">%s</g></defs>\n",
 			id.toString(), Overlay.ExportSvg((int)w, (int)h)));
 
 		for (int x = 0; x < countX; x++)
 		{
 			for (int y = 0; y < countY; y++)
 			{
-				sb.append(String.format("<g transform=\"translate(%.3f,%.3f)\">\n",
+				sb.append(String.format(Locale.US, "<g transform=\"translate(%.3f,%.3f)\">\n",
 					locX + x * intervalX,
 					locY + y * intervalY));
-				sb.append(String.format("<use xlink:href=\"#%s\" />\n", id.toString()));
+				sb.append(String.format(Locale.US, "<use xlink:href=\"#%s\" />\n", id.toString()));
 				sb.append("</g>\n");
 			}
 		}

@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
@@ -64,7 +65,7 @@ public class OverlayQuadrilateral extends Overlay
 		double y4 = canvas.getHeight() * (GetDoubleAttribute("Y4") / MaximumY);
 
 		SVGPath path = new SVGPath();
-		path.setContent(String.format("M %.3f,%.3f %.3f,%.3f %.3f,%.3f %.3f,%.3f",
+		path.setContent(String.format(Locale.US, "M %.3f,%.3f %.3f,%.3f %.3f,%.3f %.3f,%.3f",
 				x1, y1, x2, y2, x3, y3, x4, y4));
 		path.setFill(GetColorAttribute("Color"));
 		canvas.getChildren().add(path);
@@ -82,7 +83,7 @@ public class OverlayQuadrilateral extends Overlay
 		double x4 = width * (GetDoubleAttribute("X4") / MaximumX);
 		double y4 = height * (GetDoubleAttribute("Y4") / MaximumY);
 
-		return String.format("<polygon points=\"%.3f,%.3f %.3f,%.3f %.3f,%.3f %.3f,%.3f\" %s />",
+		return String.format(Locale.US, "<polygon points=\"%.3f,%.3f %.3f,%.3f %.3f,%.3f %.3f,%.3f\" %s />",
 				x1, y1, x2, y2, x3, y3, x4, y4, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
 	}
 }

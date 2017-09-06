@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -60,7 +61,7 @@ public class OverlayLine extends Overlay
 	@Override
 	public String ExportSvg(int width, int height)
 	{
-		return String.format("<line x1=\"%.3f\" y1=\"%.3f\" x2=\"%.3f\" y2=\"%.3f\" stroke=\"#%s\" stroke-width=\"%.3f\" />",
+		return String.format(Locale.US, "<line x1=\"%.3f\" y1=\"%.3f\" x2=\"%.3f\" y2=\"%.3f\" stroke=\"#%s\" stroke-width=\"%.3f\" />",
 			width * GetDoubleAttribute("X1") / MaximumX,
 			height * GetDoubleAttribute("Y1") / MaximumY,
 			width * GetDoubleAttribute("X2") / MaximumX,

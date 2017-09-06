@@ -1,6 +1,7 @@
 package flagmaker.Overlays.OverlayTypes.ShapeTypes;
 
 import flagmaker.Extensions.ColorExtensions;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
@@ -72,7 +73,7 @@ public class OverlayDiamond extends OverlayShape
 		double x = width * (GetDoubleAttribute("X") / MaximumX);
 		double y = height * (GetDoubleAttribute("Y") / MaximumY);
 		
-		return String.format("<polygon points=\"%1$.3f,%2$.3f %3$.3f,%4$.3f %1$.3f,%5$.3f %6$.3f,%4$.3f\" %7$s />",
+		return String.format(Locale.US, "<polygon points=\"%1$.3f,%2$.3f %3$.3f,%4$.3f %1$.3f,%5$.3f %6$.3f,%4$.3f\" %7$s />",
 				x, y - h / 2, x + w / 2, y, y + h / 2, x - w / 2,
 				ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
 	}

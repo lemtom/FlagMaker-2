@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -51,7 +52,7 @@ public class OverlayPall extends Overlay
 		double x = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX);
 		
 		SVGPath p = new SVGPath();
-		p.setContent(String.format("M 0,0 %1$.3f,0 %2$.3f,%3$.3f %4$.3f,%3$.3f %4$.3f,%6$.3f %2$.3f,%6$.3f %1$.3f,%5$.3f 0,%5$.3f 0,%7$.3f %9$.3f,%8$.3f 0,%1$.3f",
+		p.setContent(String.format(Locale.US, "M 0,0 %1$.3f,0 %2$.3f,%3$.3f %4$.3f,%3$.3f %4$.3f,%6$.3f %2$.3f,%6$.3f %1$.3f,%5$.3f 0,%5$.3f 0,%7$.3f %9$.3f,%8$.3f 0,%1$.3f",
 				theWidth / 2,
 				x + (double)theWidth / 3,
 				canvas.getHeight() / 2 - (double)theWidth / 3,
@@ -72,7 +73,7 @@ public class OverlayPall extends Overlay
 		double theWidth = GetDoubleAttribute("Width") / MaximumX * width / 2;
 		double x = width * (GetDoubleAttribute("X") / MaximumX);
 		
-		return String.format("<path d=\"M 0,0 %1$.3f,0 %2$.3f,%3$.3f %4$d,%3$.3f %4$d,%6$.3f %2$.3f,%6$.3f %1$.3f,%5$d 0,%5$d 0,%7$.3f %9$.3f,%8$.3f 0,%1$.3f\" %10$s />",
+		return String.format(Locale.US, "<path d=\"M 0,0 %1$.3f,0 %2$.3f,%3$.3f %4$d,%3$.3f %4$d,%6$.3f %2$.3f,%6$.3f %1$.3f,%5$d 0,%5$d 0,%7$.3f %9$.3f,%8$.3f 0,%1$.3f\" %10$s />",
 				theWidth / 2,
 				x + (double)theWidth / 3,
 				height / 2 - (double)theWidth / 3,

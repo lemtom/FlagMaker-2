@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -67,7 +68,7 @@ public class OverlayCross extends Overlay
 		double x = width * (GetDoubleAttribute("X") / MaximumX) - thick / 2;
 		double y = height * (GetDoubleAttribute("Y") / MaximumY) - thick / 2;
 			
-		return String.format("<rect width=\"%1$.3f\" height=\"%2$d\" x=\"%3$.3f\" y=\"0\" %6$s /><rect width=\"%4$d\" height=\"%1$.3f\" x=\"0\" y=\"%5$.3f\" %6$s />",
+		return String.format(Locale.US, "<rect width=\"%1$.3f\" height=\"%2$d\" x=\"%3$.3f\" y=\"0\" %6$s /><rect width=\"%4$d\" height=\"%1$.3f\" x=\"0\" y=\"%5$.3f\" %6$s />",
 				thick, height, x, width, y, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
 	}
 }
