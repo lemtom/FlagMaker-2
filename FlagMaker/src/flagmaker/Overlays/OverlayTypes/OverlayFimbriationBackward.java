@@ -33,7 +33,7 @@ public class OverlayFimbriationBackward extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l = new Line(0, 5, 30, 25);
 		l.setStrokeWidth(5);
@@ -41,10 +41,10 @@ public class OverlayFimbriationBackward extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double widthX = canvas.getWidth() * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
-		double widthY = canvas.getHeight() * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
+		double widthX = canvas.getWidth() * (getDoubleAttribute("Thickness") / maximumX) / 2;
+		double widthY = canvas.getHeight() * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
 		Path path = new Path(new PathElement[]
 		{
@@ -56,19 +56,19 @@ public class OverlayFimbriationBackward extends Overlay
 			new LineTo(canvas.getWidth(), canvas.getHeight() - widthY),
 			new LineTo(widthX, 0)
 		});
-		path.setFill(GetColorAttribute("Color"));
+		path.setFill(getColorAttribute("Color"));
 		path.setStrokeWidth(0);
 		canvas.getChildren().add(path);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double wX = width * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
-		double wY = height * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
+		double wX = width * (getDoubleAttribute("Thickness") / maximumX) / 2;
+		double wY = height * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
 		return String.format("<polygon points=\"%1$.3f,0 0,0 0,%6$.3f %2$.3f,%3$d %4$d,%3$d %4$d,%5$.3f %1$.3f,0\" %7$s />",
 			wX, width - wX, height, width, height - wY, wY,
-			ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+			ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

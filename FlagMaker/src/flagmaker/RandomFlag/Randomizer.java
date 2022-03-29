@@ -7,12 +7,12 @@ public class Randomizer
 {
 	private static final Random R = new Random();
 	
-	public static int Next(int max)
+	public static int next(int max)
 	{
 		return R.nextInt(max);
 	}
 	
-	public static int RandomWeighted(int[] weights)
+	public static int randomWeighted(int[] weights)
 	{
 		// Algorithm courtesy of this guy:
 		// http://peterkellyonline.blogspot.com/2012/02/weighted-random-selection-in-php.html
@@ -32,7 +32,7 @@ public class Randomizer
 		return -1;
 	}
 	
-	public static double NextNormalized(double mean, double standardDeviation)
+	public static double nextNormalized(double mean, double standardDeviation)
 	{
 		// Box–Muller transform
 		// http://stackoverflow.com/a/2751988/436282
@@ -42,12 +42,12 @@ public class Randomizer
 		return (normal * standardDeviation) + mean;
 	}
 	
-	public static boolean ProbabilityOfTrue(double probability)
+	public static boolean probabilityOfTrue(double probability)
 	{
 		return R.nextDouble() < probability;
 	}
 	
-	public static int Clamp(double value, int min, int max, boolean forceOdd)
+	public static int clamp(double value, int min, int max, boolean forceOdd)
 	{
 		int val = (int)value;
 		if (value < min) val = min;

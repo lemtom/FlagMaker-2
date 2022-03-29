@@ -38,7 +38,7 @@ public class OverlayRing extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Ellipse e1 = new Ellipse(15, 15, 15, 15);
 		Ellipse e2 = new Ellipse(15, 15, 7, 7);
@@ -46,39 +46,39 @@ public class OverlayRing extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double outerDiamX = canvas.getWidth() * (GetDoubleAttribute("Width") / MaximumX);
-		double outerDiamY = GetDoubleAttribute("Height") == 0
+		double outerDiamX = canvas.getWidth() * (getDoubleAttribute("Width") / maximumX);
+		double outerDiamY = getDoubleAttribute("Height") == 0
 			? outerDiamX
-			: canvas.getHeight() * (GetDoubleAttribute("Height") / MaximumY);
+			: canvas.getHeight() * (getDoubleAttribute("Height") / maximumY);
 
-		double proportion = GetDoubleAttribute("Size") / MaximumX;
+		double proportion = getDoubleAttribute("Size") / maximumX;
 		double innerDiamX = outerDiamX * proportion;
 		double innerDiamY = outerDiamY * proportion;
 
-		double locX = (canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX));
-		double locY = (canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY));
+		double locX = (canvas.getWidth() * (getDoubleAttribute("X") / maximumX));
+		double locY = (canvas.getHeight() * (getDoubleAttribute("Y") / maximumY));
 
 		Ellipse outer = new Ellipse(locX, locY, outerDiamX / 2, outerDiamY / 2);
 		Ellipse inner = new Ellipse(locX, locY, innerDiamX / 2, innerDiamY / 2);
 		Shape ring = Path.subtract(outer, inner);
-		ring.setFill(GetColorAttribute("Color"));
+		ring.setFill(getColorAttribute("Color"));
 		canvas.getChildren().add(ring);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double x = width * GetDoubleAttribute("X") / MaximumX;
-		double y = height * GetDoubleAttribute("Y") / MaximumY;
+		double x = width * getDoubleAttribute("X") / maximumX;
+		double y = height * getDoubleAttribute("Y") / maximumY;
 
-		double outerRadX = width * GetDoubleAttribute("Width") / MaximumX / 2;
-		double outerRadY = GetDoubleAttribute("Height") == 0
+		double outerRadX = width * getDoubleAttribute("Width") / maximumX / 2;
+		double outerRadY = getDoubleAttribute("Height") == 0
 			? outerRadX
-			: height * GetDoubleAttribute("Height") / MaximumY / 2;
+			: height * getDoubleAttribute("Height") / maximumY / 2;
 
-		double proportion = GetDoubleAttribute("Size") / MaximumX;
+		double proportion = getDoubleAttribute("Size") / maximumX;
 		double innerRadX = outerRadX * proportion;
 		double innerRadY = outerRadY * proportion;
 
@@ -88,6 +88,6 @@ public class OverlayRing extends Overlay
 			"\" %8$s />",
 			x, y, outerRadX, outerRadY, 2 * outerRadX,
 			innerRadX, innerRadY, 2 * innerRadX,
-			ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+			ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

@@ -17,18 +17,18 @@ public class DivisionBendsForward extends Division
 	}
 
 	@Override
-	public String Name()
+	public String getName()
 	{
 		return "bends forward";
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		double height = canvas.getHeight();
 		double width = canvas.getWidth();
 		
-		canvas.getChildren().add(new Rectangle(width, height, Colors[0]));
+		canvas.getChildren().add(new Rectangle(width, height, colors[0]));
 		
 		Path p = new Path(new PathElement[]
 		{
@@ -37,35 +37,35 @@ public class DivisionBendsForward extends Division
 			new LineTo(0, height),
 			new LineTo(width, 0)
 		});
-		p.fillProperty().set(Colors[1]);
+		p.fillProperty().set(colors[1]);
 		p.strokeWidthProperty().set(0);
 		canvas.getChildren().add(p);
 	}
 
 	@Override
-	public void SetColors(Color[] colors)
+	public void setColors(Color[] newColors)
 	{
-		Colors[0] = colors[0];
-		Colors[1] = colors[1];
+		colors[0] = newColors[0];
+		colors[1] = newColors[1];
 	}
 
 	@Override
-	public void SetValues(int[] values)
+	public void setValues(int[] newValues)
 	{
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />",
 				width,
 				height,
-				ColorExtensions.ToSvgFillWithOpacity(Colors[0])));
+				ColorExtensions.toSvgFillWithOpacity(colors[0])));
 		sb.append(String.format("<polygon points=\"%1$d,%2$d %1$d,0 0,%2$d\" %3$s />",
 				width,
 				height,
-				ColorExtensions.ToSvgFillWithOpacity(Colors[1])));
+				ColorExtensions.toSvgFillWithOpacity(colors[1])));
 		return sb.toString();
 	}
 }

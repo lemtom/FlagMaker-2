@@ -34,7 +34,7 @@ public class OverlayCross extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l1 = new Line(10, 5, 10, 25);
 		Line l2 = new Line(0, 15, 30, 15);
@@ -50,24 +50,24 @@ public class OverlayCross extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double thick = canvas.getWidth() * GetDoubleAttribute("Thickness") / MaximumX;
-		Rectangle vertical = new Rectangle(canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX) - thick / 2, 0, thick, canvas.getHeight());
-		Rectangle horizontal = new Rectangle(0, canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY) - thick / 2, canvas.getWidth(), thick);
-		vertical.setFill(GetColorAttribute("Color"));
-		horizontal.setFill(GetColorAttribute("Color"));
+		double thick = canvas.getWidth() * getDoubleAttribute("Thickness") / maximumX;
+		Rectangle vertical = new Rectangle(canvas.getWidth() * (getDoubleAttribute("X") / maximumX) - thick / 2, 0, thick, canvas.getHeight());
+		Rectangle horizontal = new Rectangle(0, canvas.getHeight() * (getDoubleAttribute("Y") / maximumY) - thick / 2, canvas.getWidth(), thick);
+		vertical.setFill(getColorAttribute("Color"));
+		horizontal.setFill(getColorAttribute("Color"));
 		canvas.getChildren().addAll(vertical, horizontal);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double thick = width * GetDoubleAttribute("Thickness") / MaximumX;
-		double x = width * (GetDoubleAttribute("X") / MaximumX) - thick / 2;
-		double y = height * (GetDoubleAttribute("Y") / MaximumY) - thick / 2;
+		double thick = width * getDoubleAttribute("Thickness") / maximumX;
+		double x = width * (getDoubleAttribute("X") / maximumX) - thick / 2;
+		double y = height * (getDoubleAttribute("Y") / maximumY) - thick / 2;
 			
 		return String.format("<rect width=\"%1$.3f\" height=\"%2$d\" x=\"%3$.3f\" y=\"0\" %6$s /><rect width=\"%4$d\" height=\"%1$.3f\" x=\"0\" y=\"%5$.3f\" %6$s />",
-				thick, height, x, width, y, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+				thick, height, x, width, y, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

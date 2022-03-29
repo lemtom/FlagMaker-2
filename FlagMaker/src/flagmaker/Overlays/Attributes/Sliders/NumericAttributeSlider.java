@@ -4,14 +4,14 @@ import flagmaker.Overlays.OverlayControl;
 
 public abstract class NumericAttributeSlider extends AttributeSlider
 {
-	public final boolean UseMaxX;
+	public final boolean useMaxX;
 	
 	public NumericAttributeSlider(OverlayControl parent, String name, boolean useMaxX)
 	{
 		super(parent, name);
-		UseMaxX = useMaxX;
+		this.useMaxX = useMaxX;
 	}
 	
-	public abstract int GetMaximum();
-	public abstract void SetMaximum(int value);
+	public abstract int getMaximum();
+	public abstract void setMaximum(int value);
 }

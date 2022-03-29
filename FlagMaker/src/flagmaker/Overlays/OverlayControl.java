@@ -36,235 +36,235 @@ public class OverlayControl extends VBox
 	@FXML private Tooltip ttpMoveDown;
 	@FXML private Tooltip ttpClone;
 	
-	public Stage Stage;
+	public Stage stage;
 	
-	private Overlay _overlay;
-	private int _defaultMaximumX;
-	private int _defaultMaximumY;
-	private boolean _isFirst;
-	public final MainWindowController MainWindow;
+	private Overlay overlay;
+	private int defaultMaximumX;
+	private int defaultMaximumY;
+	private boolean isFirst;
+	public final MainWindowController mainWindow;
 	
-	public boolean IsLoading;
-	public boolean WasCanceled;
+	public boolean isLoading;
+	public boolean wasCanceled;
 		
 	public OverlayControl(Stage stage, MainWindowController mainWindow, int defaultMaximumX, int defaultMaximumY, boolean isLoading)
 	{
-		Load(stage);
-		LoadLocalization();
+		load(stage);
+		loadLocalization();
 		
-		IsLoading = isLoading;
-		MainWindow = mainWindow;
-		_defaultMaximumX = defaultMaximumX;
-		_defaultMaximumY = defaultMaximumY;
-		_isFirst = true;
+		this.isLoading = isLoading;
+		this.mainWindow = mainWindow;
+		this.defaultMaximumX = defaultMaximumX;
+		this.defaultMaximumY = defaultMaximumY;
+		isFirst = true;
 		
-		if (!IsLoading)
+		if (!this.isLoading)
 		{
-			OverlaySelect();
+			overlaySelect();
 		}
 	}
 	
-	public Overlay GetOverlay()
+	public Overlay getOverlay()
 	{
-		return _overlay;
+		return overlay;
 	}
 	
-	public void SetOverlay(Overlay value)
+	public void setOverlay(Overlay value)
 	{
-		Attribute[] oldAttributes = SaveOldEmblemAttributes(value);
+		Attribute[] oldAttributes = saveOldEmblemAttributes(value);
 		
-		_overlay = value;
-		btnOverlay.graphicProperty().set(_overlay.PaneThumbnail());
-		btnOverlay.tooltipProperty().set(new Tooltip(_overlay.Name));
+		overlay = value;
+		btnOverlay.graphicProperty().set(overlay.paneThumbnail());
+		btnOverlay.tooltipProperty().set(new Tooltip(overlay.name));
 		
-		SetAttributesFromSliders();		
-		SetVisibilityButton();
-		AddSliders();
-		CopyOldEmblemAttributes(oldAttributes);
+		setAttributesFromSliders();		
+		setVisibilityButton();
+		addSliders();
+		copyOldEmblemAttributes(oldAttributes);
 		
-		_isFirst = false;
-		IsLoading = false;
+		isFirst = false;
+		isLoading = false;
 	}
 	
-	public void OverlaySliderChanged(boolean triggeredByUser)
+	public void overlaySliderChanged(boolean triggeredByUser)
 	{
 		if (triggeredByUser)
 		{
-			_overlay.SetValues(GetAttributeSliderValues());
-			Draw();
+			overlay.setValues(getAttributeSliderValues());
+			draw();
 		}
-		MainWindow.SetAsUnsaved();
+		mainWindow.setAsUnsaved();
 	}
 	
-	public void Expand()
+	public void expand()
 	{
-		ControlExtensions.ShowControl(pnlSliders);
-		SetCollapseButton("flagmaker/Images/collapse.png");
-		ttpExpandCollapse.setText(LocalizationHandler.Get("Collapse"));
+		ControlExtensions.showControl(pnlSliders);
+		setCollapseButton("flagmaker/Images/collapse.png");
+		ttpExpandCollapse.setText(LocalizationHandler.get("Collapse"));
 	}
 	
-	public void Collapse()
+	public void collapse()
 	{
-		ControlExtensions.HideControl(pnlSliders);
-		SetCollapseButton("flagmaker/Images/expand.png");
-		ttpExpandCollapse.setText(LocalizationHandler.Get("Expand"));
+		ControlExtensions.hideControl(pnlSliders);
+		setCollapseButton("flagmaker/Images/expand.png");
+		ttpExpandCollapse.setText(LocalizationHandler.get("Expand"));
 	}
 	
-	public void SetMaximum(int maximumX, int maximumY)
+	public void setMaximum(int maximumX, int maximumY)
 	{
-		_defaultMaximumX = maximumX;
-		_defaultMaximumY = maximumY;
+		defaultMaximumX = maximumX;
+		defaultMaximumY = maximumY;
 
-		_overlay.SetMaximum(maximumX, maximumY);
+		overlay.setMaximum(maximumX, maximumY);
 		
-		AttributeSlider[] sliders = GetAttributeSliders();
+		AttributeSlider[] sliders = getAttributeSliders();
 		for (AttributeSlider slider : sliders)
 		{
 			if (slider instanceof NumericAttributeSlider)
 			{
-				((NumericAttributeSlider)slider).SetMaximum(((NumericAttributeSlider)slider).UseMaxX
-						? _defaultMaximumX
-						: _defaultMaximumY);
+				((NumericAttributeSlider)slider).setMaximum(((NumericAttributeSlider)slider).useMaxX
+						? defaultMaximumX
+						: defaultMaximumY);
 			}
 		}
 	}
 
-	private void AddSliders()
+	private void addSliders()
 	{
 		pnlSliders.getChildren().clear();
-		for (Attribute a : _overlay.Attributes)
+		for (Attribute a : overlay.attributes)
 		{
-			pnlSliders.getChildren().add(a.GetSlider(this));
+			pnlSliders.getChildren().add(a.getSlider(this));
 		}
 	}
 
-	private void SetAttributesFromSliders()
+	private void setAttributesFromSliders()
 	{
-		if (!_isFirst && !IsLoading)
+		if (!isFirst && !isLoading)
 		{
-			HashMap<String, Object> sliderValues = GetAttributeSliderValues();
+			HashMap<String, Object> sliderValues = getAttributeSliderValues();
 			if (!sliderValues.isEmpty())
 			{
 				sliderValues.clear();
-				_overlay.SetValues(sliderValues);
+				overlay.setValues(sliderValues);
 			}
 		}
 	}
 
-	private Attribute[] SaveOldEmblemAttributes(Overlay value)
+	private Attribute[] saveOldEmblemAttributes(Overlay value)
 	{
-		if (_overlay != null && _overlay instanceof OverlayPath && value instanceof OverlayPath)
+		if (overlay != null && overlay instanceof OverlayPath && value instanceof OverlayPath)
 		{
-			return ((OverlayPath)_overlay).Attributes;
+			return ((OverlayPath)overlay).attributes;
 		}
 		
 		return null;
 	}
 
-	private void CopyOldEmblemAttributes(Attribute[] oldAttributes)
+	private void copyOldEmblemAttributes(Attribute[] oldAttributes)
 	{
 		if (oldAttributes != null)
 		{
 			for (int i = 0; i < oldAttributes.length; i++)
 			{
 				AttributeSlider slider = (AttributeSlider)pnlSliders.getChildren().get(i);
-				slider.SetValue(oldAttributes[i].GetValue());
+				slider.setValue(oldAttributes[i].getValue());
 			}
 		}
 	}
 	
-	private void LoadLocalization()
+	private void loadLocalization()
 	{
-		ttpExpandCollapse.setText(LocalizationHandler.Get("Collapse"));
-		ttpChangeType.setText(LocalizationHandler.Get("OverlayChangeType"));
-		ttpVisibility.setText(LocalizationHandler.Get("ToggleVisibility"));
-		ttpRemove.setText(LocalizationHandler.Get("Remove"));
-		ttpMoveUp.setText(LocalizationHandler.Get("MoveUp"));
-		ttpMoveDown.setText(LocalizationHandler.Get("MoveDown"));
-		ttpClone.setText(LocalizationHandler.Get("Clone"));
+		ttpExpandCollapse.setText(LocalizationHandler.get("Collapse"));
+		ttpChangeType.setText(LocalizationHandler.get("OverlayChangeType"));
+		ttpVisibility.setText(LocalizationHandler.get("ToggleVisibility"));
+		ttpRemove.setText(LocalizationHandler.get("Remove"));
+		ttpMoveUp.setText(LocalizationHandler.get("MoveUp"));
+		ttpMoveDown.setText(LocalizationHandler.get("MoveDown"));
+		ttpClone.setText(LocalizationHandler.get("Clone"));
 	}
 
-	@FXML private void OverlaySelect()
+	@FXML private void overlaySelect()
 	{
 		Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.initOwner(Stage);
-		OverlaySelector control = new OverlaySelector(dialog, _defaultMaximumX, _defaultMaximumY);
+		dialog.initOwner(stage);
+		OverlaySelector control = new OverlaySelector(dialog, defaultMaximumX, defaultMaximumY);
 		Scene dialogScene = new Scene(control, 400, 300);
 		dialogScene.getStylesheets().add(UI.class.getResource("Style.css").toExternalForm());
 		dialog.setScene(dialogScene);
 		dialog.showAndWait();
 		
-		Overlay o = control.GetSelectedOverlay();
+		Overlay o = control.getSelectedOverlay();
 		if (o == null)
 		{
-			WasCanceled = true;
+			wasCanceled = true;
 			return;
 		}
 
-		SetOverlay(o);
-		if (!IsLoading) Draw();
+		setOverlay(o);
+		if (!isLoading) draw();
 	}
 
-	private void Draw()
+	private void draw()
 	{
-		MainWindow.Draw();
+		mainWindow.draw();
 	}
 
-	@FXML private void Remove()
+	@FXML private void remove()
 	{
-		MainWindow.Remove(this);
+		mainWindow.remove(this);
 	}
 
-	@FXML private void MoveUp()
+	@FXML private void moveUp()
 	{
-		MainWindow.MoveUp(this);
+		mainWindow.moveUp(this);
 	}
 
-	@FXML private void MoveDown()
+	@FXML private void moveDown()
 	{
-		MainWindow.MoveDown(this);
+		mainWindow.moveDown(this);
 	}
 
-	@FXML private void Clone()
+	@FXML private void cloneThis()
 	{
-		MainWindow.Clone(this);
+		mainWindow.clone(this);
 	}
 
-	@FXML private void SetCollapsed()
+	@FXML private void setCollapsed()
 	{
 		if (pnlSliders.visibleProperty().get())
 		{
-			Collapse();
+			collapse();
 		}
 		else
 		{
-			Expand();
+			expand();
 		}
 	}
 	
-	@FXML private void SetVisibility()
+	@FXML private void setVisibility()
 	{
-		_overlay.IsEnabled = !_overlay.IsEnabled;
-		SetVisibilityButton();
-		Draw();
+		overlay.isEnabled = !overlay.isEnabled;
+		setVisibilityButton();
+		draw();
 	}
 
-	private void SetCollapseButton(String icon)
+	private void setCollapseButton(String icon)
 	{
 		btnExpandCollapse.setImage(new Image(icon));
 	}
 	
-	private void SetVisibilityButton()
+	private void setVisibilityButton()
 	{
-		btnVisibility.setImage(new Image(_overlay.IsEnabled
+		btnVisibility.setImage(new Image(overlay.isEnabled
 				? "flagmaker/Images/check_on.png"
 				: "flagmaker/Images/check_off.png"));
 	}
 	
-	private void Load(Stage stage)
+	private void load(Stage stage)
 	{
-		Stage = stage;
+		this.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("OverlayControl.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);
@@ -279,7 +279,7 @@ public class OverlayControl extends VBox
 		}
 	}
 	
-	private AttributeSlider[] GetAttributeSliders()
+	private AttributeSlider[] getAttributeSliders()
 	{
 		ArrayList<AttributeSlider> list = new ArrayList<>();
 		for (Object control : pnlSliders.getChildren())
@@ -291,7 +291,7 @@ public class OverlayControl extends VBox
 		return list.toArray(returnValue);
 	}
 	
-	private HashMap<String, Object> GetAttributeSliderValues()
+	private HashMap<String, Object> getAttributeSliderValues()
 	{
 		int sliderCount = pnlSliders.getChildren().size();
 		HashMap<String, Object> list = new HashMap<>();
@@ -299,13 +299,13 @@ public class OverlayControl extends VBox
 		for (int i = 0; i < sliderCount; i++)
 		{
 			AttributeSlider slider = (AttributeSlider)pnlSliders.getChildren().get(i);
-			list.put(slider.Name, slider.GetValue());
+			list.put(slider.name, slider.getValue());
 		}
 		
 		return list;
 	}
 	
-	Object[] AddElement(Object[] original, double added)
+	Object[] addElement(Object[] original, double added)
 	{
 		Object[] result = Arrays.copyOf(original, original.length +1);
 		result[original.length] = added;

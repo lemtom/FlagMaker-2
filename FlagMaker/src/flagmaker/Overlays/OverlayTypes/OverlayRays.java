@@ -37,7 +37,7 @@ public class OverlayRays extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		SVGPath path = new SVGPath();
 		path.setContent("M 15,10 18,0 12,0 Z M 15,10 0,8 0,12 Z M 15,10 18,20 12,20 Z M 15,10 30,8 30,12 Z" +
@@ -47,37 +47,37 @@ public class OverlayRays extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		for (String path : GetPaths(canvas.getWidth(), canvas.getHeight()))
+		for (String path : getPaths(canvas.getWidth(), canvas.getHeight()))
 		{
 			SVGPath p = new SVGPath();
 			p.setContent(path);
-			p.setFill(GetColorAttribute("Color"));
+			p.setFill(getColorAttribute("Color"));
 			canvas.getChildren().add(p);
 		}
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		StringBuilder sb = new StringBuilder();
 
-		for (String path : GetPaths(width, height))
+		for (String path : getPaths(width, height))
 		{
 			sb.append(String.format("<path d=\"%s\" %s />",
-				path, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color"))));
+				path, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color"))));
 		}
 
 		return sb.toString();
 	}
 	
-	private String[] GetPaths(double width, double height)
+	private String[] getPaths(double width, double height)
 	{
-		double centerX = width * (GetDoubleAttribute("X") / MaximumX);
-		double centerY = height * (GetDoubleAttribute("Y") / MaximumY);
-		int count = GetIntegerAttribute("Count");
-		double rotation = GetDoubleAttribute("Rotation") / MaximumX;
+		double centerX = width * (getDoubleAttribute("X") / maximumX);
+		double centerY = height * (getDoubleAttribute("Y") / maximumY);
+		int count = getIntegerAttribute("Count");
+		double rotation = getDoubleAttribute("Rotation") / maximumX;
 		double rotationOffset = rotation * Math.PI * 2 / count;
 		double angularInterval = Math.PI / count;
 		
@@ -85,26 +85,26 @@ public class OverlayRays extends Overlay
 
 		for (int i = 0; i < count; i++)
 		{
-			Vector point1 = BorderIntersection(centerX, centerY, angularInterval * 2 * i + rotationOffset, width, height);
-			Vector point2 = BorderIntersection(centerX, centerY, angularInterval * (2 * i + 1) + rotationOffset, width, height);
+			Vector point1 = borderIntersection(centerX, centerY, angularInterval * 2 * i + rotationOffset, width, height);
+			Vector point2 = borderIntersection(centerX, centerY, angularInterval * (2 * i + 1) + rotationOffset, width, height);
 
 			// If points lie on different sides, add corner
 			String point3 = "";
-			if (point1.X != point2.X && point1.Y != point2.Y)
+			if (point1.x != point2.x && point1.y != point2.y)
 			{
-				if (point1.Y == 0)
+				if (point1.y == 0)
 				{
 					point3 = "0,0 ";
 				}
-				else if (point1.X == 0)
+				else if (point1.x == 0)
 				{
 					point3 = String.format("0,%.3f ", height);
 				}
-				else if (point1.Y == height)
+				else if (point1.y == height)
 				{
 					point3 = String.format("%.3f,%.3f ", width, height);
 				}
-				else if (point1.X == width)
+				else if (point1.x == width)
 				{
 					point3 = String.format("%.3f,0 ", width);
 				}
@@ -112,16 +112,16 @@ public class OverlayRays extends Overlay
 
 			returnValue.add(String.format("M %.3f,%.3f %.3f,%.3f %s%.3f,%.3f Z",
 				centerX, centerY,
-				point1.X, point1.Y,
+				point1.x, point1.y,
 				point3,
-				point2.X, point2.Y));
+				point2.x, point2.y));
 		}
 		
 		String[] rv = new String[]{};
 		return returnValue.toArray(rv);
 	}
 
-	private static Vector BorderIntersection(double centerX, double centerY, double angle, double width, double height)
+	private static Vector borderIntersection(double centerX, double centerY, double angle, double width, double height)
 	{
 		ArrayList<Vector> possiblePoints = new ArrayList<>();
 
@@ -158,8 +158,8 @@ public class OverlayRays extends Overlay
 		
 		possiblePoints.sort((Vector o1, Vector o2) ->
 		{
-			Double l1 = Length(o1, new Vector(centerX, centerY));
-			Double l2 = Length(o2, new Vector(centerX, centerY));
+			Double l1 = length(o1, new Vector(centerX, centerY));
+			Double l2 = length(o2, new Vector(centerX, centerY));
 			return l1.compareTo(l2);
 		});
 
@@ -168,8 +168,8 @@ public class OverlayRays extends Overlay
 			: new Vector(centerX, centerY);
 	}
 
-	private static double Length(Vector p1, Vector p2)
+	private static double length(Vector p1, Vector p2)
 	{
-		return Math.sqrt(Math.pow(p2.X - p1.X, 2) + Math.pow(p2.Y - p1.Y, 2));
+		return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 	}
 }

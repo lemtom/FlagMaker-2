@@ -10,49 +10,49 @@ import java.util.ResourceBundle;
 
 public class LocalizationHandler
 {
-	private static Locale _currentLocale;
-	private static ResourceBundle _bundle;
-	private static ResourceBundle _defaultBundle;
+	private static Locale currentLocale;
+	private static ResourceBundle bundle;
+	private static ResourceBundle defaultBundle;
 	
-	public static void Initialize()
+	public static void initialize()
 	{
-		_currentLocale = GetLocalePreference();
-		if (_currentLocale == null) _currentLocale = Locale.US;
-		_defaultBundle = ResourceBundle.getBundle("bundles.strings", Locale.US);
-		SetBundle(_currentLocale);
+		currentLocale = getLocalePreference();
+		if (currentLocale == null) currentLocale = Locale.US;
+		defaultBundle = ResourceBundle.getBundle("bundles.strings", Locale.US);
+		setBundle(currentLocale);
 	}
 	
-	public static void SetLanguage(Locale locale)
+	public static void setLanguage(Locale locale)
 	{
-		_currentLocale = locale;
-		SetBundle(_currentLocale);
-		SaveLocalePreference(_currentLocale);
+		currentLocale = locale;
+		setBundle(currentLocale);
+		saveLocalePreference(currentLocale);
 	}
 	
-	public static String Get(String key)
+	public static String get(String key)
 	{
 		try
 		{
-			return _bundle.getString(key);
+			return bundle.getString(key);
 		}
 		catch (Exception e)
 		{
-			return _defaultBundle.getString(key);
+			return defaultBundle.getString(key);
 		}
 	}
 	
-	private static void SetBundle(Locale locale)
+	private static void setBundle(Locale locale)
 	{
 		try {
-			_bundle = ResourceBundle.getBundle("bundles.strings", locale);
+			bundle = ResourceBundle.getBundle("bundles.strings", locale);
 		}
 		catch (Exception e)
 		{
-			_bundle = _defaultBundle;
+			bundle = defaultBundle;
 		}
 	}
 	
-	private static Locale GetLocalePreference()
+	private static Locale getLocalePreference()
 	{
 		File preferencesFile = new File("flagmaker.config");
 		if (preferencesFile.exists())
@@ -77,7 +77,7 @@ public class LocalizationHandler
 		return Locale.getDefault();
 	}
 	
-	private static void SaveLocalePreference(Locale locale)
+	private static void saveLocalePreference(Locale locale)
 	{
 		File preferencesFile = new File("flagmaker.config");
 		

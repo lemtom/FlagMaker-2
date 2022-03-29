@@ -32,7 +32,7 @@ public class OverlayPall extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l1 = new Line(0, 5, 15, 15);
 		Line l2 = new Line(0, 25, 15, 15);
@@ -45,10 +45,10 @@ public class OverlayPall extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double theWidth = GetDoubleAttribute("Width") / MaximumX * canvas.getWidth() / 2;
-		double x = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX);
+		double theWidth = getDoubleAttribute("Width") / maximumX * canvas.getWidth() / 2;
+		double x = canvas.getWidth() * (getDoubleAttribute("X") / maximumX);
 		
 		SVGPath p = new SVGPath();
 		p.setContent(String.format("M 0,0 %1$.3f,0 %2$.3f,%3$.3f %4$.3f,%3$.3f %4$.3f,%6$.3f %2$.3f,%6$.3f %1$.3f,%5$.3f 0,%5$.3f 0,%7$.3f %9$.3f,%8$.3f 0,%1$.3f",
@@ -61,16 +61,16 @@ public class OverlayPall extends Overlay
 				canvas.getHeight() - (double)theWidth / 2,
 				canvas.getHeight() / 2,
 				x - (double)theWidth / 3));
-		p.setFill(GetColorAttribute("Color"));
+		p.setFill(getColorAttribute("Color"));
 		
 		canvas.getChildren().add(p);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double theWidth = GetDoubleAttribute("Width") / MaximumX * width / 2;
-		double x = width * (GetDoubleAttribute("X") / MaximumX);
+		double theWidth = getDoubleAttribute("Width") / maximumX * width / 2;
+		double x = width * (getDoubleAttribute("X") / maximumX);
 		
 		return String.format("<path d=\"M 0,0 %1$.3f,0 %2$.3f,%3$.3f %4$d,%3$.3f %4$d,%6$.3f %2$.3f,%6$.3f %1$.3f,%5$d 0,%5$d 0,%7$.3f %9$.3f,%8$.3f 0,%1$.3f\" %10$s />",
 				theWidth / 2,
@@ -82,6 +82,6 @@ public class OverlayPall extends Overlay
 				height - (double)theWidth / 2,
 				height / 2.0,
 				x - (double)theWidth / 3,
-				ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

@@ -18,35 +18,35 @@ public class ColorAttributeSlider extends AttributeSlider implements ColorButton
 	public ColorAttributeSlider(OverlayControl parent, String name, Color value)
 	{
 		super(parent, name);
-		Load();
-		picker.SetListener(parent.MainWindow, parent.Stage, this);
+		load();
+		picker.setListener(parent.mainWindow, parent.stage, this);
 		
-		String label = LocalizationHandler.Get(name);
+		String label = LocalizationHandler.get(name);
 		lblName.setText(label);
 		lblName.setTooltip(new Tooltip(label));
-		picker.SetValue(value);
+		picker.setValue(value);
 	}
 	
 	@Override
-	public Color GetValue()
+	public Color getValue()
 	{
-		return picker.GetValue();
+		return picker.getValue();
 	}
 	
-	public void SetValue(Color value)
+	public void setValue(Color value)
 	{
-		TriggeredByUser = false;
-		picker.SetValue(value);
-		TriggeredByUser = true;
+		triggeredByUser = false;
+		picker.setValue(value);
+		triggeredByUser = true;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object value)
 	{
-		SetValue((Color)value);
+		setValue((Color)value);
 	}
 
-	private void Load()
+	private void load()
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ColorAttributeSlider.fxml"));
 		loader.setRoot(this);
@@ -63,9 +63,9 @@ public class ColorAttributeSlider extends AttributeSlider implements ColorButton
 	}
 
 	@Override
-	public void ColorChanged(Color oldval, Color newval)
+	public void colorChanged(Color oldval, Color newval)
 	{
-			if (TriggeredByUser && !newval.equals(oldval)) ValueChanged();
-			TriggeredByUser = true;
+			if (triggeredByUser && !newval.equals(oldval)) valueChanged();
+			triggeredByUser = true;
 	}
 }

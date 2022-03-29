@@ -30,7 +30,7 @@ public class OverlaySaltire extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l1 = new Line(0, 5, 30, 25);
 		Line l2 = new Line(30, 5, 0, 25);
@@ -40,10 +40,10 @@ public class OverlaySaltire extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double widthX = canvas.getWidth() * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
-		double widthY = canvas.getHeight() * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
+		double widthX = canvas.getWidth() * (getDoubleAttribute("Thickness") / maximumX) / 2;
+		double widthY = canvas.getHeight() * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
 		SVGPath path1 = new SVGPath();
 		SVGPath path2 = new SVGPath();
@@ -53,19 +53,19 @@ public class OverlaySaltire extends Overlay
 		path2.setContent(String.format("M %1$.3f,0 %2$.3f,0 %2$.3f,%6$.3f %3$.3f,%4$.3f 0,%4$.3f 0,%5$.3f %1$.3f,0",
 				canvas.getWidth() - widthX, canvas.getWidth(), widthX, canvas.getHeight(), canvas.getHeight() - widthY, widthY));
 
-		path1.setFill(GetColorAttribute("Color"));
-		path2.setFill(GetColorAttribute("Color"));
+		path1.setFill(getColorAttribute("Color"));
+		path2.setFill(getColorAttribute("Color"));
 		
 		canvas.getChildren().addAll(path1, path2);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double wX = width * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
-		double wY = height * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
+		double wX = width * (getDoubleAttribute("Thickness") / maximumX) / 2;
+		double wY = height * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
 		return String.format("<polygon points=\"%1$.3f,0 0,0 0,%6$.3f %2$.3f,%3$d %4$d,%3$d %4$d,%5$.3f %1$.3f,0\" %7$s /><polygon points=\"%2$.3f,0 %4$d,0 %4$d,%6$.3f %1$.3f,%3$d 0,%3$d 0,%5$.3f %2$.3f,0\" %7$s />",
-			wX, width - wX, height, width, height - wY, wY, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+			wX, width - wX, height, width, height - wY, wY, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

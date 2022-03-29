@@ -30,7 +30,7 @@ public class OverlayTransformer extends OverlayRepeater
     }
 
     @Override
-    protected Shape[] Thumbnail()
+    protected Shape[] thumbnail()
     {
 	return new Shape[]
 	{
@@ -39,10 +39,10 @@ public class OverlayTransformer extends OverlayRepeater
     }
 
     @Override
-    public void Draw(Pane canvas)
+    public void draw(Pane canvas)
     {
-		if (Overlay == null) return;
-		if (!Overlay.IsEnabled) return;
+		if (overlay == null) return;
+		if (!overlay.isEnabled) return;
 		
 		AnchorPane a = new AnchorPane();
 		a.setBackground(Background.EMPTY);
@@ -51,19 +51,19 @@ public class OverlayTransformer extends OverlayRepeater
 		p.setBackground(Background.EMPTY);
 		s.setRoot(p);
 		
-		p.getTransforms().add(GetTransformation((int)canvas.getWidth(), (int)canvas.getHeight()));
+		p.getTransforms().add(getTransformation((int)canvas.getWidth(), (int)canvas.getHeight()));
 
-		Overlay.Draw(p);
+		overlay.draw(p);
 		canvas.getChildren().add(p);
     }
 
     @Override
-    public String ExportSvg(int width, int height)
+    public String exportSvg(int width, int height)
     {
-		if (Overlay == null) return "";
-		if (!Overlay.IsEnabled) return "";
+		if (overlay == null) return "";
+		if (!overlay.isEnabled) return "";
 
-		Transform matrix = GetTransformation(width, height);
+		Transform matrix = getTransformation(width, height);
 
 		return String.format("<g transform=\"matrix(%.3f,%.3f,%.3f,%.3f,%.3f,%.3f)\">%s</g>",
 			matrix.getMxx(),
@@ -72,21 +72,21 @@ public class OverlayTransformer extends OverlayRepeater
 			matrix.getMyy(),
 			matrix.getTx(),
 			matrix.getTy(),
-			Overlay.ExportSvg(width, height));
+			overlay.exportSvg(width, height));
     }
 	
-	private Transform GetTransformation(int width, int height)
+	private Transform getTransformation(int width, int height)
 	{
-		double centerX = width * GetDoubleAttribute("X") / MaximumX;
-		double centerY = height * GetDoubleAttribute("Y") / MaximumY;
+		double centerX = width * getDoubleAttribute("X") / maximumX;
+		double centerY = height * getDoubleAttribute("Y") / maximumY;
 
-		double skewX = 90 * (GetDoubleAttribute("SkewX") - MaximumX / 2.0) / MaximumX;
-		double skewY = 90 * (GetDoubleAttribute("SkewY") - MaximumY / 2.0) / MaximumY;
+		double skewX = 90 * (getDoubleAttribute("SkewX") - maximumX / 2.0) / maximumX;
+		double skewY = 90 * (getDoubleAttribute("SkewY") - maximumY / 2.0) / maximumY;
 
-		double scaleX = GetDoubleAttribute("Width");
-		double scaleY = GetDoubleAttribute("Height");
+		double scaleX = getDoubleAttribute("Width");
+		double scaleY = getDoubleAttribute("Height");
 
-		double rotation = (GetDoubleAttribute("Rotation") / MaximumX) * 360;
+		double rotation = (getDoubleAttribute("Rotation") / maximumX) * 360;
 		
 		Shear skewTransform = new Shear(skewX, skewY, centerX, centerY);
 		Rotate rotateTransform = new Rotate(rotation, centerX, centerY);

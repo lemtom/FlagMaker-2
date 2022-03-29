@@ -44,7 +44,7 @@ public class OverlayQuadrilateral extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		SVGPath p = new SVGPath();
 		p.setContent("M 10,5 20,5 30,30 0,30");
@@ -52,37 +52,37 @@ public class OverlayQuadrilateral extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double x1 = canvas.getWidth() * (GetDoubleAttribute("X1") / MaximumX);
-		double y1 = canvas.getHeight() * (GetDoubleAttribute("Y1") / MaximumY);
-		double x2 = canvas.getWidth() * (GetDoubleAttribute("X2") / MaximumX);
-		double y2 = canvas.getHeight() * (GetDoubleAttribute("Y2") / MaximumY);
-		double x3 = canvas.getWidth() * (GetDoubleAttribute("X3") / MaximumX);
-		double y3 = canvas.getHeight() * (GetDoubleAttribute("Y3") / MaximumY);
-		double x4 = canvas.getWidth() * (GetDoubleAttribute("X4") / MaximumX);
-		double y4 = canvas.getHeight() * (GetDoubleAttribute("Y4") / MaximumY);
+		double x1 = canvas.getWidth() * (getDoubleAttribute("X1") / maximumX);
+		double y1 = canvas.getHeight() * (getDoubleAttribute("Y1") / maximumY);
+		double x2 = canvas.getWidth() * (getDoubleAttribute("X2") / maximumX);
+		double y2 = canvas.getHeight() * (getDoubleAttribute("Y2") / maximumY);
+		double x3 = canvas.getWidth() * (getDoubleAttribute("X3") / maximumX);
+		double y3 = canvas.getHeight() * (getDoubleAttribute("Y3") / maximumY);
+		double x4 = canvas.getWidth() * (getDoubleAttribute("X4") / maximumX);
+		double y4 = canvas.getHeight() * (getDoubleAttribute("Y4") / maximumY);
 
 		SVGPath path = new SVGPath();
 		path.setContent(String.format("M %.3f,%.3f %.3f,%.3f %.3f,%.3f %.3f,%.3f",
 				x1, y1, x2, y2, x3, y3, x4, y4));
-		path.setFill(GetColorAttribute("Color"));
+		path.setFill(getColorAttribute("Color"));
 		canvas.getChildren().add(path);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double x1 = width * (GetDoubleAttribute("X1") / MaximumX);
-		double y1 = height * (GetDoubleAttribute("Y1") / MaximumY);
-		double x2 = width * (GetDoubleAttribute("X2") / MaximumX);
-		double y2 = height * (GetDoubleAttribute("Y2") / MaximumY);
-		double x3 = width * (GetDoubleAttribute("X3") / MaximumX);
-		double y3 = height * (GetDoubleAttribute("Y3") / MaximumY);
-		double x4 = width * (GetDoubleAttribute("X4") / MaximumX);
-		double y4 = height * (GetDoubleAttribute("Y4") / MaximumY);
+		double x1 = width * (getDoubleAttribute("X1") / maximumX);
+		double y1 = height * (getDoubleAttribute("Y1") / maximumY);
+		double x2 = width * (getDoubleAttribute("X2") / maximumX);
+		double y2 = height * (getDoubleAttribute("Y2") / maximumY);
+		double x3 = width * (getDoubleAttribute("X3") / maximumX);
+		double y3 = height * (getDoubleAttribute("Y3") / maximumY);
+		double x4 = width * (getDoubleAttribute("X4") / maximumX);
+		double y4 = height * (getDoubleAttribute("Y4") / maximumY);
 
 		return String.format("<polygon points=\"%.3f,%.3f %.3f,%.3f %.3f,%.3f %.3f,%.3f\" %s />",
-				x1, y1, x2, y2, x3, y3, x4, y4, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+				x1, y1, x2, y2, x3, y3, x4, y4, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

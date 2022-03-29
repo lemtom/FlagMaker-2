@@ -2,10 +2,8 @@ package flagmaker.Overlays.OverlayTypes.SpecialTypes;
 
 import flagmaker.Extensions.StringExtensions;
 import flagmaker.Overlays.Attributes.Attribute;
-import flagmaker.Overlays.Attributes.ColorAttribute;
 import flagmaker.Overlays.Attributes.DoubleAttribute;
 import flagmaker.Overlays.Overlay;
-import flagmaker.Overlays.OverlayTypes.ShapeTypes.OverlayShape;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -24,8 +22,8 @@ import javafx.scene.shape.Shape;
 
 public class OverlayImage extends Overlay
 {
-	private File _path;
-	private Image _bitmap;
+	private File path;
+	private Image bitmap;
 
 	public OverlayImage(int maximumX, int maximumY)
 	{
@@ -47,7 +45,7 @@ public class OverlayImage extends Overlay
 			new DoubleAttribute("Width", 1, maximumX, true),
 			new DoubleAttribute("Height", 1, maximumY, false)
 		}, maximumX, maximumY);
-		SetPath(path);
+		setPath(path);
 	}
 	
 	public OverlayImage(File path, double x, double y, double width, double height, int maximumX, int maximumY)
@@ -59,25 +57,25 @@ public class OverlayImage extends Overlay
 			new DoubleAttribute("Width", width, maximumX, true),
 			new DoubleAttribute("Height", height, maximumY, false)
 		}, maximumX, maximumY);
-		SetPath(path);
+		setPath(path);
 	}
 	
-	public File GetPath()
+	public File getPath()
 	{
-		return _path;
+		return path;
 	}
 	
-	public final void SetPath(File value)
+	public final void setPath(File value)
 	{
-		_path = value;
+		path = value;
 		
-		if (_path.exists())
+		if (path.exists())
 		{
 			try
 			{
-				URI uri = _path.toURI();
+				URI uri = path.toURI();
 				URL url = uri.toURL();
-				_bitmap = new Image(url.toString());
+				bitmap = new Image(url.toString());
 			}
 			catch (Exception e)
 			{
@@ -86,7 +84,7 @@ public class OverlayImage extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Rectangle border = new Rectangle(25, 30, new Color(1, 1, 0, 0));
 		border.setStrokeWidth(3);
@@ -109,48 +107,48 @@ public class OverlayImage extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double width = canvas.getWidth() * GetDoubleAttribute("Width") / MaximumX;
-		double height = canvas.getHeight() * GetDoubleAttribute("Height") / MaximumY;
+		double width = canvas.getWidth() * getDoubleAttribute("Width") / maximumX;
+		double height = canvas.getHeight() * getDoubleAttribute("Height") / maximumY;
 		
 		if (height == 0)
 		{
-			double ratio = _bitmap.getHeight() / _bitmap.getWidth();
+			double ratio = bitmap.getHeight() / bitmap.getWidth();
 			height = width * ratio;
 		}
 
 		Canvas c = new Canvas(width, height);
 		GraphicsContext gc = c.getGraphicsContext2D();
-		gc.drawImage(_bitmap, 0, 0, width, height);
+		gc.drawImage(bitmap, 0, 0, width, height);
 
-		c.setLayoutX((canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX)) - width / 2);
-		c.setLayoutY((canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY)) - height / 2);
+		c.setLayoutX((canvas.getWidth() * (getDoubleAttribute("X") / maximumX)) - width / 2);
+		c.setLayoutY((canvas.getHeight() * (getDoubleAttribute("Y") / maximumY)) - height / 2);
 		canvas.getChildren().add(c);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		try
 		{
-			double imageWidth = width * GetDoubleAttribute("Width") / MaximumX;
-			double imageHeight = height * GetDoubleAttribute("Height") / MaximumY;
+			double imageWidth = width * getDoubleAttribute("Width") / maximumX;
+			double imageHeight = height * getDoubleAttribute("Height") / maximumY;
 			if (imageHeight <= 0)
 			{
-				double ratio = _bitmap.getHeight() / _bitmap.getWidth();
+				double ratio = bitmap.getHeight() / bitmap.getWidth();
 				imageHeight = imageWidth * ratio;
 			}
 			
-			byte[] bytes = Base64.getEncoder().encode(Files.readAllBytes(_path.toPath()));
+			byte[] bytes = Base64.getEncoder().encode(Files.readAllBytes(path.toPath()));
 			String base64String = new String(bytes);
 			
 			return String.format("<image x=\"%.3f\" y=\"%.3f\" width=\"%.3f\" height=\"%.3f\" preserveAspectRatio=\"none\" xlink:href=\"data:image/%s;base64,%s\" />",
-					width * (GetDoubleAttribute("X") / MaximumX) - imageWidth / 2,
-					height * (GetDoubleAttribute("Y") / MaximumY) - imageHeight / 2,
+					width * (getDoubleAttribute("X") / maximumX) - imageWidth / 2,
+					height * (getDoubleAttribute("Y") / maximumY) - imageHeight / 2,
 					imageWidth,
 					imageHeight,
-					StringExtensions.GetFilenameExtension(_path.getPath()),
+					StringExtensions.getFilenameExtension(path.getPath()),
 					base64String);
 		}
 		catch (IOException ex)

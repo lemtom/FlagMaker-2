@@ -2,24 +2,24 @@ package flagmaker.Data;
 
 public class Ratio
 {
-	public int Width;
-	public int Height;
+	public int width;
+	public int height;
 	
 	public Ratio (int width, int height)
 	{
-		Width = width;
-		Height = height;
+		this.width = width;
+		this.height = height;
 	}
 	
 	public Ratio (String asString)
 	{
 		String[] parts = asString.split(":");
-		Height = Integer.parseInt(parts[0]);
-		Width = Integer.parseInt(parts[1]);
+		height = Integer.parseInt(parts[0]);
+		width = Integer.parseInt(parts[1]);
 	}
 	
-	public String ToString()
+	public String toString()
 	{
-		return Height + ":" + Width;
+		return height + ":" + width;
 	}
 }

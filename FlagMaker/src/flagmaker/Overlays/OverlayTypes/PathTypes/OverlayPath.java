@@ -13,8 +13,8 @@ import javafx.scene.transform.*;
 
 public class OverlayPath extends Overlay
 {
-	private Vector _pathSize;
-	private String _path;
+	private Vector pathSize;
+	private String path;
 		
 	public OverlayPath(String name, int maximumX, int maximumY)
 	{
@@ -45,8 +45,8 @@ public class OverlayPath extends Overlay
 			new BooleanAttribute("StrokeCurved", false)
 		}, 1, 1);
 		
-		_path = path;
-		_pathSize = pathSize;
+		this.path = path;
+		this.pathSize = pathSize;
 	}
 	
 	public OverlayPath(String name, String path, Vector pathSize, int maximumX, int maximumY)
@@ -63,23 +63,23 @@ public class OverlayPath extends Overlay
 			new BooleanAttribute("StrokeCurved", false)
 		}, maximumX, maximumY);
 		
-		_path = path;
-		_pathSize = pathSize;
+		this.path = path;
+		this.pathSize = pathSize;
 	}
 	
-	protected void Constructor(String path, Vector pathSize)
+	protected void constructor(String path, Vector pathSize)
 	{
-		_path = path;
-		_pathSize = pathSize;
+		this.path = path;
+		this.pathSize = pathSize;
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		final double thumbSize = 30.0;
-		double scaleFactor = thumbSize / Math.max(_pathSize.X, _pathSize.Y);
+		double scaleFactor = thumbSize / Math.max(pathSize.x, pathSize.y);
 		SVGPath path = new SVGPath();
-		path.setContent(_path);
+		path.setContent(this.path);
 		
 		Translate translate = new Translate();
 		translate.setX(thumbSize/2);
@@ -98,36 +98,36 @@ public class OverlayPath extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		try
 		{
-			double xGridSize = canvas.getWidth() / MaximumX;
-			double yGridSize = canvas.getHeight() / MaximumY;
+			double xGridSize = canvas.getWidth() / maximumX;
+			double yGridSize = canvas.getHeight() / maximumY;
 			
-			double x = GetDoubleAttribute("X");
-			double y = GetDoubleAttribute("Y");
+			double x = getDoubleAttribute("X");
+			double y = getDoubleAttribute("Y");
 			
 			Vector finalCenterPoint = new Vector(x * xGridSize, y * yGridSize);
-			double scaleFactor = ScaleFactor(canvas.getWidth(), canvas.getHeight());
+			double scaleFactor = scaleFactor(canvas.getWidth(), canvas.getHeight());
 			
 			SVGPath path = new SVGPath();
-			path.setContent(_path);
-			path.setFill(GetColorAttribute("Color"));
-			path.setStroke(GetColorAttribute("StrokeColor"));
-			path.setStrokeWidth(StrokeThickness(canvas.getWidth(), canvas.getHeight()));
-			path.setStrokeLineJoin(GetBooleanAttribute("StrokeCurved")
+			path.setContent(this.path);
+			path.setFill(getColorAttribute("Color"));
+			path.setStroke(getColorAttribute("StrokeColor"));
+			path.setStrokeWidth(strokeThickness(canvas.getWidth(), canvas.getHeight()));
+			path.setStrokeLineJoin(getBooleanAttribute("StrokeCurved")
 				? StrokeLineJoin.ROUND
 				: StrokeLineJoin.MITER);
 			
 			Rotate rotate = new Rotate();
-			rotate.setAngle(GetDoubleAttribute("Rotation") / MaximumX * 360);
+			rotate.setAngle(getDoubleAttribute("Rotation") / maximumX * 360);
 			rotate.setPivotX(0);
 			rotate.setPivotY(0);
 			
 			Translate translate = new Translate();
-			translate.setX(finalCenterPoint.X);
-			translate.setY(finalCenterPoint.Y);
+			translate.setX(finalCenterPoint.x);
+			translate.setY(finalCenterPoint.y);
 			
 			Scale scale = new Scale();
 			scale.setX(scaleFactor);
@@ -148,41 +148,41 @@ public class OverlayPath extends Overlay
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double xGridSize = (double)width / MaximumX;
-		double yGridSize = (double)height / MaximumY;
+		double xGridSize = (double)width / maximumX;
+		double yGridSize = (double)height / maximumY;
 
-		double x = GetDoubleAttribute("X");
-		double y = GetDoubleAttribute("Y");
+		double x = getDoubleAttribute("X");
+		double y = getDoubleAttribute("Y");
 
 		Vector finalCenterPoint = new Vector(x * xGridSize, y * yGridSize);
-		double rotate = (GetDoubleAttribute("Rotation") / MaximumX) * 360;
+		double rotate = (getDoubleAttribute("Rotation") / maximumX) * 360;
 
-		double strokeThickness = StrokeThickness(width, height);
-		boolean strokeCurved = GetBooleanAttribute("StrokeCurved");
+		double strokeThickness = strokeThickness(width, height);
+		boolean strokeCurved = getBooleanAttribute("StrokeCurved");
 
 		return String.format("<g transform=\"translate(%.3f,%.3f) rotate(%.3f) scale(%.3f)\"><path d=\"%s\" %s %s /></g>",
-			finalCenterPoint.X, finalCenterPoint.Y, rotate, ScaleFactor(width, height), _path, ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")),
+			finalCenterPoint.x, finalCenterPoint.y, rotate, scaleFactor(width, height), path, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")),
 			strokeThickness > 0
 				? String.format("stroke=\"#%s\" stroke-width=\"$.3f\" stroke-linejoin=\"%s\"",
-					ColorExtensions.ToHexString(GetColorAttribute("StrokeColor"), false), strokeThickness, strokeCurved ? "round" : "miter")
+					ColorExtensions.toHexString(getColorAttribute("StrokeColor"), false), strokeThickness, strokeCurved ? "round" : "miter")
 				: "");
 	}
 	
-	public OverlayPath Copy()
+	public OverlayPath copy()
 	{
-		return new OverlayPath(Name, _path, _pathSize, MaximumX, MaximumY);
+		return new OverlayPath(name, path, pathSize, maximumX, maximumY);
 	}
 	
-	private double StrokeThickness(double canvasWidth, double canvasHeight)
+	private double strokeThickness(double canvasWidth, double canvasHeight)
 	{
-		return canvasWidth * GetDoubleAttribute("Stroke") / 32 / ScaleFactor(canvasWidth, canvasHeight) / MaximumX;
+		return canvasWidth * getDoubleAttribute("Stroke") / 32 / scaleFactor(canvasWidth, canvasHeight) / maximumX;
 	}
 	
-	private double ScaleFactor(double canvasWidth, double canvasHeight)
+	private double scaleFactor(double canvasWidth, double canvasHeight)
 	{
-		double idealPixelSize = GetDoubleAttribute("Size") / MaximumX * Math.max(canvasWidth, canvasHeight);
-		return idealPixelSize / Math.max(_pathSize.X, _pathSize.Y);
+		double idealPixelSize = getDoubleAttribute("Size") / maximumX * Math.max(canvasWidth, canvasHeight);
+		return idealPixelSize / Math.max(pathSize.x, pathSize.y);
 	}
 }

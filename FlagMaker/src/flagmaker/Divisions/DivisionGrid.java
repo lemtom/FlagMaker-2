@@ -13,29 +13,29 @@ public class DivisionGrid extends Division
 	}
 
 	@Override
-	public String Name()
+	public String getName()
 	{
 		return "grid";
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		double height = canvas.getHeight();
 		double width = canvas.getWidth();
 		
-		canvas.getChildren().add(new Rectangle(width, height, Colors[0]));
+		canvas.getChildren().add(new Rectangle(width, height, colors[0]));
 		
-		double gHeight = height / Values[1];
-		double gWidth = width / Values[0];
+		double gHeight = height / values[1];
+		double gWidth = width / values[0];
 		
-		for (int x = 0; x < Values[0]; x++)
+		for (int x = 0; x < values[0]; x++)
 		{
-			for (int y = 0; y < Values[1]; y++)
+			for (int y = 0; y < values[1]; y++)
 			{
 				if ((x + y) % 2 == 0) continue;
 				
-				Rectangle r = new Rectangle(gWidth, gHeight, Colors[1]);
+				Rectangle r = new Rectangle(gWidth, gHeight, colors[1]);
 				r.setX(x * gWidth);
 				r.setY(y * gHeight);
 				canvas.getChildren().add(r);
@@ -44,38 +44,38 @@ public class DivisionGrid extends Division
 	}
 
 	@Override
-	public void SetColors(Color[] colors)
+	public void setColors(Color[] newColors)
 	{
-		Colors[0] = colors[0];
-		Colors[1] = colors[1];
+		colors[0] = newColors[0];
+		colors[1] = newColors[1];
 	}
 
 	@Override
-	public void SetValues(int[] values)
+	public void setValues(int[] newValues)
 	{
-		Values[0] = values[0];
-		Values[1] = values[1];
+		values[0] = newValues[0];
+		values[1] = newValues[1];
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />",
 				width,
 				height,
-				ColorExtensions.ToSvgFillWithOpacity(Colors[0])));
+				ColorExtensions.toSvgFillWithOpacity(colors[0])));
 		
-		double h = height / (double)Values[1];
-		double w = width / (double)Values[0];
+		double h = height / (double)values[1];
+		double w = width / (double)values[0];
 			
-		for	(int x = 0; x < Values[0]; x++)
+		for	(int x = 0; x < values[0]; x++)
 		{
-			for (int y = 0; y < Values[1]; y++)
+			for (int y = 0; y < values[1]; y++)
 			{
 				sb.append(String.format("<rect width=\"%.3f\" height=\"%.3f\" x=\"%.3f\" y=\"%.3f\" %s />",
 					w, h, x * w, y * h,
-					ColorExtensions.ToSvgFillWithOpacity((x + y) % 2 == 0 ? Colors[0] : Colors[1])));
+					ColorExtensions.toSvgFillWithOpacity((x + y) % 2 == 0 ? colors[0] : colors[1])));
 			}
 		}
 		

@@ -2,15 +2,15 @@ package flagmaker.RandomFlag;
 
 public enum DivisionTypes
 {
-	Stripes,
-	Pales,
-	Fesses,
-	Diagonal,
+	STRIPES,
+	PALES,
+	FESSES,
+	DIAGONAL,
 	X,
-	Horizontal,
-	Vertical,
-	Cross,
-	Blank,
-	Stripe,
-	Ray
+	HORIZONTAL,
+	VERTICAL,
+	CROSS,
+	BLANK,
+	STRIPE,
+	RAY
 }

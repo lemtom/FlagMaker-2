@@ -19,7 +19,7 @@ public class OverlayBox extends OverlayShape
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		return new Shape[]
 		{
@@ -28,31 +28,31 @@ public class OverlayBox extends OverlayShape
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double width = canvas.getWidth() * (GetDoubleAttribute("Width") / (double)MaximumX);
-		double height = GetDoubleAttribute("Height") == 0
+		double width = canvas.getWidth() * (getDoubleAttribute("Width") / (double)maximumX);
+		double height = getDoubleAttribute("Height") == 0
 				? width
-				: canvas.getHeight() * (GetDoubleAttribute("Height") / MaximumY);
-		double left = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX);
-		double top = canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY);
+				: canvas.getHeight() * (getDoubleAttribute("Height") / maximumY);
+		double left = canvas.getWidth() * (getDoubleAttribute("X") / maximumX);
+		double top = canvas.getHeight() * (getDoubleAttribute("Y") / maximumY);
 		Rectangle rect = new Rectangle(left, top, width, height);
-		rect.setFill(GetColorAttribute("Color"));
+		rect.setFill(getColorAttribute("Color"));
 		canvas.getChildren().add(rect);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double w = width * (GetDoubleAttribute("Width") / (double)MaximumX);
-		double h = GetDoubleAttribute("Height") == 0
+		double w = width * (getDoubleAttribute("Width") / (double)maximumX);
+		double h = getDoubleAttribute("Height") == 0
 				? w
-				: height * (GetDoubleAttribute("Height") / MaximumY);
+				: height * (getDoubleAttribute("Height") / maximumY);
 		return String.format("<rect width=\"%.3f\" height=\"%.3f\" x=\"%.3f\" y=\"%.3f\" %s />",
 				w,
 				h,
-				width * (GetDoubleAttribute("X") / MaximumX),
-				height * (GetDoubleAttribute("Y") / MaximumY),
-				ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+				width * (getDoubleAttribute("X") / maximumX),
+				height * (getDoubleAttribute("Y") / maximumY),
+				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

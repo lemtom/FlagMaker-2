@@ -6,54 +6,54 @@ import flagmaker.Overlays.OverlayControl;
 
 public class IntegerAttribute extends NumericAttribute<Integer>
 {
-	public int Value;
+	public int value;
 	
-	private IntegerAttributeSlider _slider;
+	private IntegerAttributeSlider slider;
 	
 	public IntegerAttribute(String name, int initialValue, int maximum, boolean useMaxX)
 	{
 		super(name, maximum, useMaxX);
-		Value = initialValue;
+		value = initialValue;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object newValue)
 	{
-		Value = (int)value;
-		if (_slider != null)
+		value = (int)newValue;
+		if (slider != null)
 		{
-			_slider.SetValue(Value);
+			slider.setValue(value);
 		}
 	}
 
 	@Override
-	public void SetValue(String value)
+	public void setValue(String newValue)
 	{
-		SetValue(Integer.parseInt(value));
+		setValue(Integer.parseInt(newValue));
 	}
 	
 	@Override
-	public Integer GetValue()
+	public Integer getValue()
 	{
-		return Value;
+		return value;
 	}
 
 	@Override
-	public AttributeSlider GetSlider(OverlayControl parent)
+	public AttributeSlider getSlider(OverlayControl parent)
 	{
-		_slider = new IntegerAttributeSlider(parent, Name, Value, Maximum, UseMaxX);
-		return _slider;
+		slider = new IntegerAttributeSlider(parent, name, value, maximum, useMaxX);
+		return slider;
 	}
 
 	@Override
-	public Attribute Clone()
+	public Attribute clone()
 	{
-		return new IntegerAttribute(Name, Value, Maximum, UseMaxX);
+		return new IntegerAttribute(name, value, maximum, useMaxX);
 	}
 
 	@Override
-	public String ExportAsString()
+	public String exportAsString()
 	{
-		return String.format("%d", Value);
+		return String.format("%d", value);
 	}
 }

@@ -2,7 +2,7 @@ package flagmaker.Extensions;
 
 public class StringExtensions
 {
-	public static String GetFilenameWithoutExtension(String fname)
+	public static String getFilenameWithoutExtension(String fname)
 	{
 		int period = fname.lastIndexOf(".");
 		int slash = Math.max(fname.lastIndexOf("/"), fname.lastIndexOf("\\"));
@@ -17,7 +17,7 @@ public class StringExtensions
 		return fname;
 	}
 	
-	public static String GetFilenameExtension(String fname)
+	public static String getFilenameExtension(String fname)
 	{
 		int period = fname.lastIndexOf(".");
 		if (period > 0)
@@ -27,12 +27,12 @@ public class StringExtensions
 		return "";
 	}
 
-	public static boolean IsNullOrWhitespace(String s)
+	public static boolean isNullOrWhitespace(String s)
 	{
-		return s == null || IsWhitespace(s);
+		return s == null || isWhitespace(s);
 	}
 
-	private static boolean IsWhitespace(String s)
+	private static boolean isWhitespace(String s)
 	{
 		int length = s.length();
 		if (length > 0)

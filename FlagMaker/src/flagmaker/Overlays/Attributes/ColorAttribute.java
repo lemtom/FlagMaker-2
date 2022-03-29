@@ -8,54 +8,54 @@ import javafx.scene.paint.Color;
 
 public class ColorAttribute extends Attribute
 {
-	public Color Value;
+	public Color value;
 	
-	private ColorAttributeSlider _slider;
+	private ColorAttributeSlider slider;
 	
 	public ColorAttribute(String name, Color initialValue)
 	{
 		super(name);
-		Value = initialValue;
+		value = initialValue;
 	}
 	
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object newValue)
 	{
-		Value = (Color)value;
-		if (_slider != null)
+		value = (Color)newValue;
+		if (slider != null)
 		{
-			_slider.SetValue(Value);
+			slider.setValue(value);
 		}
 	}
 
 	@Override
-	public void SetValue(String value)
+	public void setValue(String newValue)
 	{
-		SetValue(ColorExtensions.ParseColor(value));
+		setValue(ColorExtensions.parseColor(newValue));
 	}
 	
 	@Override
-	public Color GetValue()
+	public Color getValue()
 	{
-		return Value;
+		return value;
 	}
 
 	@Override
-	public AttributeSlider GetSlider(OverlayControl parent)
+	public AttributeSlider getSlider(OverlayControl parent)
 	{
-		_slider = new ColorAttributeSlider(parent, Name, Value);
-		return _slider;
+		slider = new ColorAttributeSlider(parent, name, value);
+		return slider;
 	}
 
 	@Override
-	public Attribute Clone()
+	public Attribute clone()
 	{
-		return new ColorAttribute(Name, Value);
+		return new ColorAttribute(name, value);
 	}
 
 	@Override
-	public String ExportAsString()
+	public String exportAsString()
 	{
-		return ColorExtensions.ToHexString(Value, true);
+		return ColorExtensions.toHexString(value, true);
 	}
 }

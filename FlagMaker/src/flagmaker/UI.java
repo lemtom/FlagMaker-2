@@ -20,7 +20,7 @@ public class UI extends Application
 				Object controller = type.newInstance();
 				if (controller instanceof MainWindowController)
 				{
-					((MainWindowController) controller).SetPrimaryStage(stage);
+					((MainWindowController) controller).setPrimaryStage(stage);
 				}
 				return controller;
 			}

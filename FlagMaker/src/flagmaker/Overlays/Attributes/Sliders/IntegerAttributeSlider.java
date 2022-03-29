@@ -20,14 +20,14 @@ public class IntegerAttributeSlider extends NumericAttributeSlider
 	@FXML private TextField txtValue;
 	@FXML private Slider slider;
 	
-	private int _oldValue;
+	private int oldValue;
 		
 	public IntegerAttributeSlider(OverlayControl parent, String name, int value, int maximum, boolean useMaxX)
 	{
 		super(parent, name, useMaxX);
-		Load();
+		load();
 		
-		String label = LocalizationHandler.Get(name);
+		String label = LocalizationHandler.get(name);
 		lblName.setText(label);
 		lblName.setTooltip(new Tooltip(label));
 		lblValue.setText(String.format("%d", (int)value));
@@ -35,59 +35,59 @@ public class IntegerAttributeSlider extends NumericAttributeSlider
 		slider.setValue(value);
 		slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (TriggeredByUser && !oldval.equals(newval)) SliderValueChanged();
-			TriggeredByUser = true;
+			if (triggeredByUser && !oldval.equals(newval)) sliderValueChanged();
+			triggeredByUser = true;
 		});
-		ControlExtensions.HideControl(txtValue);
-		txtValue.setOnKeyPressed((KeyEvent event) -> TxtValueKeyDown(event));
+		ControlExtensions.hideControl(txtValue);
+		txtValue.setOnKeyPressed((KeyEvent event) -> txtValueKeyDown(event));
 		txtValue.focusedProperty().addListener((arg0, oldval, newval) ->
 		{
 			if (oldval && !newval)
 			{
-				HideTxtValue();
+				hideTxtValue();
 			}
 		});
 	}
 	
 	@Override
-	public int GetMaximum()
+	public int getMaximum()
 	{
 		return (int)slider.getMax();
 	}
 	
 	@Override
-	public void SetMaximum(int value)
+	public void setMaximum(int value)
 	{
 		slider.setMax(value);
 	}
 	
 	@Override
-	public Integer GetValue()
+	public Integer getValue()
 	{
 		return (int)slider.getValue();
 	}
 	
-	public void SetValue(int value)
+	public void setValue(int value)
 	{
-		TriggeredByUser = false;
+		triggeredByUser = false;
 		slider.setValue(value);
-		SliderValueChanged();
-		TriggeredByUser = true;
+		sliderValueChanged();
+		triggeredByUser = true;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object value)
 	{
-		SetValue((int)value);
+		setValue((int)value);
 	}
 	
-	private void SliderValueChanged()
+	private void sliderValueChanged()
 	{
 		lblValue.setText(String.format("%d", (int)slider.getValue()));
-		ValueChanged();
+		valueChanged();
 	}
 
-	private void Load()
+	private void load()
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("IntegerAttributeSlider.fxml"));
 		loader.setRoot(this);
@@ -104,24 +104,24 @@ public class IntegerAttributeSlider extends NumericAttributeSlider
 	}
 	
 	@FXML
-	private void Clicked()
+	private void clicked()
 	{
-		ControlExtensions.HideControl(lblValue);
-		ControlExtensions.ShowControl(txtValue);
-		_oldValue = (int)slider.getValue();
+		ControlExtensions.hideControl(lblValue);
+		ControlExtensions.showControl(txtValue);
+		oldValue = (int)slider.getValue();
 		txtValue.setText(Integer.toString((int)slider.getValue()));
 		txtValue.selectAll();
 		txtValue.requestFocus();
 	}
 	
 	@FXML
-	private void TxtValueKeyDown(KeyEvent e)
+	private void txtValueKeyDown(KeyEvent e)
 	{
 		KeyCode k = e.getCode();
 		switch (k)
 		{
 			case ENTER:
-				HideTxtValue();
+				hideTxtValue();
 				try
 				{
 					slider.setValue(Integer.parseInt(txtValue.getText()));
@@ -131,8 +131,8 @@ public class IntegerAttributeSlider extends NumericAttributeSlider
 				}
 				break;
 			case ESCAPE:
-				slider.setValue(_oldValue);
-				HideTxtValue();
+				slider.setValue(oldValue);
+				hideTxtValue();
 				break;
 			case DOWN:
 			case UP:
@@ -154,9 +154,9 @@ public class IntegerAttributeSlider extends NumericAttributeSlider
 		}
 	}
 	
-	private void HideTxtValue()
+	private void hideTxtValue()
 	{
-		ControlExtensions.HideControl(txtValue);
-		ControlExtensions.ShowControl(lblValue);
+		ControlExtensions.hideControl(txtValue);
+		ControlExtensions.showControl(lblValue);
 	}
 }

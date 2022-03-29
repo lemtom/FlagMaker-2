@@ -4,12 +4,12 @@ import javafx.scene.paint.Color;
 
 public class NamedColor
 {
-	public final Color Color;
-	public final String Name;
+	public final Color color;
+	public final String name;
 	
 	public NamedColor(Color color, String name)
 	{
-		Color = color;
-		Name = name;
+		this.color = color;
+		this.name = name;
 	}
 }

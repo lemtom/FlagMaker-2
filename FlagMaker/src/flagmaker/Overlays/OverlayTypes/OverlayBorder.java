@@ -32,7 +32,7 @@ public class OverlayBorder extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		return new Shape[]
 		{
@@ -53,9 +53,9 @@ public class OverlayBorder extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double thickness = canvas.getWidth() * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
+		double thickness = canvas.getWidth() * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
 		// Prevent the border from overlapping itself
 		if (canvas.getWidth() - thickness * 2 < 0)
@@ -80,16 +80,16 @@ public class OverlayBorder extends Overlay
 			new LineTo(canvas.getWidth() - thickness, thickness),
 			new LineTo(thickness, thickness)
 		});
-		path.setFill(GetColorAttribute("Color"));
+		path.setFill(getColorAttribute("Color"));
 		path.setStrokeWidth(0);
 
 		canvas.getChildren().add(path);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double thickness = width * (GetDoubleAttribute("Thickness") / MaximumX) / 2;
+		double thickness = width * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
 		// Prevent the border from overlapping itself
 		if (width - thickness * 2 < 0)
@@ -106,6 +106,6 @@ public class OverlayBorder extends Overlay
 			thickness,
 			width - thickness,
 			height - thickness,
-			ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+			ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

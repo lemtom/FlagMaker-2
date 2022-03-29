@@ -6,54 +6,54 @@ import flagmaker.Overlays.OverlayControl;
 
 public class BooleanAttribute extends Attribute<Boolean>
 {
-	public boolean Value;
+	public boolean value;
 	
-	private BooleanAttributeSlider _slider;
+	private BooleanAttributeSlider slider;
 	
 	public BooleanAttribute(String name, boolean initialValue)
 	{
 		super(name);
-		Value = initialValue;
+		value = initialValue;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object newValue)
 	{
-		Value = (boolean)value;
-		if (_slider != null)
+		value = (boolean)newValue;
+		if (slider != null)
 		{
-			_slider.SetValue(Value);
+			slider.setValue(value);
 		}
 	}
 
 	@Override
-	public void SetValue(String value)
+	public void setValue(String newValue)
 	{
-		SetValue(Boolean.parseBoolean(value));
+		setValue(Boolean.parseBoolean(newValue));
 	}
 	
 	@Override
-	public Boolean GetValue()
+	public Boolean getValue()
 	{
-		return Value;
+		return value;
 	}
 
 	@Override
-	public AttributeSlider GetSlider(OverlayControl parent)
+	public AttributeSlider getSlider(OverlayControl parent)
 	{
-		_slider = new BooleanAttributeSlider(parent, Name, Value);
-		return _slider;
+		slider = new BooleanAttributeSlider(parent, name, value);
+		return slider;
 	}
 
 	@Override
-	public Attribute Clone()
+	public Attribute clone()
 	{
-		return new BooleanAttribute(Name, Value);
+		return new BooleanAttribute(name, value);
 	}
 
 	@Override
-	public String ExportAsString()
+	public String exportAsString()
 	{
-		return Value ? "true" : "false";
+		return value ? "true" : "false";
 	}
 }

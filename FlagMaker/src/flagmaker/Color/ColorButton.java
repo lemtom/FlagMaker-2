@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 public class ColorButton extends VBox
 {
 	@FXML private Rectangle rect;
-	private Color _value;
-	private MainWindowController _mainWindowController;
-	private Stage _stage;
-	private ColorButtonListener _listener;
+	private Color value;
+	private MainWindowController mainWindowController;
+	private Stage stage;
+	private ColorButtonListener listener;
 	
 	public ColorButton()
 	{
@@ -37,51 +37,51 @@ public class ColorButton extends VBox
 		}
 	}
 	
-	public void SetListener(MainWindowController mainWindowController, Stage stage, ColorButtonListener listener)
+	public void setListener(MainWindowController mainWindowController, Stage stage, ColorButtonListener listener)
 	{
-		_mainWindowController = mainWindowController;
-		_stage = stage;
-		_listener = listener;
+		this.mainWindowController = mainWindowController;
+		this.stage = stage;
+		this.listener = listener;
 	}
 	
-	public Color GetValue()
+	public Color getValue()
 	{
-		return _value;
+		return value;
 	}
 	
-	public void SetValue(Color value)
+	public void setValue(Color value)
 	{
-		_value = value;
+		this.value = value;
 		rect.setFill(value);
 	}
 	
-	@FXML private void OnClicked()
+	@FXML private void onClicked()
 	{
-		Color oldval = _value;
+		Color oldval = value;
 		
 		Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.initOwner(_stage);
-		ColorSelector control = new ColorSelector(dialog, _value, new ArrayList<>(Arrays.asList(_mainWindowController.Flag().ColorsUsed())), _mainWindowController.RecentColors);
+		dialog.initOwner(stage);
+		ColorSelector control = new ColorSelector(dialog, value, new ArrayList<>(Arrays.asList(mainWindowController.flag().colorsUsed())), mainWindowController.recentColors);
 		Scene dialogScene = new Scene(control);
 		dialogScene.getStylesheets().add(UI.class.getResource("Style.css").toExternalForm());
 		dialog.setScene(dialogScene);
 		dialog.setResizable(false);
 		dialog.showAndWait();
 		
-		Color c = control.GetSelectedColor();
+		Color c = control.getSelectedColor();
 		if (c != null)
 		{
-			SetValue(c);
+			setValue(c);
 			
-			if (_mainWindowController.RecentColors.contains(c))
+			if (mainWindowController.recentColors.contains(c))
 			{
-				_mainWindowController.RecentColors.removeIf(r -> r.equals(c));
+				mainWindowController.recentColors.removeIf(r -> r.equals(c));
 			}
 			
-			_mainWindowController.RecentColors.add(0, c);
+			mainWindowController.recentColors.add(0, c);
 			
-			_listener.ColorChanged(oldval, _value);
+			listener.colorChanged(oldval, value);
 		}
 	}
 }

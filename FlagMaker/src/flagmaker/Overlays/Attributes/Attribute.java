@@ -5,17 +5,17 @@ import flagmaker.Overlays.OverlayControl;
 
 public abstract class Attribute<T>
 {
-	public String Name;
+	public String name;
 	
 	public Attribute(String name)
 	{
-		Name = name;
+		this.name = name;
 	}
 	
-	public abstract <T> void SetValue(T value);
-	public abstract <T> void SetValue(String value);
-	public abstract <T> T GetValue();
-	public abstract AttributeSlider GetSlider(OverlayControl parent);
-	public abstract Attribute Clone();
-	public abstract String ExportAsString();
+	public abstract <T> void setValue(T value);
+	public abstract <T> void setValue(String value);
+	public abstract <T> T getValue();
+	public abstract AttributeSlider getSlider(OverlayControl parent);
+	public abstract Attribute clone();
+	public abstract String exportAsString();
 }

@@ -4,25 +4,25 @@ import javafx.scene.paint.Color;
 
 public class ColorExtensions
 {
-	public static String ToHexString(Color c, boolean includeOpacity)
+	public static String toHexString(Color c, boolean includeOpacity)
 	{
 		return String.format("%s%s%s%s",
-				includeOpacity && c.getOpacity() < 1.0 ? IntToHex((int) (c.getOpacity() * 255)) : "",
-				IntToHex((int) (c.getRed() * 255)),
-				IntToHex((int) (c.getGreen() * 255)),
-				IntToHex((int) (c.getBlue() * 255)));
+				includeOpacity && c.getOpacity() < 1.0 ? intToHex((int) (c.getOpacity() * 255)) : "",
+				intToHex((int) (c.getRed() * 255)),
+				intToHex((int) (c.getGreen() * 255)),
+				intToHex((int) (c.getBlue() * 255)));
 	}
 
-	public static String ToSvgFillWithOpacity(Color c)
+	public static String toSvgFillWithOpacity(Color c)
 	{
 		return String.format("fill=\"#%s\"%s",
-				ToHexString(c, true),
+				toHexString(c, true),
 				c.getOpacity() < 1.0
 						? String.format(" fill=opacity=\"%s\"", c.getOpacity())
 						: "");
 	}
 	
-	public static Color ParseColor(String str)
+	public static Color parseColor(String str)
 	{
 		double a = 1.0;
 		int r, b, g;
@@ -44,7 +44,7 @@ public class ColorExtensions
 		return Color.rgb(r, g, b, a);
 	}
 
-	private static String IntToHex(int value)
+	private static String intToHex(int value)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(Integer.toHexString(value));

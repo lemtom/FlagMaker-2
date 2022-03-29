@@ -117,58 +117,58 @@ public class MainWindowController implements ColorButtonListener
 	
 	@FXML private Label lblDivisions;
 	
-	private Stage _stage;
-	private SubScene _subScene;
-	private Pane _pane;
+	private Stage stage;
+	private SubScene subScene;
+	private Pane pane;
 
-	private SubScene _gridSubScene;
-	private Pane _gridPane;
+	private SubScene gridSubScene;
+	private Pane gridPane;
 
-	private Division _division;
+	private Division division;
 
-	private boolean _isLoading;
-	private boolean _showGrid;
-	private int _texture;
+	private boolean isLoading;
+	private boolean showGrid;
+	private int texture;
 
-	private String _headerText;
-	private String _filename;
-	private boolean _isUnsaved;
+	private String headerText;
+	private String fileName;
+	private boolean isUnsaved;
 
-	private Ratio _ratio;
+	private Ratio ratio;
 	
-	public ArrayList<Color> RecentColors;
+	public ArrayList<Color> recentColors;
 
 	@FXML
 	protected void initialize()
 	{
-		LoadLocalization();
-		AddWorkspace();
+		loadLocalization();
+		addWorkspace();
 
-		_headerText = String.format(" - %s", CommonExtensions.TitleAndVersionString(getClass()));
+		headerText = String.format(" - %s", CommonExtensions.titleAndVersionString(getClass()));
 
-		SetColorsAndSliders();
-		LoadBasicPresets();
-		LoadFilePresets();
-		HookUpEvents();
-		OverlayFactory.SetUpTypeMap();
-		OverlayFactory.FillCustomOverlays();
-		New();
+		setColorsAndSliders();
+		loadBasicPresets();
+		loadFilePresets();
+		hookUpEvents();
+		OverlayFactory.setUpTypeMap();
+		OverlayFactory.fillCustomOverlays();
+		newFile();
 	}
 
-	public void SetPrimaryStage(Stage stage)
+	public void setPrimaryStage(Stage stage)
 	{
-		_stage = stage;
+		this.stage = stage;
 	}
 	
-	private void LoadLocalization()
+	private void loadLocalization()
 	{
-		LoadLanguageMenu();
+		loadLanguageMenu();
 		
-		LocalizationHandler.Initialize();
-		SetWindowStrings();
+		LocalizationHandler.initialize();
+		setWindowStrings();
 	}
 	
-	private void LoadLanguageMenu()
+	private void loadLanguageMenu()
 	{
 		Locale[] locales = new Locale[]
 		{
@@ -184,259 +184,259 @@ public class MainWindowController implements ColorButtonListener
 			MenuItem item = new MenuItem(locale.getDisplayName());
 			item.addEventHandler(EventType.ROOT, (Event event) ->
 			{
-				LocalizationHandler.SetLanguage(locale);
-				SetWindowStrings();
+				LocalizationHandler.setLanguage(locale);
+				setWindowStrings();
 			});
 			mnuLanguages.getItems().add(item);
 		}
 	}
 
-	private void SetWindowStrings()
+	private void setWindowStrings()
 	{
-		mnuFile.setText(LocalizationHandler.Get("File"));
-		mnuNew.setText(LocalizationHandler.Get("New"));
-		mnuOpen.setText(LocalizationHandler.Get("OpenMenu"));
-		mnuSave.setText(LocalizationHandler.Get("SaveMenu"));
-		mnuSaveAs.setText(LocalizationHandler.Get("SaveAs"));
-		mnuExportPng.setText(LocalizationHandler.Get("ExportAsPngMenu"));
-		mnuExportSvg.setText(LocalizationHandler.Get("ExportAsSvgMenu"));
-		mnuBulkExportPng.setText(LocalizationHandler.Get("ExportBulkAsPng"));
-		mnuBulkExportSvg.setText(LocalizationHandler.Get("ExportBulkAsSvg"));
-		mnuPresets.setText(LocalizationHandler.Get("WorldFlagPresets"));
-		mnuLanguages.setText(LocalizationHandler.Get("Language"));
-		mnuHelp.setText(LocalizationHandler.Get("Help"));
-		mnuAbout.setText(LocalizationHandler.Get("About"));
+		mnuFile.setText(LocalizationHandler.get("File"));
+		mnuNew.setText(LocalizationHandler.get("New"));
+		mnuOpen.setText(LocalizationHandler.get("OpenMenu"));
+		mnuSave.setText(LocalizationHandler.get("SaveMenu"));
+		mnuSaveAs.setText(LocalizationHandler.get("SaveAs"));
+		mnuExportPng.setText(LocalizationHandler.get("ExportAsPngMenu"));
+		mnuExportSvg.setText(LocalizationHandler.get("ExportAsSvgMenu"));
+		mnuBulkExportPng.setText(LocalizationHandler.get("ExportBulkAsPng"));
+		mnuBulkExportSvg.setText(LocalizationHandler.get("ExportBulkAsSvg"));
+		mnuPresets.setText(LocalizationHandler.get("WorldFlagPresets"));
+		mnuLanguages.setText(LocalizationHandler.get("Language"));
+		mnuHelp.setText(LocalizationHandler.get("Help"));
+		mnuAbout.setText(LocalizationHandler.get("About"));
 		
-		lblRatio.setText(LocalizationHandler.Get("Ratio"));
-		lblGridSize.setText(LocalizationHandler.Get("GridSize"));
-		ttpShowGrid.setText(LocalizationHandler.Get("ShowGrid"));
-		ttpShuffleColors.setText(LocalizationHandler.Get("ShuffleColors"));
-		ttpToggleTexture.setText(LocalizationHandler.Get("ToggleTexture"));
-		ttpRandomFlag.setText(LocalizationHandler.Get("GenerateRandomFlag"));
+		lblRatio.setText(LocalizationHandler.get("Ratio"));
+		lblGridSize.setText(LocalizationHandler.get("GridSize"));
+		ttpShowGrid.setText(LocalizationHandler.get("ShowGrid"));
+		ttpShuffleColors.setText(LocalizationHandler.get("ShuffleColors"));
+		ttpToggleTexture.setText(LocalizationHandler.get("ToggleTexture"));
+		ttpRandomFlag.setText(LocalizationHandler.get("GenerateRandomFlag"));
 		
-		lblDivisions.setText(LocalizationHandler.Get("Division"));
-		ttpDivisionGrid.setText(LocalizationHandler.Get("DivisionGrid"));
-		ttpDivisionFesses.setText(LocalizationHandler.Get("DivisionFesses"));
-		ttpDivisionPales.setText(LocalizationHandler.Get("DivisionPales"));
-		ttpDivisionBendsForward.setText(LocalizationHandler.Get("DivisionBendsForward"));
-		ttpDivisionBendsBackward.setText(LocalizationHandler.Get("DivisionBendsBackward"));
-		ttpDivisionBendsBoth.setText(LocalizationHandler.Get("DivisionBendsBoth"));
-		lblPresets.setText(LocalizationHandler.Get("DivisionPresets"));
+		lblDivisions.setText(LocalizationHandler.get("Division"));
+		ttpDivisionGrid.setText(LocalizationHandler.get("DivisionGrid"));
+		ttpDivisionFesses.setText(LocalizationHandler.get("DivisionFesses"));
+		ttpDivisionPales.setText(LocalizationHandler.get("DivisionPales"));
+		ttpDivisionBendsForward.setText(LocalizationHandler.get("DivisionBendsForward"));
+		ttpDivisionBendsBackward.setText(LocalizationHandler.get("DivisionBendsBackward"));
+		ttpDivisionBendsBoth.setText(LocalizationHandler.get("DivisionBendsBoth"));
+		lblPresets.setText(LocalizationHandler.get("DivisionPresets"));
 				
-		lblOverlays.setText(LocalizationHandler.Get("Overlays"));
-		ttpOverlayAddNew.setText(LocalizationHandler.Get("OverlayAdd"));
-		ttpOverlaysExpandAll.setText(LocalizationHandler.Get("ExpandAll"));
-		ttpOverlaysCollapseAll.setText(LocalizationHandler.Get("CollapseAll"));
-		LoadBasicPresets();
+		lblOverlays.setText(LocalizationHandler.get("Overlays"));
+		ttpOverlayAddNew.setText(LocalizationHandler.get("OverlayAdd"));
+		ttpOverlaysExpandAll.setText(LocalizationHandler.get("ExpandAll"));
+		ttpOverlaysCollapseAll.setText(LocalizationHandler.get("CollapseAll"));
+		loadBasicPresets();
 	}
 	
-	private void AddWorkspace()
+	private void addWorkspace()
 	{
-		_pane = new Pane();
-		_subScene = new SubScene(leftAnchor, 300, 200);
-		_subScene.setRoot(_pane);
-		leftStack.getChildren().add(_subScene);
+		pane = new Pane();
+		subScene = new SubScene(leftAnchor, 300, 200);
+		subScene.setRoot(pane);
+		leftStack.getChildren().add(subScene);
 
-		_gridPane = new Pane();
-		_gridPane.setBackground(Background.EMPTY);
-		_gridSubScene = new SubScene(leftAnchor, 300, 200);
-		_gridSubScene.setRoot(_gridPane);
-		leftStack.getChildren().add(_gridSubScene);
+		gridPane = new Pane();
+		gridPane.setBackground(Background.EMPTY);
+		gridSubScene = new SubScene(leftAnchor, 300, 200);
+		gridSubScene.setRoot(gridPane);
+		leftStack.getChildren().add(gridSubScene);
 
 		// Draw whenever the left side changes size
 		leftStack.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) ->
 		{
-			if (!_isLoading && !oldValue.equals(newValue)) Draw();
+			if (!isLoading && !oldValue.equals(newValue)) draw();
 		});
 		cmbRatio.valueProperty().addListener(new ChangeListener<String>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				if (!_isLoading) GridSizeDropdownChanged();
+				if (!isLoading) gridSizeDropdownChanged();
 			}
 		});
 
-		_ratio = new Ratio(2, 3);
-		_subScene.widthProperty().bind(Bindings.createDoubleBinding(() -> leftStack.getWidth() - 10, leftStack.widthProperty(), leftStack.heightProperty()));
-		_subScene.heightProperty().bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * _ratio.Height / _ratio.Width,
+		ratio = new Ratio(2, 3);
+		subScene.widthProperty().bind(Bindings.createDoubleBinding(() -> leftStack.getWidth() - 10, leftStack.widthProperty(), leftStack.heightProperty()));
+		subScene.heightProperty().bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * ratio.height / ratio.width,
 				leftStack.widthProperty(), leftStack.heightProperty(), txtRatioHeight.textProperty(), txtRatioWidth.textProperty()));
-		_gridSubScene.widthProperty().bind(Bindings.createDoubleBinding(() -> leftStack.getWidth() - 10, leftStack.widthProperty(), leftStack.heightProperty()));
-		_gridSubScene.heightProperty().bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * _ratio.Height / _ratio.Width,
+		gridSubScene.widthProperty().bind(Bindings.createDoubleBinding(() -> leftStack.getWidth() - 10, leftStack.widthProperty(), leftStack.heightProperty()));
+		gridSubScene.heightProperty().bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * ratio.height / ratio.width,
 				leftStack.widthProperty(), leftStack.heightProperty(), txtRatioHeight.textProperty(), txtRatioWidth.textProperty()));
 	}
 	
-	private void HookUpEvents()
+	private void hookUpEvents()
 	{
 		txtRatioHeight.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!_isLoading && !newValue.equals(oldValue)) RatioTextboxChanged();
+			if (!isLoading && !newValue.equals(oldValue)) ratioTextboxChanged();
 		});
 		txtRatioWidth.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!_isLoading && !newValue.equals(oldValue)) RatioTextboxChanged();
+			if (!isLoading && !newValue.equals(oldValue)) ratioTextboxChanged();
 		});
 		
 		txtName.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!_isLoading && !newValue.equals(oldValue)) SetAsUnsaved();
+			if (!isLoading && !newValue.equals(oldValue)) setAsUnsaved();
 		});
 		
-		_stage.setOnCloseRequest(event -> OnClosing(event));
+		stage.setOnCloseRequest(event -> onClosing(event));
 	}
 
-	private void SetTitle()
+	private void setTitle()
 	{
 		String title = String.format("%s%s%s",
-				StringExtensions.IsNullOrWhitespace(_filename)
-						? LocalizationHandler.Get("Untitled")
-						: StringExtensions.GetFilenameWithoutExtension(_filename),
-				_isUnsaved ? "*" : "",
-				_headerText);
-		_stage.setTitle(title);
+				StringExtensions.isNullOrWhitespace(fileName)
+						? LocalizationHandler.get("Untitled")
+						: StringExtensions.getFilenameWithoutExtension(fileName),
+				isUnsaved ? "*" : "",
+				headerText);
+		stage.setTitle(title);
 	}
 
 	// Division
 	@Override
-	public void ColorChanged(Color oldval, Color newval)
+	public void colorChanged(Color oldval, Color newval)
 	{
 		if (!oldval.equals(newval))
 		{
-			DivisionColorChanged();
+			divisionColorChanged();
 		}
 	}
 	
-	private void DivisionColorChanged()
+	private void divisionColorChanged()
 	{
-		if (_isLoading) return;
+		if (isLoading) return;
 
-		_division.SetColors(new Color[]
+		division.setColors(new Color[]
 		{
-			divisionPicker1.GetValue(),
-			divisionPicker2.GetValue(),
-			divisionPicker3.GetValue()
+			divisionPicker1.getValue(),
+			divisionPicker2.getValue(),
+			divisionPicker3.getValue()
 		});
-		Draw();
-		SetAsUnsaved();
+		draw();
+		setAsUnsaved();
 	}
 
-	private void DivisionSliderChanged()
+	private void divisionSliderChanged()
 	{
-		if (_isLoading) return;
+		if (isLoading) return;
 		
 		divisionLabel1.setText(String.format("%d", divisionSlider1.valueProperty().intValue()));
 		divisionLabel2.setText(String.format("%d", divisionSlider2.valueProperty().intValue()));
 		divisionLabel3.setText(String.format("%d", divisionSlider3.valueProperty().intValue()));
-		_division.SetValues(new int[]
+		division.setValues(new int[]
 		{
 			divisionSlider1.valueProperty().intValue(), divisionSlider2.valueProperty().intValue(), divisionSlider3.valueProperty().intValue()
 		});
-		Draw();
-		SetAsUnsaved();
+		draw();
+		setAsUnsaved();
 	}
 
-	private void SetDivisionVisibility()
+	private void setDivisionVisibility()
 	{
-		divisionPicker1.SetValue(_division.Colors[0]);
-		divisionPicker2.SetValue(_division.Colors[1]);
+		divisionPicker1.setValue(division.colors[0]);
+		divisionPicker2.setValue(division.colors[1]);
 
-		if (_division.Colors.length > 2)
+		if (division.colors.length > 2)
 		{
-			divisionPicker3.SetValue(_division.Colors[2]);
-			ControlExtensions.ShowControl(divisionPicker3);
+			divisionPicker3.setValue(division.colors[2]);
+			ControlExtensions.showControl(divisionPicker3);
 		}
 		else
 		{
-			ControlExtensions.HideControl(divisionPicker3);
+			ControlExtensions.hideControl(divisionPicker3);
 		}
 
-		ControlExtensions.HideControl(divisionSlider1);
-		ControlExtensions.HideControl(divisionSlider2);
-		ControlExtensions.HideControl(divisionSlider3);
-		ControlExtensions.HideControl(divisionLabel1);
-		ControlExtensions.HideControl(divisionLabel2);
-		ControlExtensions.HideControl(divisionLabel3);
+		ControlExtensions.hideControl(divisionSlider1);
+		ControlExtensions.hideControl(divisionSlider2);
+		ControlExtensions.hideControl(divisionSlider3);
+		ControlExtensions.hideControl(divisionLabel1);
+		ControlExtensions.hideControl(divisionLabel2);
+		ControlExtensions.hideControl(divisionLabel3);
 
-		if (_division.Values.length <= 0) return;
-		divisionSlider1.setValue(_division.Values[0]);
-		ControlExtensions.ShowControl(divisionSlider1);
-		divisionLabel1.setText(String.format("%d", _division.Values[0]));
-		ControlExtensions.ShowControl(divisionLabel1);
+		if (division.values.length <= 0) return;
+		divisionSlider1.setValue(division.values[0]);
+		ControlExtensions.showControl(divisionSlider1);
+		divisionLabel1.setText(String.format("%d", division.values[0]));
+		ControlExtensions.showControl(divisionLabel1);
 
-		if (_division.Values.length <= 1) return;
-		divisionSlider2.setValue(_division.Values[1]);
-		ControlExtensions.ShowControl(divisionSlider2);
-		divisionLabel2.setText(String.format("%d", _division.Values[1]));
-		ControlExtensions.ShowControl(divisionLabel2);
+		if (division.values.length <= 1) return;
+		divisionSlider2.setValue(division.values[1]);
+		ControlExtensions.showControl(divisionSlider2);
+		divisionLabel2.setText(String.format("%d", division.values[1]));
+		ControlExtensions.showControl(divisionLabel2);
 
-		if (_division.Values.length <= 2) return;
-		divisionSlider3.setValue(_division.Values[2]);
-		ControlExtensions.ShowControl(divisionSlider3);
-		divisionLabel3.setText(String.format("%d", _division.Values[2]));
-		ControlExtensions.ShowControl(divisionLabel3);
+		if (division.values.length <= 2) return;
+		divisionSlider3.setValue(division.values[2]);
+		ControlExtensions.showControl(divisionSlider3);
+		divisionLabel3.setText(String.format("%d", division.values[2]));
+		ControlExtensions.showControl(divisionLabel3);
 	}
 
-	@FXML private void DivisionGridClick()
+	@FXML private void divisionGridClick()
 	{
-		_division = new DivisionGrid(divisionPicker1.GetValue(), divisionPicker2.GetValue(), divisionSlider1.valueProperty().intValue(), divisionSlider2.valueProperty().intValue());
-		SetDivisionVisibility();
-		Draw();
-		SetAsUnsaved();
+		division = new DivisionGrid(divisionPicker1.getValue(), divisionPicker2.getValue(), divisionSlider1.valueProperty().intValue(), divisionSlider2.valueProperty().intValue());
+		setDivisionVisibility();
+		draw();
+		setAsUnsaved();
 	}
 
-	@FXML private void DivisionFessesClick()
+	@FXML private void divisionFessesClick()
 	{
-		_division = new DivisionFesses(divisionPicker1.GetValue(), divisionPicker2.GetValue(), divisionPicker3.GetValue(),
+		division = new DivisionFesses(divisionPicker1.getValue(), divisionPicker2.getValue(), divisionPicker3.getValue(),
 				divisionSlider1.valueProperty().intValue(), divisionSlider2.valueProperty().intValue(), divisionSlider3.valueProperty().intValue());
-		SetDivisionVisibility();
-		Draw();
-		SetAsUnsaved();
+		setDivisionVisibility();
+		draw();
+		setAsUnsaved();
 	}
 
-	@FXML private void DivisionPalesClick()
+	@FXML private void divisionPalesClick()
 	{
-		_division = new DivisionPales(divisionPicker1.GetValue(), divisionPicker2.GetValue(), divisionPicker3.GetValue(),
+		division = new DivisionPales(divisionPicker1.getValue(), divisionPicker2.getValue(), divisionPicker3.getValue(),
 				divisionSlider1.valueProperty().intValue(), divisionSlider2.valueProperty().intValue(), divisionSlider3.valueProperty().intValue());
-		SetDivisionVisibility();
-		Draw();
-		SetAsUnsaved();
+		setDivisionVisibility();
+		draw();
+		setAsUnsaved();
 	}
 
-	@FXML private void DivisionBendsForwardClick()
+	@FXML private void divisionBendsForwardClick()
 	{
-		_division = new DivisionBendsForward(divisionPicker1.GetValue(), divisionPicker2.GetValue());
-		SetDivisionVisibility();
-		Draw();
-		SetAsUnsaved();
+		division = new DivisionBendsForward(divisionPicker1.getValue(), divisionPicker2.getValue());
+		setDivisionVisibility();
+		draw();
+		setAsUnsaved();
 	}
 
-	@FXML private void DivisionBendsBackwardClick()
+	@FXML private void divisionBendsBackwardClick()
 	{
-		_division = new DivisionBendsBackward(divisionPicker1.GetValue(), divisionPicker2.GetValue());
-		SetDivisionVisibility();
-		Draw();
-		SetAsUnsaved();
+		division = new DivisionBendsBackward(divisionPicker1.getValue(), divisionPicker2.getValue());
+		setDivisionVisibility();
+		draw();
+		setAsUnsaved();
 	}
 
-	@FXML private void DivisionXClick()
+	@FXML private void divisionXClick()
 	{
-		_division = new DivisionX(divisionPicker1.GetValue(), divisionPicker2.GetValue());
-		SetDivisionVisibility();
-		Draw();
-		SetAsUnsaved();
+		division = new DivisionX(divisionPicker1.getValue(), divisionPicker2.getValue());
+		setDivisionVisibility();
+		draw();
+		setAsUnsaved();
 	}
 
 	// Overlays
-	@FXML private void OverlayAdd()
+	@FXML private void overlayAdd()
 	{
-		OverlayAdd(lstOverlays.getChildren().size(), null, false);
+		overlayAdd(lstOverlays.getChildren().size(), null, false);
 	}
 
-	public void Remove(OverlayControl overlayControl)
+	public void remove(OverlayControl overlayControl)
 	{
 		lstOverlays.getChildren().remove(overlayControl);
-		Draw();
-		SetAsUnsaved();
+		draw();
+		setAsUnsaved();
 	}
 
-	public void MoveUp(OverlayControl overlayControl)
+	public void moveUp(OverlayControl overlayControl)
 	{
 		int index = lstOverlays.getChildren().indexOf(overlayControl);
 		if (index == 0) return;
@@ -462,11 +462,11 @@ public class MainWindowController implements ColorButtonListener
 			lstOverlays.getChildren().add(control);
 		}
 
-		Draw();
-		SetAsUnsaved();
+		draw();
+		setAsUnsaved();
 	}
 
-	public void MoveDown(OverlayControl overlayControl)
+	public void moveDown(OverlayControl overlayControl)
 	{
 		int index = lstOverlays.getChildren().indexOf(overlayControl);
 		if (index == lstOverlays.getChildren().size() - 1) return;
@@ -492,115 +492,115 @@ public class MainWindowController implements ColorButtonListener
 			lstOverlays.getChildren().add(control);
 		}
 
-		Draw();
-		SetAsUnsaved();
+		draw();
+		setAsUnsaved();
 	}
 
-	public void Clone(OverlayControl controlToClone)
+	public void clone(OverlayControl controlToClone)
 	{
 		int index = lstOverlays.getChildren().indexOf(controlToClone);
-		Overlay original = controlToClone.GetOverlay();
+		Overlay original = controlToClone.getOverlay();
 		Class type = original.getClass();
-		Overlay copy = OverlayFactory.GetInstanceByLongName(type.getName(), 1, 1);
+		Overlay copy = OverlayFactory.getInstanceByLongName(type.getName(), 1, 1);
 
-		for (int i = 0; i < original.Attributes.length; i++)
+		for (int i = 0; i < original.attributes.length; i++)
 		{
-			copy.Attributes[i] = original.Attributes[i].Clone();
+			copy.attributes[i] = original.attributes[i].clone();
 		}
 
 		if (type.isAssignableFrom(OverlayFlag.class))
 		{
-			((OverlayFlag) copy).Flag = ((OverlayFlag) original).Flag;
+			((OverlayFlag) copy).flag = ((OverlayFlag) original).flag;
 		}
 
-		Ratio gridSize = SelectedGridSize();
-		copy.SetMaximum(gridSize.Width, gridSize.Height);
+		Ratio gridSize = selectedGridSize();
+		copy.setMaximum(gridSize.width, gridSize.height);
 
-		OverlayAdd(index + 1, copy, true);
+		overlayAdd(index + 1, copy, true);
 	}
 
-	private void OverlayAdd(int index, Overlay overlay, boolean isLoading)
+	private void overlayAdd(int index, Overlay overlay, boolean isLoading)
 	{
-		Ratio gridSize = SelectedGridSize();
-		OverlayControl control = new OverlayControl(_stage, this, gridSize.Width, gridSize.Height, isLoading);
+		Ratio gridSize = selectedGridSize();
+		OverlayControl control = new OverlayControl(stage, this, gridSize.width, gridSize.height, isLoading);
 
-		if (control.WasCanceled)
+		if (control.wasCanceled)
 		{
 			return;
 		}
 
 		if (overlay != null)
 		{
-			control.SetOverlay(overlay);
+			control.setOverlay(overlay);
 		}
 
 		lstOverlays.getChildren().add(control);
 
 		if (!isLoading)
 		{
-			Draw();
-			SetAsUnsaved();
+			draw();
+			setAsUnsaved();
 		}
 	}
 
-	@FXML private void OverlaysExpandAll()
+	@FXML private void overlaysExpandAll()
 	{
 		for (OverlayControl overlay : (List<OverlayControl>)(List<?>)lstOverlays.getChildren())
 		{
-			overlay.Expand();
+			overlay.expand();
 		}
 	}
 	
-	@FXML private void OverlaysCollapseAll()
+	@FXML private void overlaysCollapseAll()
 	{
 		for (OverlayControl overlay : (List<OverlayControl>)(List<?>)lstOverlays.getChildren())
 		{
-			overlay.Collapse();
+			overlay.collapse();
 		}
 	}
 	
 	// Colors
-	private void SetColorsAndSliders()
+	private void setColorsAndSliders()
 	{
-		SetDefaultColors();
+		setDefaultColors();
 		
-		RecentColors = new ArrayList<Color>();
-		divisionPicker1.SetListener(this, _stage, this);
-		divisionPicker2.SetListener(this, _stage, this);
-		divisionPicker3.SetListener(this, _stage, this);
+		recentColors = new ArrayList<Color>();
+		divisionPicker1.setListener(this, stage, this);
+		divisionPicker2.setListener(this, stage, this);
+		divisionPicker3.setListener(this, stage, this);
 
 		divisionSlider1.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (!oldval.equals(newval)) DivisionSliderChanged();
+			if (!oldval.equals(newval)) divisionSliderChanged();
 		});
 		divisionSlider2.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (!oldval.equals(newval)) DivisionSliderChanged();
+			if (!oldval.equals(newval)) divisionSliderChanged();
 		});
 		divisionSlider3.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (!oldval.equals(newval)) DivisionSliderChanged();
+			if (!oldval.equals(newval)) divisionSliderChanged();
 		});
 	}
 
-	private void SetDefaultColors()
+	private void setDefaultColors()
 	{
-		divisionPicker1.SetValue(Color.rgb(198, 12, 48));
-		divisionPicker2.SetValue(Color.rgb(253, 200, 47));
-		divisionPicker3.SetValue(Color.rgb(0, 38, 100));
+		divisionPicker1.setValue(Color.rgb(198, 12, 48));
+		divisionPicker2.setValue(Color.rgb(253, 200, 47));
+		divisionPicker3.setValue(Color.rgb(0, 38, 100));
 	}
 
 	@FXML
-	private void ShuffleColors()
+	private void shuffleColors()
 	{
-		Flag f = Flag();
-		f.ShuffleColors();
-		LoadFlag(f);
-		SetAsUnsaved();
+		Flag f = flag();
+		f.shuffleColors();
+		loadFlag(f);
+		setAsUnsaved();
 	}
 
 	// Grid
-	private Ratio SelectedGridSize()
+	private Ratio selectedGridSize()
 	{
 		String value = (String) cmbRatio.getValue();
 		return value == null
@@ -608,25 +608,25 @@ public class MainWindowController implements ColorButtonListener
 			: new Ratio(value);
 	}
 
-	private void SetRatio(int width, int height)
+	private void setRatio(int width, int height)
 	{
 		txtRatioHeight.setText(height + "");
 		txtRatioWidth.setText(width + "");
-		_ratio = new Ratio(width, height);
-		FillGridCombobox();
+		ratio = new Ratio(width, height);
+		fillGridCombobox();
 	}
 
 	@FXML
-	private void GridOnChanged()
+	private void gridOnChanged()
 	{
-		_showGrid = !_showGrid;
-		DrawGrid();
+		showGrid = !showGrid;
+		drawGrid();
 	}
 
-	private void DrawGrid()
+	private void drawGrid()
 	{
-		_gridPane.getChildren().clear();
-		if (!_showGrid)
+		gridPane.getChildren().clear();
+		if (!showGrid)
 		{
 			return;
 		}
@@ -635,70 +635,70 @@ public class MainWindowController implements ColorButtonListener
 			return;
 		}
 
-		Ratio gridSize = SelectedGridSize();
-		double intervalX = _gridPane.getWidth() / gridSize.Width;
-		double intervalY = _gridPane.getHeight() / gridSize.Height;
+		Ratio gridSize = selectedGridSize();
+		double intervalX = gridPane.getWidth() / gridSize.width;
+		double intervalY = gridPane.getHeight() / gridSize.height;
 
-		for (int x = 0; x <= gridSize.Width; x++)
+		for (int x = 0; x <= gridSize.width; x++)
 		{
-			Line line = new Line(x * intervalX, 0, x * intervalX, _gridPane.getHeight());
+			Line line = new Line(x * intervalX, 0, x * intervalX, gridPane.getHeight());
 			line.setStrokeWidth(5);
 			line.setStroke(Color.SILVER);
-			_gridPane.getChildren().add(line);
+			gridPane.getChildren().add(line);
 		}
 		
-		for (int y = 0; y <= gridSize.Height; y++)
+		for (int y = 0; y <= gridSize.height; y++)
 		{
-			Line line = new Line(0, y * intervalY, _gridPane.getWidth(), y * intervalX);
+			Line line = new Line(0, y * intervalY, gridPane.getWidth(), y * intervalX);
 			line.setStrokeWidth(5);
 			line.setStroke(Color.SILVER);
-			_gridPane.getChildren().add(line);
+			gridPane.getChildren().add(line);
 		}
 	}
 
-	private void FillGridCombobox()
+	private void fillGridCombobox()
 	{
 		cmbRatio.getItems().clear();
 		for (int i = 1; i <= 20; i++)
 		{
-			int h = i * _ratio.Height;
-			int w = i * _ratio.Width;
+			int h = i * ratio.height;
+			int w = i * ratio.width;
 			cmbRatio.getItems().add(h + ":" + w);
 		}
 		cmbRatio.getSelectionModel().select(0);
 	}
 
 	@FXML
-	public void RatioTextboxChanged()
+	public void ratioTextboxChanged()
 	{
 		String sheight = txtRatioHeight.getText();
 		String swidth = txtRatioWidth.getText();
 
-		int height = CanParseInt(sheight)
+		int height = canParseInt(sheight)
 				? Integer.parseInt(sheight)
 				: 1;
-		int width = CanParseInt(swidth)
+		int width = canParseInt(swidth)
 				? Integer.parseInt(swidth)
 				: 1;
 
-		_ratio = new Ratio(width, height);
+		ratio = new Ratio(width, height);
 		leftStack.autosize();
 
-		if (!_isLoading)
+		if (!isLoading)
 		{
-			Draw();
-			SetAsUnsaved();
+			draw();
+			setAsUnsaved();
 		}
 
-		FillGridCombobox();
+		fillGridCombobox();
 	}
 
 	@FXML
-	private void GridSizeDropdownChanged()
+	private void gridSizeDropdownChanged()
 	{
 		if (cmbRatio.getItems().size() == 0) return;
-		Ratio gridSize = SelectedGridSize();
-		int sliderMax = Math.max(gridSize.Width, gridSize.Height);
+		Ratio gridSize = selectedGridSize();
+		int sliderMax = Math.max(gridSize.width, gridSize.height);
 
 		divisionSlider1.setMax(sliderMax);
 		divisionSlider2.setMax(sliderMax);
@@ -706,37 +706,37 @@ public class MainWindowController implements ColorButtonListener
 
 		for (OverlayControl overlay : (List<OverlayControl>)(List<?>)lstOverlays.getChildren())
 		{
-			((OverlayControl)overlay).SetMaximum(gridSize.Width, gridSize.Height);
+			((OverlayControl)overlay).setMaximum(gridSize.width, gridSize.height);
 		}
 
-		Draw();
-		SetAsUnsaved();
+		draw();
+		setAsUnsaved();
 	}
 
 	// Other
-	public void SetAsUnsaved()
+	public void setAsUnsaved()
 	{
-		_isUnsaved = true;
-		SetTitle();
+		isUnsaved = true;
+		setTitle();
 	}
 
-	public void Draw()
+	public void draw()
 	{
-		if (!_isLoading)
+		if (!isLoading)
 		{
-			Flag().Draw(_pane);
-			DrawTexture(_pane);
-			DrawGrid();
+			flag().draw(pane);
+			drawTexture(pane);
+			drawGrid();
 		}
 	}
 
-	private void DrawTexture(Pane canvas)
+	private void drawTexture(Pane canvas)
 	{
-		if (_texture == 0) return;
+		if (texture == 0) return;
 		
 		double width = canvas.getWidth();
 		double height = canvas.getHeight();
-		InputStream is = getClass().getResourceAsStream(String.format("Images/Texture/%d.png", _texture));
+		InputStream is = getClass().getResourceAsStream(String.format("Images/Texture/%d.png", texture));
 		Image i = new Image(is, width, height, false, true);
 		Canvas c = new Canvas(width, height);
 		GraphicsContext gc = c.getGraphicsContext2D();
@@ -745,42 +745,42 @@ public class MainWindowController implements ColorButtonListener
 	}
 
 	@FXML
-	private void ToggleTexture()
+	private void toggleTexture()
 	{
-		_texture = (_texture + 1) % 6;
-		Draw();
+		texture = (texture + 1) % 6;
+		draw();
 	}
 
 	// Export
-	public void MenuExportPngClick()
+	public void menuExportPngClick()
 	{
-		Size dimensions = GetPngDimensions(true);
-		if (dimensions.X == 0 || dimensions.Y == 0) return;
+		Size dimensions = getPngDimensions(true);
+		if (dimensions.x == 0 || dimensions.y == 0) return;
 		
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(LocalizationHandler.Get("ExportAsPng"));
+		fileChooser.setTitle(LocalizationHandler.get("ExportAsPng"));
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG (*.png)", "*.png"));
-		File file = fileChooser.showSaveDialog(_stage);
+		File file = fileChooser.showSaveDialog(stage);
 		
 		if (file != null)
 		{
 			try
 			{
-				FileHandler.ExportFlagToPng(Flag(), dimensions, file);
+				FileHandler.exportFlagToPng(flag(), dimensions, file);
 			}
 			catch (IOException ex)
 			{
-				new Alert(AlertType.ERROR, String.format(LocalizationHandler.Get("CouldNotSaveError"), ex.getMessage()), ButtonType.OK).showAndWait();
+				new Alert(AlertType.ERROR, String.format(LocalizationHandler.get("CouldNotSaveError"), ex.getMessage()), ButtonType.OK).showAndWait();
 			}
 		}
 	}
 
-	private Size GetPngDimensions(boolean constrain)
+	private Size getPngDimensions(boolean constrain)
 	{
 		Dialog<Size> dialog = new Dialog<>();
-		dialog.setTitle(LocalizationHandler.Get("ExportAsPng"));
-		dialog.setHeaderText(LocalizationHandler.Get("PngSizePrompt"));
-		ButtonType saveButtonType = new ButtonType(LocalizationHandler.Get("Save"), ButtonData.OK_DONE);
+		dialog.setTitle(LocalizationHandler.get("ExportAsPng"));
+		dialog.setHeaderText(LocalizationHandler.get("PngSizePrompt"));
+		ButtonType saveButtonType = new ButtonType(LocalizationHandler.get("Save"), ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 		
 		// Create the username and password labels and fields.
@@ -790,13 +790,13 @@ public class MainWindowController implements ColorButtonListener
 		grid.setPadding(new Insets(20, 150, 10, 10));
 
 		TextField width = new TextField();
-		width.setPromptText(LocalizationHandler.Get("Width"));
+		width.setPromptText(LocalizationHandler.get("Width"));
 		TextField height = new TextField();
-		height.setPromptText(LocalizationHandler.Get("Height"));
+		height.setPromptText(LocalizationHandler.get("Height"));
 
-		grid.add(new Label(LocalizationHandler.Get("Width")), 0, 0);
+		grid.add(new Label(LocalizationHandler.get("Width")), 0, 0);
 		grid.add(width, 1, 0);
-		grid.add(new Label(LocalizationHandler.Get("Height")), 0, 1);
+		grid.add(new Label(LocalizationHandler.get("Height")), 0, 1);
 		grid.add(height, 1, 1);
 
 		Node saveButton = dialog.getDialogPane().lookupButton(saveButtonType);
@@ -808,12 +808,12 @@ public class MainWindowController implements ColorButtonListener
 			{
 				String value = width.getText().trim();
 				
-				if (CanParseInt(value) && constrain)
+				if (canParseInt(value) && constrain)
 				{
 					Integer w = Integer.parseInt(value);
-					Ratio r = SelectedGridSize();
-					height.setText(Integer.toString((int)(r.Height / (double)r.Width * w)));
-					saveButton.setDisable(value.isEmpty() || height.getText().isEmpty() || !CanParseInt(value));
+					Ratio r = selectedGridSize();
+					height.setText(Integer.toString((int)(r.height / (double)r.width * w)));
+					saveButton.setDisable(value.isEmpty() || height.getText().isEmpty() || !canParseInt(value));
 				}
 			}
 		});
@@ -823,12 +823,12 @@ public class MainWindowController implements ColorButtonListener
 			{
 				String value = height.getText().trim();
 				
-				if (CanParseInt(value) && constrain)
+				if (canParseInt(value) && constrain)
 				{
 					Integer h = Integer.parseInt(value);
-					Ratio r = SelectedGridSize();
-					width.setText(Integer.toString((int)(r.Width / (double)r.Height * h)));
-					saveButton.setDisable(value.isEmpty() || width.getText().isEmpty() || !CanParseInt(value));
+					Ratio r = selectedGridSize();
+					width.setText(Integer.toString((int)(r.width / (double)r.height * h)));
+					saveButton.setDisable(value.isEmpty() || width.getText().isEmpty() || !canParseInt(value));
 				}	
 			}
 		});
@@ -848,44 +848,44 @@ public class MainWindowController implements ColorButtonListener
 		return result.isPresent() ? result.get() : new Size(0, 0);
 	}
 
-	public void MenuExportSvgClick()
+	public void menuExportSvgClick()
 	{
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(LocalizationHandler.Get("ExportAsSvg"));
+		fileChooser.setTitle(LocalizationHandler.get("ExportAsSvg"));
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("SVG (*.svg)", "*.svg"));
-		File file = fileChooser.showSaveDialog(_stage);
+		File file = fileChooser.showSaveDialog(stage);
 		
 		if (file != null)
 		{
 			try
 			{
-				FileHandler.ExportFlagToSvg(Flag(), file);
+				FileHandler.exportFlagToSvg(flag(), file);
 			}
 			catch (IOException ex)
 			{
-				new Alert(AlertType.ERROR, String.format(LocalizationHandler.Get("CouldNotSaveError"), ex.getMessage()), ButtonType.OK).showAndWait();
+				new Alert(AlertType.ERROR, String.format(LocalizationHandler.get("CouldNotSaveError"), ex.getMessage()), ButtonType.OK).showAndWait();
 			}
 		}
 	}
 
-	@FXML private void MenuExportBulkPngClick()
+	@FXML private void menuExportBulkPngClick()
 	{
 		boolean error = false;
-		List<File> files = GetFlagFiles();
+		List<File> files = getFlagFiles();
 		if (files == null || files.isEmpty()) return;
 		
-		Size dimensions = GetPngDimensions(false);
-		if (dimensions.X == 0 || dimensions.Y == 0) return;
+		Size dimensions = getPngDimensions(false);
+		if (dimensions.x == 0 || dimensions.y == 0) return;
 		
-		File directory = GetBulkSaveDirectory(files.get(0).getParentFile());
+		File directory = getBulkSaveDirectory(files.get(0).getParentFile());
 		if (!directory.exists() || !directory.canWrite()) return;
 		
 		for (File file : files)
 		{
 			try
 			{
-				Flag flag = FileHandler.LoadFlagFromFile(file);
-				FileHandler.ExportFlagToPng(flag, dimensions, new File(String.format("%s%s%s.png", directory, FileHandler.GetPathSeparator(), StringExtensions.GetFilenameWithoutExtension(file.getName()))));
+				Flag flag = FileHandler.loadFlagFromFile(file);
+				FileHandler.exportFlagToPng(flag, dimensions, new File(String.format("%s%s%s.png", directory, FileHandler.getPathSeparator(), StringExtensions.getFilenameWithoutExtension(file.getName()))));
 			}
 			catch (Exception ex)
 			{
@@ -893,24 +893,24 @@ public class MainWindowController implements ColorButtonListener
 			}
 		}
 		
-		ExportFinished(error);
+		exportFinished(error);
 	}
 	
-	@FXML private void MenuExportBulkSvgClick()
+	@FXML private void menuExportBulkSvgClick()
 	{
 		boolean error = false;
-		List<File> files = GetFlagFiles();
+		List<File> files = getFlagFiles();
 		if (files == null || files.isEmpty()) return;
 		
-		File directory = GetBulkSaveDirectory(files.get(0).getParentFile());
+		File directory = getBulkSaveDirectory(files.get(0).getParentFile());
 		if (!directory.exists() || !directory.canWrite()) return;
 		
 		for (File file : files)
 		{
 			try
 			{
-				Flag flag = FileHandler.LoadFlagFromFile(file);
-				FileHandler.ExportFlagToSvg(flag, new File(String.format("%s%s%s.svg", directory, FileHandler.GetPathSeparator(), StringExtensions.GetFilenameWithoutExtension(file.getName()))));
+				Flag flag = FileHandler.loadFlagFromFile(file);
+				FileHandler.exportFlagToSvg(flag, new File(String.format("%s%s%s.svg", directory, FileHandler.getPathSeparator(), StringExtensions.getFilenameWithoutExtension(file.getName()))));
 			}
 			catch (Exception ex)
 			{
@@ -918,120 +918,120 @@ public class MainWindowController implements ColorButtonListener
 			}
 		}
 		
-		ExportFinished(error);
+		exportFinished(error);
 	}
 	
-	private List<File> GetFlagFiles()
+	private List<File> getFlagFiles()
 	{
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(LocalizationHandler.Get("SelectFiles"));
-		fileChooser.getExtensionFilters().add(new ExtensionFilter(LocalizationHandler.Get("FlagFileFilter"), "*.flag"));
-		return fileChooser.showOpenMultipleDialog(_stage);
+		fileChooser.setTitle(LocalizationHandler.get("SelectFiles"));
+		fileChooser.getExtensionFilters().add(new ExtensionFilter(LocalizationHandler.get("FlagFileFilter"), "*.flag"));
+		return fileChooser.showOpenMultipleDialog(stage);
 	}
 	
-	private File GetBulkSaveDirectory(File defaultDirectory)
+	private File getBulkSaveDirectory(File defaultDirectory)
 	{
 		DirectoryChooser dc = new DirectoryChooser();
 		dc.setInitialDirectory(defaultDirectory);
-		dc.setTitle(LocalizationHandler.Get("SelectDirectory"));
-		return dc.showDialog(_stage);
+		dc.setTitle(LocalizationHandler.get("SelectDirectory"));
+		return dc.showDialog(stage);
 	}
 
-	private void ExportFinished(boolean errorOccurred)
+	private void exportFinished(boolean errorOccurred)
 	{
 		if (errorOccurred)
 		{
-			new Alert(AlertType.ERROR, LocalizationHandler.Get("ExportBulkError"), ButtonType.OK).showAndWait();
+			new Alert(AlertType.ERROR, LocalizationHandler.get("ExportBulkError"), ButtonType.OK).showAndWait();
 		}
 		else
 		{
-			new Alert(AlertType.INFORMATION, LocalizationHandler.Get("ExportBulkSuccess"), ButtonType.OK).showAndWait();
+			new Alert(AlertType.INFORMATION, LocalizationHandler.get("ExportBulkSuccess"), ButtonType.OK).showAndWait();
 		}
 	}
 
 	// Load / save
-	@FXML private void New()
+	@FXML private void newFile()
 	{
-		if (CheckUnsaved())
+		if (checkUnsaved())
 		{
 			return;
 		}
-		PlainPreset(2, 2);
-		SetDefaultColors();
+		plainPreset(2, 2);
+		setDefaultColors();
 		lstOverlays.getChildren().clear();
-		SetRatio(3, 2);
-		RatioTextboxChanged();
-		txtName.setText(LocalizationHandler.Get("Untitled"));
-		_filename = "";
-		_isUnsaved = false;
-		SetTitle();
+		setRatio(3, 2);
+		ratioTextboxChanged();
+		txtName.setText(LocalizationHandler.get("Untitled"));
+		fileName = "";
+		isUnsaved = false;
+		setTitle();
 	}
 
-	@FXML private void Save()
+	@FXML private void save()
 	{
-		if (StringExtensions.IsNullOrWhitespace(_filename))
+		if (StringExtensions.isNullOrWhitespace(fileName))
 		{
-			SaveAs();
+			saveAs();
 		}
 		else
 		{
-			SaveFlag();
+			saveFlag();
 		}
 	}
 	
-	private void SaveFlag()
+	private void saveFlag()
 	{
 		try
 		{
-			FileHandler.SaveFlagToFile(Flag(), _filename);
+			FileHandler.saveFlagToFile(flag(), fileName);
 		}
 		catch (IOException ex)
 		{
-			new Alert(AlertType.ERROR, String.format(LocalizationHandler.Get("CouldNotSaveError"), ex.getMessage()), ButtonType.OK).showAndWait();
+			new Alert(AlertType.ERROR, String.format(LocalizationHandler.get("CouldNotSaveError"), ex.getMessage()), ButtonType.OK).showAndWait();
 		}
 		
-		_isUnsaved = false;
-		SetTitle();
-		LoadFilePresets();
+		isUnsaved = false;
+		setTitle();
+		loadFilePresets();
 	}
 	
-	@FXML private void SaveAs()
+	@FXML private void saveAs()
 	{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save");
-		fileChooser.getExtensionFilters().add(new ExtensionFilter(LocalizationHandler.Get("FlagFileFilter"), "*.flag"));
-		File file = fileChooser.showSaveDialog(_stage);
+		fileChooser.getExtensionFilters().add(new ExtensionFilter(LocalizationHandler.get("FlagFileFilter"), "*.flag"));
+		File file = fileChooser.showSaveDialog(stage);
 		
 		if (file != null)
 		{
-			_filename = file.getPath();
-			SaveFlag();
+			fileName = file.getPath();
+			saveFlag();
 		}	
 	}
 
-	@FXML private void Open()
+	@FXML private void open()
 	{
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(LocalizationHandler.Get("Open"));
-		fileChooser.getExtensionFilters().add(new ExtensionFilter(LocalizationHandler.Get("FlagFileFilter"), "*.flag"));
-		File file = fileChooser.showOpenDialog(_stage);
+		fileChooser.setTitle(LocalizationHandler.get("Open"));
+		fileChooser.getExtensionFilters().add(new ExtensionFilter(LocalizationHandler.get("FlagFileFilter"), "*.flag"));
+		File file = fileChooser.showOpenDialog(stage);
 		if (file != null)
 		{
-			LoadFlagFromFile(file);
+			loadFlagFromFile(file);
 		}
 	}
 
-	private boolean CheckUnsaved()
+	private boolean checkUnsaved()
 	{
-		if (!_isUnsaved) return false;
+		if (!isUnsaved) return false;
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		ButtonType buttonYes = new ButtonType(LocalizationHandler.Get("Yes"));
-		ButtonType buttonNo = new ButtonType(LocalizationHandler.Get("No"));
-		ButtonType buttonCancel = new ButtonType(LocalizationHandler.Get("Cancel"), ButtonData.CANCEL_CLOSE);
-		alert.setTitle(CommonExtensions.TitleAndVersionString(getClass()));
-		alert.setHeaderText(LocalizationHandler.Get("NotSaved"));
-		alert.setContentText(String.format(LocalizationHandler.Get("SaveChangesPrompt"), txtName.getText()));
+		ButtonType buttonYes = new ButtonType(LocalizationHandler.get("Yes"));
+		ButtonType buttonNo = new ButtonType(LocalizationHandler.get("No"));
+		ButtonType buttonCancel = new ButtonType(LocalizationHandler.get("Cancel"), ButtonData.CANCEL_CLOSE);
+		alert.setTitle(CommonExtensions.titleAndVersionString(getClass()));
+		alert.setHeaderText(LocalizationHandler.get("NotSaved"));
+		alert.setContentText(String.format(LocalizationHandler.get("SaveChangesPrompt"), txtName.getText()));
 		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -1039,140 +1039,140 @@ public class MainWindowController implements ColorButtonListener
 		ButtonType b = result.get();
 		if (b == buttonYes)
 		{
-			Save();
+			save();
 		}
 
 		return b == buttonCancel;
 	}
 
-	private void LoadFlagFromFile(File filename)
+	private void loadFlagFromFile(File filename)
 	{
 		try
 		{
-			LoadFlag(FileHandler.LoadFlagFromFile(filename));
-			_filename = filename.getPath();
+			loadFlag(FileHandler.loadFlagFromFile(filename));
+			fileName = filename.getPath();
 		}
 		catch (Exception e)
 		{
-			new Alert(AlertType.ERROR, String.format(LocalizationHandler.Get("CouldNotOpenError"), e.getMessage()), ButtonType.OK).showAndWait();
+			new Alert(AlertType.ERROR, String.format(LocalizationHandler.get("CouldNotOpenError"), e.getMessage()), ButtonType.OK).showAndWait();
 		}
 	}
 
-	private void LoadFlag(Flag flag)
+	private void loadFlag(Flag flag)
 	{
-		_isLoading = true;
-		_ratio = flag.Ratio;
-		txtRatioHeight.setText(Integer.toString(flag.Ratio.Height));
-		txtRatioWidth.setText(Integer.toString(flag.Ratio.Width));
-		FillGridCombobox();
+		isLoading = true;
+		ratio = flag.ratio;
+		txtRatioHeight.setText(Integer.toString(flag.ratio.height));
+		txtRatioWidth.setText(Integer.toString(flag.ratio.width));
+		fillGridCombobox();
 		
 		for (int i = 0; i < cmbRatio.getItems().size(); i++)
 		{
-			if (new Ratio(cmbRatio.getItems().get(i).toString()).Width != flag.GridSize.Width)
+			if (new Ratio(cmbRatio.getItems().get(i).toString()).width != flag.gridSize.width)
 				continue;
 			
 			cmbRatio.getSelectionModel().select(i);
 			break;
 		}
 		
-		_division = flag.Division;
-		SetDivisionVisibility();
+		division = flag.division;
+		setDivisionVisibility();
 		
 		lstOverlays.getChildren().clear();
-		for (Overlay overlay : flag.Overlays)
+		for (Overlay overlay : flag.overlays)
 		{
-			OverlayAdd(lstOverlays.getChildren().size(), overlay, true);
+			overlayAdd(lstOverlays.getChildren().size(), overlay, true);
 		}
 		
-		txtName.setText(flag.Name);
-		_isUnsaved = false;
-		_isLoading = false;
+		txtName.setText(flag.name);
+		isUnsaved = false;
+		isLoading = false;
 		
-		Draw();
+		draw();
 		
 		for (Node n : lstOverlays.getChildren())
 		{
-			((OverlayControl)n).IsLoading = false;
+			((OverlayControl)n).isLoading = false;
 		}
 	}
 
 	// Presets
-	private void PresetBlank()
+	private void presetBlank()
 	{
-		PlainPreset(1, 1);
+		plainPreset(1, 1);
 	}
 
-	private void PresetHorizontal()
+	private void presetHorizontal()
 	{
-		PlainPreset(1, 2);
+		plainPreset(1, 2);
 	}
 
-	private void PresetVertical()
+	private void presetVertical()
 	{
-		PlainPreset(2, 1);
+		plainPreset(2, 1);
 	}
 
-	private void PresetQuad()
+	private void presetQuad()
 	{
-		PlainPreset(2, 2);
+		plainPreset(2, 2);
 	}
 
-	private void PresetStripes()
+	private void presetStripes()
 	{
 		for (int i = 0; i < cmbRatio.getItems().size(); i++)
 		{
 			Object item = cmbRatio.getItems().get(i);
 			Ratio ratio = new Ratio((String)item);
-			if (ratio.Width >= 7)
+			if (ratio.width >= 7)
 			{
 				cmbRatio.getSelectionModel().select(i);
 				break;
 			}
 		}
 
-		PlainPreset(1, 7);
+		plainPreset(1, 7);
 	}
 
-	private void PlainPreset(int slider1, int slider2)
+	private void plainPreset(int slider1, int slider2)
 	{
-		DivisionGridClick();
+		divisionGridClick();
 		divisionSlider1.setValue(slider1);
 		divisionSlider2.setValue(slider2);
 		divisionSlider3.setValue(1);
 		cmbPresets.getSelectionModel().clearSelection();
 	}
 
-	private void LoadBasicPresets()
+	private void loadBasicPresets()
 	{
 		cmbPresets.getItems().clear();
-		cmbPresets.getItems().add(LocalizationHandler.Get("DivisionBlank"));
-		cmbPresets.getItems().add(LocalizationHandler.Get("DivisionHorizontalHalves"));
-		cmbPresets.getItems().add(LocalizationHandler.Get("DivisionVerticalHalves"));
-		cmbPresets.getItems().add(LocalizationHandler.Get("DivisionQuartered"));
-		cmbPresets.getItems().add(LocalizationHandler.Get("DivisionStripes"));
+		cmbPresets.getItems().add(LocalizationHandler.get("DivisionBlank"));
+		cmbPresets.getItems().add(LocalizationHandler.get("DivisionHorizontalHalves"));
+		cmbPresets.getItems().add(LocalizationHandler.get("DivisionVerticalHalves"));
+		cmbPresets.getItems().add(LocalizationHandler.get("DivisionQuartered"));
+		cmbPresets.getItems().add(LocalizationHandler.get("DivisionStripes"));
 
 		cmbPresets.valueProperty().addListener(new ChangeListener<String>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				if (newValue == null || (oldValue != null && oldValue.equals(newValue)) || StringExtensions.IsNullOrWhitespace(newValue)) return;
-				else if (newValue.equals(LocalizationHandler.Get("DivisionBlank"))) PresetBlank();
-				else if (newValue.equals(LocalizationHandler.Get("DivisionHorizontalHalves"))) PresetHorizontal();
-				else if (newValue.equals(LocalizationHandler.Get("DivisionVerticalHalves"))) PresetVertical();
-				else if (newValue.equals(LocalizationHandler.Get("DivisionQuartered"))) PresetQuad();
-				else if (newValue.equals(LocalizationHandler.Get("DivisionStripes"))) PresetStripes();
+				if (newValue == null || (oldValue != null && oldValue.equals(newValue)) || StringExtensions.isNullOrWhitespace(newValue)) return;
+				else if (newValue.equals(LocalizationHandler.get("DivisionBlank"))) presetBlank();
+				else if (newValue.equals(LocalizationHandler.get("DivisionHorizontalHalves"))) presetHorizontal();
+				else if (newValue.equals(LocalizationHandler.get("DivisionVerticalHalves"))) presetVertical();
+				else if (newValue.equals(LocalizationHandler.get("DivisionQuartered"))) presetQuad();
+				else if (newValue.equals(LocalizationHandler.get("DivisionStripes"))) presetStripes();
 			}
 		});
 	}
 	
-	private void LoadFilePresets()
+	private void loadFilePresets()
 	{
 		mnuPresets.getItems().clear();
 		
 		try
 		{
-			File directory = new File(String.format("%s%sPresets", new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent(), FileHandler.GetPathSeparator()));
+			File directory = new File(String.format("%s%sPresets", new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent(), FileHandler.getPathSeparator()));
 			File[] files = directory.listFiles();
 			if (files == null) return;
 						
@@ -1182,7 +1182,7 @@ public class MainWindowController implements ColorButtonListener
 			{
 				if (fileEntry.getName().endsWith(".flag"))
 				{
-					presets.put(GetPresetFlagName(fileEntry), fileEntry);
+					presets.put(getPresetFlagName(fileEntry), fileEntry);
 				}
 			}
 			
@@ -1191,12 +1191,12 @@ public class MainWindowController implements ColorButtonListener
 			for (String name : names)
 			{
 				File fileEntry = presets.get(name);
-				if (!StringExtensions.IsNullOrWhitespace(name))
+				if (!StringExtensions.isNullOrWhitespace(name))
 				{
 					MenuItem item = new MenuItem(name);
 					item.addEventHandler(EventType.ROOT, (Event event) ->
 					{
-						LoadPreset(fileEntry);
+						loadPreset(fileEntry);
 					});
 					mnuPresets.getItems().add(item);
 				}
@@ -1207,14 +1207,14 @@ public class MainWindowController implements ColorButtonListener
 		}
 	}
 
-	private void LoadPreset(File file)
+	private void loadPreset(File file)
 	{
-		if (CheckUnsaved()) return;
-		LoadFlagFromFile(file);
-		SetTitle();
+		if (checkUnsaved()) return;
+		loadFlagFromFile(file);
+		setTitle();
 	}
 
-	private String GetPresetFlagName(File file)
+	private String getPresetFlagName(File file)
 	{
 		try (FileReader fr = new FileReader(file); BufferedReader sr = new BufferedReader(fr))
 		{
@@ -1236,34 +1236,34 @@ public class MainWindowController implements ColorButtonListener
 	}
 
 	@FXML
-	private void GenerateRandomFlag()
+	private void generateRandomFlag()
 	{
-		if (CheckUnsaved()) return;
-		Flag f = new RandomFlagFactory().GenerateFlag();
-		LoadFlag(f);
-		_filename = "";
-		SetTitle();
+		if (checkUnsaved()) return;
+		Flag f = new RandomFlagFactory().generateFlag();
+		loadFlag(f);
+		fileName = "";
+		setTitle();
 	}
 
-	private void OnClosing(WindowEvent event)
+	private void onClosing(WindowEvent event)
 	{
-		if (CheckUnsaved())
+		if (checkUnsaved())
 		{
 			event.consume();
 		}
 	}
 
-	public Flag Flag()
+	public Flag flag()
 	{
-		String name = StringExtensions.IsNullOrWhitespace(txtName.getText())
-				? StringExtensions.IsNullOrWhitespace(_filename)
+		String name = StringExtensions.isNullOrWhitespace(txtName.getText())
+				? StringExtensions.isNullOrWhitespace(fileName)
 					? ""
-					: Paths.get(_filename).getFileName().toString()
+					: Paths.get(fileName).getFileName().toString()
 				: txtName.getText();
-		return new Flag(name, _ratio, SelectedGridSize(), _division, GetOverlays());
+		return new Flag(name, ratio, selectedGridSize(), division, getOverlays());
 	}
 
-	private boolean CanParseInt(String value)
+	private boolean canParseInt(String value)
 	{
 		try
 		{
@@ -1276,13 +1276,13 @@ public class MainWindowController implements ColorButtonListener
 		}
 	}
 
-	private Overlay[] GetOverlays()
+	private Overlay[] getOverlays()
 	{
 		ArrayList<Overlay> list = new ArrayList<>();
 		for (Object control : lstOverlays.getChildren())
 		{
 			OverlayControl oc = (OverlayControl)control;
-			Overlay o = oc.GetOverlay();
+			Overlay o = oc.getOverlay();
 			list.add(o);
 		}
 
@@ -1291,11 +1291,11 @@ public class MainWindowController implements ColorButtonListener
 	}
 	
 	// About	
-	@FXML private void MenuAbout()
+	@FXML private void menuAbout()
 	{
 		Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.initOwner(_stage);
+		dialog.initOwner(stage);
 		dialog.setResizable(false);
 		AboutController control = new AboutController(dialog);
 		Scene dialogScene = new Scene(control, 400, 300);

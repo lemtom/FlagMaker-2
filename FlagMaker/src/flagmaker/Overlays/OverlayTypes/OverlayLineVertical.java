@@ -31,7 +31,7 @@ public class OverlayLineVertical extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l = new Line(15, 5, 15, 25);
 		l.setStrokeWidth(5);
@@ -39,26 +39,26 @@ public class OverlayLineVertical extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		Line line = new Line(
-				canvas.getWidth() * GetDoubleAttribute("X") / MaximumX,
+				canvas.getWidth() * getDoubleAttribute("X") / maximumX,
 				0,
-				canvas.getWidth() * GetDoubleAttribute("X") / MaximumX,
+				canvas.getWidth() * getDoubleAttribute("X") / maximumX,
 				canvas.getHeight());
-		line.setStrokeWidth(canvas.getWidth() * (GetDoubleAttribute("Thickness") / MaximumX));
-		line.setStroke(GetColorAttribute("Color"));
+		line.setStrokeWidth(canvas.getWidth() * (getDoubleAttribute("Thickness") / maximumX));
+		line.setStroke(getColorAttribute("Color"));
 		canvas.getChildren().add(line);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		return String.format("<line x1=\"%.3f\" y1=\"0\" x2=\"%3f\" y2=\"%d\" stroke=\"#%s\" stroke-width=\"%.3f\" />",
-			width * GetDoubleAttribute("X") / MaximumX,
-			width * GetDoubleAttribute("X") / MaximumX,
+			width * getDoubleAttribute("X") / maximumX,
+			width * getDoubleAttribute("X") / maximumX,
 			height,
-			ColorExtensions.ToHexString(GetColorAttribute("Color"), false),
-			width * (GetDoubleAttribute("Thickness") / MaximumX));
+			ColorExtensions.toHexString(getColorAttribute("Color"), false),
+			width * (getDoubleAttribute("Thickness") / maximumX));
 	}
 }

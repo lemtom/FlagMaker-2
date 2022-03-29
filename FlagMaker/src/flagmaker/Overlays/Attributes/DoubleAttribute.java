@@ -8,59 +8,59 @@ import java.text.DecimalFormatSymbols;
 
 public class DoubleAttribute extends NumericAttribute<Double>
 {
-	public boolean IsDiscrete;
-	public double Value;
+	public boolean isDiscrete;
+	public double value;
 	
-	private DoubleAttributeSlider _slider;
+	private DoubleAttributeSlider sslider;
 	
 	public DoubleAttribute(String name, double initialValue, int maximum, boolean useMaxX)
 	{
 		super(name, maximum, useMaxX);
-		IsDiscrete = initialValue % 1 == 0;
-		Value = initialValue;
+		isDiscrete = initialValue % 1 == 0;
+		value = initialValue;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object newValue)
 	{
-		Value = (double)value;
-		if (_slider != null)
+		value = (double)newValue;
+		if (sslider != null)
 		{
-			_slider.SetValue(Value);
+			sslider.setValue(value);
 		}
 	}
 
 	@Override
-	public void SetValue(String value)
+	public void setValue(String newValue)
 	{
-		SetValue(Double.parseDouble(value.replace(",", ".")));
+		setValue(Double.parseDouble(newValue.replace(",", ".")));
 	}
 	
 	@Override
-	public Double GetValue()
+	public Double getValue()
 	{
-		return Value;
+		return value;
 	}
 
 	@Override
-	public AttributeSlider GetSlider(OverlayControl parent)
+	public AttributeSlider getSlider(OverlayControl parent)
 	{
-		_slider = new DoubleAttributeSlider(parent, Name, IsDiscrete, Value, Maximum, UseMaxX);
-		return _slider;
+		sslider = new DoubleAttributeSlider(parent, name, isDiscrete, value, maximum, useMaxX);
+		return sslider;
 	}
 
 	@Override
-	public Attribute Clone()
+	public Attribute clone()
 	{
-		return new DoubleAttribute(Name, Value, Maximum, UseMaxX);
+		return new DoubleAttribute(name, value, maximum, useMaxX);
 	}
 
 	@Override
-	public String ExportAsString()
+	public String exportAsString()
 	{
 		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 		decimalFormatSymbols.setDecimalSeparator('.');
 		DecimalFormat decimalFormat = new DecimalFormat("0.##", decimalFormatSymbols);
-		return decimalFormat.format(Value);
+		return decimalFormat.format(value);
 	}
 }

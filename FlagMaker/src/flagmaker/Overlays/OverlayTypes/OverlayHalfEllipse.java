@@ -41,7 +41,7 @@ public class OverlayHalfEllipse extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		return new Shape[]
 		{
@@ -55,14 +55,14 @@ public class OverlayHalfEllipse extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double x = canvas.getWidth() * GetDoubleAttribute("X") / MaximumX;
-		double y = canvas.getHeight() * GetDoubleAttribute("Y") / MaximumY;
-		double radX = canvas.getWidth() * (GetDoubleAttribute("Width") / MaximumX) / 2;
-		double radY = canvas.getHeight() * GetDoubleAttribute("Height") / MaximumY;
+		double x = canvas.getWidth() * getDoubleAttribute("X") / maximumX;
+		double y = canvas.getHeight() * getDoubleAttribute("Y") / maximumY;
+		double radX = canvas.getWidth() * (getDoubleAttribute("Width") / maximumX) / 2;
+		double radY = canvas.getHeight() * getDoubleAttribute("Height") / maximumY;
 
-		double angle = 2 * Math.PI * GetDoubleAttribute("Rotation") / MaximumX;
+		double angle = 2 * Math.PI * getDoubleAttribute("Rotation") / maximumX;
 		double xOffset = radX - radX * Math.cos(angle);
 		double yOffset = radX * Math.sin(angle);
 
@@ -77,20 +77,20 @@ public class OverlayHalfEllipse extends Overlay
 			new ArcTo(radX, radY, angle * 180 / Math.PI, x2, y2, true, true),
 			new LineTo(x1, y1)
 		});
-		path.setFill(GetColorAttribute("Color"));
+		path.setFill(getColorAttribute("Color"));
 		path.setStrokeWidth(0);
 		canvas.getChildren().add(path);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double x = width * GetDoubleAttribute("X") / MaximumX;
-		double y = height * GetDoubleAttribute("Y") / MaximumY;
-		double radX = width * (GetDoubleAttribute("Width") / MaximumX) / 2;
-		double radY = height * GetDoubleAttribute("Height") / MaximumY;
+		double x = width * getDoubleAttribute("X") / maximumX;
+		double y = height * getDoubleAttribute("Y") / maximumY;
+		double radX = width * (getDoubleAttribute("Width") / maximumX) / 2;
+		double radY = height * getDoubleAttribute("Height") / maximumY;
 
-		double angle = 2 * Math.PI * GetDoubleAttribute("Rotation") / MaximumX;
+		double angle = 2 * Math.PI * getDoubleAttribute("Rotation") / maximumX;
 		double xOffset = radX - radX * Math.cos(angle);
 		double yOffset = radX * Math.sin(angle);
 
@@ -101,6 +101,6 @@ public class OverlayHalfEllipse extends Overlay
 		
 		return String.format("<path d=\"M %.3f,%.3f A %.3f,%.3f %.3f 1,1 %.3f,%.3f z\" %s />",
 				x1, y1, radX, radY, angle * 180 / Math.PI, x2, y2,
-				ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

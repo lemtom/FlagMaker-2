@@ -17,22 +17,22 @@
 			<menus>
 				<Menu fx:id="mnuFile">
 					<items>
-						<MenuItem fx:id="mnuNew" accelerator="Ctrl+N" onAction="#New" />
-						<MenuItem fx:id="mnuOpen" accelerator="Ctrl+O" onAction="#Open" />
-						<MenuItem fx:id="mnuSave" accelerator="Ctrl+S" onAction="#Save" />
-						<MenuItem fx:id="mnuSaveAs" accelerator="Ctrl+Shift+S" onAction="#SaveAs" />
+						<MenuItem fx:id="mnuNew" accelerator="Ctrl+N" onAction="#newFile" />
+						<MenuItem fx:id="mnuOpen" accelerator="Ctrl+O" onAction="#open" />
+						<MenuItem fx:id="mnuSave" accelerator="Ctrl+S" onAction="#save" />
+						<MenuItem fx:id="mnuSaveAs" accelerator="Ctrl+Shift+S" onAction="#saveAs" />
 						<SeparatorMenuItem />
-						<MenuItem fx:id="mnuExportPng" onAction="#MenuExportPngClick" />
-						<MenuItem fx:id="mnuExportSvg" onAction="#MenuExportSvgClick" />
+						<MenuItem fx:id="mnuExportPng" onAction="#menuExportPngClick" />
+						<MenuItem fx:id="mnuExportSvg" onAction="#menuExportSvgClick" />
 						<SeparatorMenuItem />
-						<MenuItem fx:id="mnuBulkExportPng" onAction="#MenuExportBulkPngClick" />
-						<MenuItem fx:id="mnuBulkExportSvg" onAction="#MenuExportBulkSvgClick" />
+						<MenuItem fx:id="mnuBulkExportPng" onAction="#menuExportBulkPngClick" />
+						<MenuItem fx:id="mnuBulkExportSvg" onAction="#menuExportBulkSvgClick" />
 					</items>
 				</Menu>
 				<Menu fx:id="mnuPresets" />
 				<Menu fx:id="mnuLanguages" />
 				<Menu fx:id="mnuHelp">
-					<MenuItem fx:id="mnuAbout" onAction="#MenuAbout" accelerator="Ctrl+A" />
+					<MenuItem fx:id="mnuAbout" onAction="#menuAbout" accelerator="Ctrl+A" />
 				</Menu>
 			</menus>
 		</MenuBar>
@@ -46,7 +46,7 @@
 				<Label fx:id="lblGridSize" />
 				<ComboBox fx:id="cmbRatio" prefWidth="100.0" />
 				
-				<ToggleButton onAction="#GridOnChanged" styleClass="button">
+				<ToggleButton onAction="#gridOnChanged" styleClass="button">
 					<tooltip>
 						<Tooltip fx:id="ttpShowGrid" />
 					</tooltip>
@@ -69,7 +69,7 @@
 				
 				<TextField fx:id="txtName" style="-fx-pref-width: 200;" />
 				
-				<Button onAction="#ShuffleColors">
+				<Button onAction="#shuffleColors">
 					<tooltip>
 						<Tooltip fx:id="ttpShuffleColors" />
 					</tooltip>
@@ -81,7 +81,7 @@
 						</ImageView>
 					</graphic>
 				</Button>
-				<Button onAction="#ToggleTexture">
+				<Button onAction="#toggleTexture">
 					<tooltip>
 						<Tooltip fx:id="ttpToggleTexture" />
 					</tooltip>
@@ -93,7 +93,7 @@
 						</ImageView>
 					</graphic>
 				</Button>
-				<Button onAction="#GenerateRandomFlag">
+				<Button onAction="#generateRandomFlag">
 					<tooltip>
 						<Tooltip fx:id="ttpRandomFlag" />
 					</tooltip>
@@ -119,7 +119,7 @@
 						<Label fx:id="lblDivisions" styleClass="header" />
 						<FlowPane alignment="TOP_LEFT" hgap="4" orientation="HORIZONTAL" vgap="4">
 							<children>
-								<Button onAction="#DivisionGridClick">
+								<Button onAction="#divisionGridClick">
 									<tooltip>
 										<Tooltip fx:id="ttpDivisionGrid" />
 									</tooltip>
@@ -170,7 +170,7 @@
 										</Pane>
 									</graphic>
 								</Button>
-								<Button onAction="#DivisionFessesClick">
+								<Button onAction="#divisionFessesClick">
 									<tooltip>
 										<Tooltip fx:id="ttpDivisionFesses" />
 									</tooltip>
@@ -188,7 +188,7 @@
 										</Pane>
 									</graphic>
 								</Button>
-								<Button onAction="#DivisionPalesClick">
+								<Button onAction="#divisionPalesClick">
 									<tooltip>
 										<Tooltip fx:id="ttpDivisionPales" />
 									</tooltip>
@@ -206,7 +206,7 @@
 										</Pane>
 									</graphic>
 								</Button>
-								<Button onAction="#DivisionBendsForwardClick">
+								<Button onAction="#divisionBendsForwardClick">
 									<tooltip>
 										<Tooltip fx:id="ttpDivisionBendsForward" />
 									</tooltip>
@@ -226,7 +226,7 @@
 										</Pane>
 									</graphic>
 								</Button>
-								<Button onAction="#DivisionBendsBackwardClick">
+								<Button onAction="#divisionBendsBackwardClick">
 									<tooltip>
 										<Tooltip fx:id="ttpDivisionBendsBackward" />
 									</tooltip>
@@ -246,7 +246,7 @@
 										</Pane>
 									</graphic>
 								</Button>
-								<Button onAction="#DivisionXClick">
+								<Button onAction="#divisionXClick">
 									<tooltip>
 										<Tooltip fx:id="ttpDivisionBendsBoth" />
 									</tooltip>
@@ -315,7 +315,7 @@
 						<HBox alignment="CENTER_LEFT">
 							<children>
 								<Label fx:id="lblOverlays" styleClass="header" />
-								<Button onAction="#OverlayAdd">
+								<Button onAction="#overlayAdd">
 									<HBox.margin>
 										<Insets left="10.0" />
 									</HBox.margin>
@@ -330,7 +330,7 @@
 										</ImageView>
 									</graphic>
 								</Button>
-								<Button onAction="#OverlaysExpandAll">
+								<Button onAction="#overlaysExpandAll">
 									<HBox.margin>
 										<Insets left="10.0" />
 									</HBox.margin>
@@ -345,7 +345,7 @@
 										</ImageView>
 									</graphic>
 								</Button>
-								<Button onAction="#OverlaysCollapseAll">
+								<Button onAction="#overlaysCollapseAll">
 									<HBox.margin>
 										<Insets left="10.0" />
 									</HBox.margin>

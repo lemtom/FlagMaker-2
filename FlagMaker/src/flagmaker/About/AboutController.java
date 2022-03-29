@@ -26,52 +26,52 @@ public class AboutController extends VBox
 	@FXML private Tab tabCredits;
 	@FXML private Tab tabHistory;
 	@FXML private Label lblVersion;
-	@FXML private VBox CreditBox;
-	@FXML private VBox HistoryBox;
+	@FXML private VBox creditBox;
+	@FXML private VBox historyBox;
 
 	public AboutController(Stage stage)
 	{
-		Load(stage);
+		load(stage);
 
-		tabCredits.setText(LocalizationHandler.Get("Credits"));
-		tabHistory.setText(LocalizationHandler.Get("History"));
-		lblVersion.setText(CommonExtensions.TitleAndVersionString(getClass()));
+		tabCredits.setText(LocalizationHandler.get("Credits"));
+		tabHistory.setText(LocalizationHandler.get("History"));
+		lblVersion.setText(CommonExtensions.titleAndVersionString(getClass()));
 		
-		AddCredits();
-		AddHistory();
+		addCredits();
+		addHistory();
 	}
 	
-	private void AddCredits()
+	private void addCredits()
 	{
 		try
 		{
-			AddCredit(new URI("https://github.com/andrewsarnold"), "Andrew Arnold", "Development");
-			AddUnlinkedCredit("Hellerick Ferlibay — Russian translation");
-			AddUnlinkedCredit("Tikchbila — French translation");
-			AddUnlinkedCredit("Cubenity — Polish translation");
-			AddCredit(new URI("http://www.crwflags.com/fotw/flags/index.html"), "Flags of the World", "Flag construction specifications and colors");
-			AddCredit(new URI("http://en.wikipedia.org/"), "Wikipedia", "Flag construction specifications and colors");
-			AddCredit(new URI("https://flag-designer.appspot.com/"), "Lars Ruoff", "Inspiration; eagle, sun, and tree patterns");
-			AddUnlinkedCredit("Various emblems created by: PepePateaTraseros, VainRobot, OakBlood3");
-			AddUnlinkedCredit("the_dirty_saltire: Icons");
+			addCredit(new URI("https://github.com/andrewsarnold"), "Andrew Arnold", "Development");
+			addUnlinkedCredit("Hellerick Ferlibay — Russian translation");
+			addUnlinkedCredit("Tikchbila — French translation");
+			addUnlinkedCredit("Cubenity — Polish translation");
+			addCredit(new URI("http://www.crwflags.com/fotw/flags/index.html"), "Flags of the World", "Flag construction specifications and colors");
+			addCredit(new URI("http://en.wikipedia.org/"), "Wikipedia", "Flag construction specifications and colors");
+			addCredit(new URI("https://flag-designer.appspot.com/"), "Lars Ruoff", "Inspiration; eagle, sun, and tree patterns");
+			addUnlinkedCredit("Various emblems created by: PepePateaTraseros, VainRobot, OakBlood3");
+			addUnlinkedCredit("the_dirty_saltire: Icons");
 		}
 		catch (URISyntaxException ex)
 		{
 		}
 	}
 	
-	private void AddCredit(URI link, String name, String role)
+	private void addCredit(URI link, String name, String role)
 	{
 		Hyperlink h = new Hyperlink(name);
 		h.setOnAction(event ->
 		{
 			try
 			{
-				if (CommonExtensions.IsWindows())
+				if (CommonExtensions.isWindows())
 				{
 					Desktop.getDesktop().browse(link);
 				}
-				else if (CommonExtensions.IsMac())
+				else if (CommonExtensions.isMac())
 				{
 					CommonExtensions.RunTime.exec("open " + link);
 				}
@@ -90,10 +90,10 @@ public class AboutController extends VBox
 		TextFlow b = new TextFlow();
 		b.setTextAlignment(TextAlignment.LEFT);
 		b.getChildren().addAll(h, l);
-		CreditBox.getChildren().add(b);
+		creditBox.getChildren().add(b);
 	}
 	
-	private void AddUnlinkedCredit(String text)
+	private void addUnlinkedCredit(String text)
 	{
 		Label l = new Label(text);
 		l.setPadding(new Insets(4));
@@ -101,157 +101,157 @@ public class AboutController extends VBox
 		HBox b = new HBox();
 		b.setAlignment(Pos.CENTER_LEFT);
 		b.getChildren().add(l);
-		CreditBox.getChildren().add(b);
+		creditBox.getChildren().add(b);
 	}
 
-	private void AddHistory()
+	private void addHistory()
 	{
-		AddVersion("2.1", "2016");
-		AddFeature("New icons");
+		addVersion("2.1", "2016");
+		addFeature("New icons");
 		
-		AddVersion("2.0.1", "2016-07-10");
-		AddFeature("Fixed file encoding issue");
+		addVersion("2.0.1", "2016-07-10");
+		addFeature("Fixed file encoding issue");
 		
-		AddVersion("2.0", "2016-05-01");
-		AddFeature("Linux version");
-		AddFeature("Mac version");
-		AddFeature("Installer");
-		AddFeature("Brand-new random flag generation engine");
-		AddFeature("Polish translation");
-		AddFeature("Can rotate rays overlay");
-		AddFeature("New emblems: Albania, albatross, allahu, arevakhach, arrowhead, banner (2 versions), bear, beaver, " +
+		addVersion("2.0", "2016-05-01");
+		addFeature("Linux version");
+		addFeature("Mac version");
+		addFeature("Installer");
+		addFeature("Brand-new random flag generation engine");
+		addFeature("Polish translation");
+		addFeature("Can rotate rays overlay");
+		addFeature("New emblems: Albania, albatross, allahu, arevakhach, arrowhead, banner (2 versions), bear, beaver, " +
 				"bee, Bhutan, bison, bottany cross, castle, compass, condor, Cyprus, dove, dragon (Wales), eagle (Iowa), " +
 				"Eritrea, Ethiopia, fasces, fern, gear (2 versions), globe, Greenland, key (2 versions), Khazak banner and " +
 				"emblem, keystone, Kosovo, Kyrgyzstan, Kuwait, laurel, Lesotho, lion, lotus, Malawi, maple triple, Mexico, " +
 				"mjolnir, Nunavut, oak, Occitania, octagram, Oman, Ontario, pine, rooster, rose, sagebrush (2 versions), " +
 				"Saskatchewan, Scotland lion, shamrock (2 versions), shield (7 versions), star (Chicago), star (Marshall " +
 				"Islands), star shadow, Sudan, Tajikistan, torch, UN, Vanuatu, Venice, vergina, wheat, zia");
-		AddFeature("Attribute handling overhaul");
-		AddFeature("Minor bug fixes");
+		addFeature("Attribute handling overhaul");
+		addFeature("Minor bug fixes");
 
-		AddVersion("1.7", "2014-08-25");
-		AddFeature("Random flag generation");
-		AddFeature("Bulk SVG / PNG export");
-		AddFeature("Add strokes / outlines to path overlays");
-		AddFeature("Toggle overlay visibility for editing purposes");
-		AddFeature("New overlay types: Half-ellipse, line (arbitrary positioning), quadrilateral, ring");
-		AddFeature("New emblems: Bolnisi cross (Georgia), fire, shield, snake, wave, yang");
-		AddFeature("Toggleable cloth textures");
-		AddFeature("Major bug fixes and under-the-hood optimization");
+		addVersion("1.7", "2014-08-25");
+		addFeature("Random flag generation");
+		addFeature("Bulk SVG / PNG export");
+		addFeature("Add strokes / outlines to path overlays");
+		addFeature("Toggle overlay visibility for editing purposes");
+		addFeature("New overlay types: Half-ellipse, line (arbitrary positioning), quadrilateral, ring");
+		addFeature("New emblems: Bolnisi cross (Georgia), fire, shield, snake, wave, yang");
+		addFeature("Toggleable cloth textures");
+		addFeature("Major bug fixes and under-the-hood optimization");
 
-		AddVersion("1.6", "2014-02-15");
-		AddFeature("Popup window for selecting overlays instead of cluttered dropdown");
-		AddFeature("New overlay type: Transformer (arbitrary skewing, scaling, and rotation)");
-		AddFeature("New overlay type: Image (insert any JPG or PNG)");
-		AddFeature("New overlay type: Checkerboard");
-		AddFeature("Triangle overlays can now be positioned anywhere (this WILL break some saved flags!)");
-		AddFeature("Overlay sliders retain their values when switching types");
-		AddFeature("Overlay sliders accept percentage and fractional inputs");
-		AddFeature("Updating crescent overlay rendering (this WILL break some saved flags!)");
-		AddFeature("Improved SVG output for smaller file sizes");
-		AddFeature("Overlays no longer overflow the flag work area and cover other parts of the program");
-		AddFeature("French language support");
-		AddFeature("Fixed bug with multiple custom overlays of the same type not all being rendered");
-		AddFeature("Fixed bug where exporting SVG with repeaters included the repeated overlay on its own");
+		addVersion("1.6", "2014-02-15");
+		addFeature("Popup window for selecting overlays instead of cluttered dropdown");
+		addFeature("New overlay type: Transformer (arbitrary skewing, scaling, and rotation)");
+		addFeature("New overlay type: Image (insert any JPG or PNG)");
+		addFeature("New overlay type: Checkerboard");
+		addFeature("Triangle overlays can now be positioned anywhere (this WILL break some saved flags!)");
+		addFeature("Overlay sliders retain their values when switching types");
+		addFeature("Overlay sliders accept percentage and fractional inputs");
+		addFeature("Updating crescent overlay rendering (this WILL break some saved flags!)");
+		addFeature("Improved SVG output for smaller file sizes");
+		addFeature("Overlays no longer overflow the flag work area and cover other parts of the program");
+		addFeature("French language support");
+		addFeature("Fixed bug with multiple custom overlays of the same type not all being rendered");
+		addFeature("Fixed bug where exporting SVG with repeaters included the repeated overlay on its own");
 		
-		AddVersion("1.5.1", "2014-02-05");
-		AddFeature("Fixed a few custom overlay bugs");
-		AddFeature("Fixed a bug where pall overlays crashed on some cultures (the dreaded comma-as-decimal-separator bug)");
-		AddFeature("Reducing decimal points to 3 on SVG output");
-		AddFeature("Russian language support");
+		addVersion("1.5.1", "2014-02-05");
+		addFeature("Fixed a few custom overlay bugs");
+		addFeature("Fixed a bug where pall overlays crashed on some cultures (the dreaded comma-as-decimal-separator bug)");
+		addFeature("Reducing decimal points to 3 on SVG output");
+		addFeature("Russian language support");
 		
-		AddVersion("1.5", "2014-02-02");
-		AddFeature("Custom overlay functionality");
-		AddFeature("Updated lines, border, cross, saltires, and fimbriations to line up with the grid (this WILL break some saved flags!)");
-		AddFeature("All currently-used colors (custom or not) displayed in palette");
-		AddFeature("Button to quickly shuffle around the colors used");
-		AddFeature("New emblems: American eagle, anchor, angola, cedar (Lebanon), chakra (India), Communist party of the USA logo, coronet (Swedish crown), crown, Egyptian eagle, emblem of Iran, flash (lightning bolt), Forth International logo, hand, harp (Ireland), iron cross, kangaroo, kiwi, laurel wreath, Maltese cross, Mozambique hoe and rifle, olive branches (Cyprus), Papua New Guinea, parteiadler / reichsadler, shahadah, Sikh emblem, springbok, swastika, sword (Saudi Arabia), takbir, trident (Barbados), triskele, yin");
-		AddFeature("Support for different languages");
-		AddFeature("Spanish translation");
-		AddFeature("Fixed major bug where the program would crash on computers using comma-decimal cultures");
-		AddFeature("Fixed similar bug when reading .flag files");
-		AddFeature("Fixed bug when loading a broken flag file");
-		AddFeature("Fixed line rendering bugs when exporting SVG");
+		addVersion("1.5", "2014-02-02");
+		addFeature("Custom overlay functionality");
+		addFeature("Updated lines, border, cross, saltires, and fimbriations to line up with the grid (this WILL break some saved flags!)");
+		addFeature("All currently-used colors (custom or not) displayed in palette");
+		addFeature("Button to quickly shuffle around the colors used");
+		addFeature("New emblems: American eagle, anchor, angola, cedar (Lebanon), chakra (India), Communist party of the USA logo, coronet (Swedish crown), crown, Egyptian eagle, emblem of Iran, flash (lightning bolt), Forth International logo, hand, harp (Ireland), iron cross, kangaroo, kiwi, laurel wreath, Maltese cross, Mozambique hoe and rifle, olive branches (Cyprus), Papua New Guinea, parteiadler / reichsadler, shahadah, Sikh emblem, springbok, swastika, sword (Saudi Arabia), takbir, trident (Barbados), triskele, yin");
+		addFeature("Support for different languages");
+		addFeature("Spanish translation");
+		addFeature("Fixed major bug where the program would crash on computers using comma-decimal cultures");
+		addFeature("Fixed similar bug when reading .flag files");
+		addFeature("Fixed bug when loading a broken flag file");
+		addFeature("Fixed line rendering bugs when exporting SVG");
 		
-		AddVersion("1.4.1", "2013-12-04");
-		AddFeature("Fixed fimbriation SVG export bug");
+		addVersion("1.4.1", "2013-12-04");
+		addFeature("Fixed fimbriation SVG export bug");
 		
-		AddVersion("1.4", "2013-12-04");
-		AddFeature("Custom PNG dimensions on export");
-		AddFeature("More robust file handling");
-		AddFeature("Updated triangle overlay to have variable height");
-		AddFeature("Shortcut keys for new, open, save, save as");
-		AddFeature("New overlay type: Rays");
-		AddFeature("New emblems: Fleur-de-lis, eagle, sun, tree, ermine");
-		AddFeature("Box for editing the name for a .flag file");
-		AddFeature("Fixed vertical alignment on star overlays");
-		AddFeature("Fixed main icon");
-		AddFeature("Fancy new icons for overlay controls");
-		AddFeature("More world flag presets");
+		addVersion("1.4", "2013-12-04");
+		addFeature("Custom PNG dimensions on export");
+		addFeature("More robust file handling");
+		addFeature("Updated triangle overlay to have variable height");
+		addFeature("Shortcut keys for new, open, save, save as");
+		addFeature("New overlay type: Rays");
+		addFeature("New emblems: Fleur-de-lis, eagle, sun, tree, ermine");
+		addFeature("Box for editing the name for a .flag file");
+		addFeature("Fixed vertical alignment on star overlays");
+		addFeature("Fixed main icon");
+		addFeature("Fancy new icons for overlay controls");
+		addFeature("More world flag presets");
 		
-		AddVersion("1.3", "2013-11-09");
-		AddFeature("Overlay sliders dealing with vertical alignment now use the grid's vertical size for its discrete values");
-		AddFeature("Changed \"canton\" to \"box\"; now freely positionable");
-		AddFeature("Changed the corner angles of saltires and fimbriations to have the same proportions as the flag itself");
-		AddFeature("Click-to-edit slider values for overlays");
-		AddFeature("Alignment grid (toggleable)");
-		AddFeature("New overlay type: Repeaters (lateral and radial)");
-		AddFeature("New overlay type: Flag (embed another FlagMaker flag into the editor)");
-		AddFeature("New overlay type: Half saltire (as in the United Kingdom flag)");
-		AddFeature("New overlay type: Border");
-		AddFeature("New emblems: Four-pointed star, six-pointed star, eight-pointed star");
-		AddFeature("Fixed a crashing bug that occurred on invalid ratio entry");
-		AddFeature("Lots more world flag presets");
-		AddFeature("Spruced up the Readme a bit");
-		AddFeature("Behind-the-scenes refactoring and streamlining");
+		addVersion("1.3", "2013-11-09");
+		addFeature("Overlay sliders dealing with vertical alignment now use the grid's vertical size for its discrete values");
+		addFeature("Changed \"canton\" to \"box\"; now freely positionable");
+		addFeature("Changed the corner angles of saltires and fimbriations to have the same proportions as the flag itself");
+		addFeature("Click-to-edit slider values for overlays");
+		addFeature("Alignment grid (toggleable)");
+		addFeature("New overlay type: Repeaters (lateral and radial)");
+		addFeature("New overlay type: Flag (embed another FlagMaker flag into the editor)");
+		addFeature("New overlay type: Half saltire (as in the United Kingdom flag)");
+		addFeature("New overlay type: Border");
+		addFeature("New emblems: Four-pointed star, six-pointed star, eight-pointed star");
+		addFeature("Fixed a crashing bug that occurred on invalid ratio entry");
+		addFeature("Lots more world flag presets");
+		addFeature("Spruced up the Readme a bit");
+		addFeature("Behind-the-scenes refactoring and streamlining");
 		
-		AddVersion("1.2", "2013-10-07");
-		AddFeature("Downgraded to .NET 4.0 for increased compatibility");
-		AddFeature("Fixed star overlay");
-		AddFeature("New overlay types: Horizontal line, vertical line");
-		AddFeature("New emblems: Equitorial (Swiss) cross, maple leaf, pentagram, seven-pointed star, star of David");
+		addVersion("1.2", "2013-10-07");
+		addFeature("Downgraded to .NET 4.0 for increased compatibility");
+		addFeature("Fixed star overlay");
+		addFeature("New overlay types: Horizontal line, vertical line");
+		addFeature("New emblems: Equitorial (Swiss) cross, maple leaf, pentagram, seven-pointed star, star of David");
 		
-		AddVersion("1.1", "2013-09-30");
-		AddFeature("SVG export");
-		AddFeature("Blank / basic presets");
-		AddFeature("Grey background (for easily seeing white flags)");
-		AddFeature("Additional color palette");
-		AddFeature("Improved overlay engine");
-		AddFeature("New emblems: Hammer and sickle, crescent");
-		AddFeature("Overlay cloning");
-		AddFeature("Overlay slider labels");
-		AddFeature("Continuous overlay sliders");
-		AddFeature("Adjustable workspace size");
-		AddFeature("Icon");
+		addVersion("1.1", "2013-09-30");
+		addFeature("SVG export");
+		addFeature("Blank / basic presets");
+		addFeature("Grey background (for easily seeing white flags)");
+		addFeature("Additional color palette");
+		addFeature("Improved overlay engine");
+		addFeature("New emblems: Hammer and sickle, crescent");
+		addFeature("Overlay cloning");
+		addFeature("Overlay slider labels");
+		addFeature("Continuous overlay sliders");
+		addFeature("Adjustable workspace size");
+		addFeature("Icon");
 		
-		AddVersion("1.0", "2013-09-09");
-		AddFeature("Initial release");
+		addVersion("1.0", "2013-09-09");
+		addFeature("Initial release");
 	}
 	
-	private void AddVersion(String number, String note)
+	private void addVersion(String number, String note)
 	{
 		Label l = new Label(String.format("%s — %s", number, note));
 		l.getStyleClass().add("header");
-		HistoryBox.getChildren().add(l);
+		historyBox.getChildren().add(l);
 	}
 	
-	private void AddFeature(String text)
+	private void addFeature(String text)
 	{
 		Label l = new Label("— " + text);
 		l.setWrapText(true);
 		HBox b = new HBox();
 		b.setAlignment(Pos.CENTER_LEFT);
 		b.getChildren().addAll(l);
-		HistoryBox.getChildren().add(b);
+		historyBox.getChildren().add(b);
 	}
 	
-	private void Load(Stage stage)
+	private void load(Stage stage)
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("About.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);
 
-		stage.titleProperty().set(LocalizationHandler.Get("About"));
+		stage.titleProperty().set(LocalizationHandler.get("About"));
 		stage.getIcons().add(new Image("flagmaker/Images/icon.png"));
 		
 		try

@@ -18,50 +18,50 @@ import javafx.scene.paint.Color;
 
 public class RandomFlagFactory
 {
-	private Ratio _ratio;
-	private Ratio _gridSize;
-	private DivisionTypes _divisionType;
-	private Division _division;
-	private ArrayList<Overlay> _overlays;
-	private ColorScheme _colorScheme;
-	private boolean _canHaveCanton;
+	private Ratio ratio;
+	private Ratio gridSize;
+	private DivisionTypes divisionType;
+	private Division division;
+	private ArrayList<Overlay> overlays;
+	private ColorScheme colorScheme;
+	private boolean canHaveCanton;
 	
-	private final Overlay[] _emblems = OverlayFactory.GetEmblems();
+	private final Overlay[] emblems = OverlayFactory.getEmblems();
 	
-	public Flag GenerateFlag()
+	public Flag generateFlag()
 	{
-		return GenerateFlag(new ColorScheme());
+		return generateFlag(new ColorScheme());
 	}
 	
-	public Flag GenerateFlag(ColorScheme colorScheme)
+	public Flag generateFlag(ColorScheme colorScheme)
 	{
-		_colorScheme = new ColorScheme();
-		_canHaveCanton = true;
-		GetRatio();
-		_overlays = new ArrayList<>();
-		_division = GetDivision();
+		this.colorScheme = new ColorScheme();
+		canHaveCanton = true;
+		getRatio();
+		overlays = new ArrayList<>();
+		division = getDivision();
 		
 		Overlay[] overlays = new Overlay[]{};
-		return new Flag(LocalizationHandler.Get("Random"), _ratio, _gridSize, _division, _overlays.toArray(overlays));
+		return new Flag(LocalizationHandler.get("Random"), ratio, gridSize, division, this.overlays.toArray(overlays));
 	}
 	
-	private void GetRatio()
+	private void getRatio()
 	{
-		_ratio = new Ratio[]
+		ratio = new Ratio[]
 				 {
 					 new Ratio(3, 2),
 					 new Ratio(5, 3),
 					 new Ratio(7, 4),
 					 new Ratio(2, 1)
-				 }[Randomizer.RandomWeighted(new int[] { 6, 2, 3, 4 })];
-		_gridSize = new Ratio(_ratio.Width * 8, _ratio.Height * 8);
+				 }[Randomizer.randomWeighted(new int[] { 6, 2, 3, 4 })];
+		gridSize = new Ratio(ratio.width * 8, ratio.height * 8);
 	}
 	
-	private Division GetDivision()
+	private Division getDivision()
 	{
 		// Roughly based on real-life usage
 		// 206 flags surveyed
-		_divisionType = DivisionTypes.values()[Randomizer.RandomWeighted(new int[]
+		divisionType = DivisionTypes.values()[Randomizer.randomWeighted(new int[]
 																  {
 																	  9, // stripes
 																	  22, // pales
@@ -77,85 +77,85 @@ public class RandomFlagFactory
 																	  0 // 11 // other
 																  })];
 
-		switch (_divisionType)
+		switch (divisionType)
 		{
-			case Stripes:
-				return GetStripes();
-			case Pales:
-				return GetPales();
-			case Fesses:
-				return GetFesses();
-			case Blank:
-				return GetBlank();
-			case Horizontal:
-				return GetHorizontal();
-			case Vertical:
-				return GetVertical();
-			case Diagonal:
-				return GetDiagonal();
-			case Stripe:
-				return GetStripe();
-			case Cross:
-				return GetCross();
+			case STRIPES:
+				return getStripes();
+			case PALES:
+				return getPales();
+			case FESSES:
+				return getFesses();
+			case BLANK:
+				return getBlank();
+			case HORIZONTAL:
+				return getHorizontal();
+			case VERTICAL:
+				return getVertical();
+			case DIAGONAL:
+				return getDiagonal();
+			case STRIPE:
+				return getStripe();
+			case CROSS:
+				return getCross();
 			case X:
-				return GetX();
-			case Ray:
-				return GetRay();
+				return getX();
+			case RAY:
+				return getRay();
 			default:
 				return null;
 				//throw new Exception("No valid type selection");
 		}
 	}
 	
-	private DivisionGrid GetStripes()
+	private DivisionGrid getStripes()
 	{
-		int stripeCount = Randomizer.Clamp(Randomizer.NextNormalized(10, 3), 5, 15, true);
+		int stripeCount = Randomizer.clamp(Randomizer.nextNormalized(10, 3), 5, 15, true);
 
-		Color stripeOuterColor = _colorScheme.Color1();
-		Color stripeInnerColor = _colorScheme.Metal();
-		Color cantonColor = _colorScheme.Color2();
+		Color stripeOuterColor = colorScheme.getColor1();
+		Color stripeInnerColor = colorScheme.getMetal();
+		Color cantonColor = colorScheme.getColor2();
 
-		if (Randomizer.ProbabilityOfTrue(0.125))
+		if (Randomizer.probabilityOfTrue(0.125))
 		{
-			int width = HoistElementWidth(true);
-			AddTriangle(1.0, 1.0, width, cantonColor, stripeInnerColor);
+			int width = hoistElementWidth(true);
+			addTriangle(1.0, 1.0, width, cantonColor, stripeInnerColor);
 		}
 		else
 		{
-			boolean isMainColorMetal = Randomizer.ProbabilityOfTrue(0.142857);
+			boolean isMainColorMetal = Randomizer.probabilityOfTrue(0.142857);
 			if (isMainColorMetal)
 			{
-				stripeOuterColor = _colorScheme.Metal();
-				stripeInnerColor = _colorScheme.Color1();
-				cantonColor = _colorScheme.Metal();
+				stripeOuterColor = colorScheme.getMetal();
+				stripeInnerColor = colorScheme.getColor1();
+				cantonColor = colorScheme.getMetal();
 			}
-			else if (Randomizer.ProbabilityOfTrue(0.16667))
+			else if (Randomizer.probabilityOfTrue(0.16667))
 			{
 				cantonColor = stripeOuterColor;
 			}
 
-			double width = HoistElementWidth(false);
-			double cantonHeight = _gridSize.Height * ((double)((int)(stripeCount / 2.0) + 1) / stripeCount);
+			double width = hoistElementWidth(false);
+			double cantonHeight = gridSize.height * ((double)((int)(stripeCount / 2.0) + 1) / stripeCount);
 			if (width < cantonHeight) width = cantonHeight;
 
-			_overlays.add(new OverlayBox(cantonColor, 0, 0, width, cantonHeight, _gridSize.Width, _gridSize.Height));
+			overlays.add(new OverlayBox(cantonColor, 0, 0, width, cantonHeight, gridSize.width, gridSize.height));
 
-			if (Randomizer.ProbabilityOfTrue(0.142857))
+			if (Randomizer.probabilityOfTrue(0.142857))
 			{
-				AddRepeater(width / 2, cantonHeight / 2, width * 3 / 4.0, cantonHeight * 3 / 4.0, stripeInnerColor, false);
+				addRepeater(width / 2, cantonHeight / 2, width * 3 / 4.0, cantonHeight * 3 / 4.0, stripeInnerColor, false);
 			}
 			else
 			{
-				AddEmblem(1.0, width / 2, cantonHeight / 2, stripeInnerColor, false, Color.WHITE, false);
+				addEmblem(1.0, width / 2, cantonHeight / 2, stripeInnerColor, false, Color.WHITE, false);
 			}
 		}
 
 		return new DivisionGrid(stripeOuterColor, stripeInnerColor, 1, stripeCount);
 	}
 	
-	private DivisionPales GetPales()
+	private DivisionPales getPales()
 	{
-		Color c1 = _colorScheme.Color1();
+		Color c1 = colorScheme.getColor1();
 		Color c2;
 		Color c3;
 		Color emblemColor;
@@ -163,38 +163,38 @@ public class RandomFlagFactory
 		boolean emblemInCenter = true;
 		double probabilityOfEmblem;
 
-		if (Randomizer.ProbabilityOfTrue(0.13636))
+		if (Randomizer.probabilityOfTrue(0.13636))
 		{
-			c2 = _colorScheme.Color2();
+			c2 = colorScheme.getColor2();
 
-			if (Randomizer.ProbabilityOfTrue(0.333))
+			if (Randomizer.probabilityOfTrue(0.333))
 			{
-				c3 = _colorScheme.Color3();
-				emblemColor = _colorScheme.Metal();
+				c3 = colorScheme.getColor3();
+				emblemColor = colorScheme.getMetal();
 				probabilityOfEmblem = 1.0;
 			}
-			else if (Randomizer.ProbabilityOfTrue(0.5))
+			else if (Randomizer.probabilityOfTrue(0.5))
 			{
-				c3 = _colorScheme.Metal();
-				emblemColor = _colorScheme.Metal();
+				c3 = colorScheme.getMetal();
+				emblemColor = colorScheme.getMetal();
 				probabilityOfEmblem = 1.0;
 			}
 			else
 			{
-				c3 = _colorScheme.Color1();
+				c3 = colorScheme.getColor1();
 				emblemInCenter = false;
-				emblemColor = _colorScheme.Metal();
+				emblemColor = colorScheme.getMetal();
 				probabilityOfEmblem = 1.0;
 			}
 		}
 		else
 		{
-			c2 = _colorScheme.Metal();
-			emblemColor = Randomizer.ProbabilityOfTrue(0.5) ? _colorScheme.Color1() : _colorScheme.Color2();
+			c2 = colorScheme.getMetal();
+			emblemColor = Randomizer.probabilityOfTrue(0.5) ? colorScheme.getColor1() : colorScheme.getColor2();
 
-			if (Randomizer.ProbabilityOfTrue(0.2632))
+			if (Randomizer.probabilityOfTrue(0.2632))
 			{
-				c3 = _colorScheme.Color2();
+				c3 = colorScheme.getColor2();
 				probabilityOfEmblem = 0.357;
 			}
 			else
@@ -203,18 +203,18 @@ public class RandomFlagFactory
 				probabilityOfEmblem = 0.6;
 			}
 
-			if (Randomizer.ProbabilityOfTrue(0.1052))
+			if (Randomizer.probabilityOfTrue(0.1052))
 			{
 				isBalanced = false;
 				probabilityOfEmblem = 1.0;
 			}
 		}
 
-		AddEmblem(probabilityOfEmblem, emblemInCenter ? _gridSize.Width / 2.0 : _gridSize.Width / 6.0, _gridSize.Height / 2.0, emblemColor, false, Color.WHITE, false);
+		addEmblem(probabilityOfEmblem, emblemInCenter ? gridSize.width / 2.0 : gridSize.width / 6.0, gridSize.height / 2.0, emblemColor, false, Color.WHITE, false);
 		return new DivisionPales(c1, c2, c3, 1, isBalanced ? 1 : 2, 1);
 	}
 
-	private DivisionFesses GetFesses()
+	private DivisionFesses getFesses()
 	{
 		Color c1;
 		Color c2;
@@ -227,80 +227,80 @@ public class RandomFlagFactory
 		double probabilityOfEmblem;
 		double probabilityOfHoist;
 
-		if (Randomizer.ProbabilityOfTrue(0.166667))
+		if (Randomizer.probabilityOfTrue(0.166667))
 		{
-			c1 = _colorScheme.Metal();
-			c2 = _colorScheme.Color1();
-			c3 = _colorScheme.Color2();
+			c1 = colorScheme.getMetal();
+			c2 = colorScheme.getColor1();
+			c3 = colorScheme.getColor2();
 			hoistColor = c2;
 			probabilityOfHoist = 0.0909;
 			probabilityOfEmblem = 0.5454;
-			isColombian = Randomizer.ProbabilityOfTrue(0.1818182);
+			isColombian = Randomizer.probabilityOfTrue(0.1818182);
 			emblemColor = isColombian ? c3 : c1;
 		}
 		else
 		{
-			c1 = _colorScheme.Color1();
+			c1 = colorScheme.getColor1();
 
-			if (Randomizer.ProbabilityOfTrue(0.29))
+			if (Randomizer.probabilityOfTrue(0.29))
 			{
-				c2 = _colorScheme.Color2();
+				c2 = colorScheme.getColor2();
 
-				if (Randomizer.ProbabilityOfTrue(0.25))
+				if (Randomizer.probabilityOfTrue(0.25))
 				{
-					c3 = _colorScheme.Color1();
-					isLatvian = Randomizer.ProbabilityOfTrue(0.5);
+					c3 = colorScheme.getColor1();
+					isLatvian = Randomizer.probabilityOfTrue(0.5);
 					isSpanish = !isLatvian;
 					probabilityOfEmblem = isSpanish ? 1.0 : 0.0;
 					probabilityOfHoist = 0;
 					hoistColor = Color.TRANSPARENT;
-					emblemColor = _colorScheme.Metal();
+					emblemColor = colorScheme.getMetal();
 				}
-				else if (Randomizer.ProbabilityOfTrue(0.5))
+				else if (Randomizer.probabilityOfTrue(0.5))
 				{
-					c3 = _colorScheme.Color3();
+					c3 = colorScheme.getColor3();
 					probabilityOfHoist = 0.0;
 					probabilityOfEmblem = 0.833333;
-					boolean hasFimbriations = Randomizer.ProbabilityOfTrue(0.5);
-					isSpanish = !hasFimbriations && Randomizer.ProbabilityOfTrue(0.2);
+					boolean hasFimbriations = Randomizer.probabilityOfTrue(0.5);
+					isSpanish = !hasFimbriations && Randomizer.probabilityOfTrue(0.2);
 					hoistColor = Color.TRANSPARENT;
-					emblemColor = _colorScheme.Metal();
+					emblemColor = colorScheme.getMetal();
 
 					if (hasFimbriations)
 					{
-						_overlays.add(new OverlayLineHorizontal(_colorScheme.Metal(), isSpanish ? _gridSize.Height / 4.0 : _gridSize.Height / 3.0, _gridSize.Height / 20.0, _gridSize.Width, _gridSize.Height));
-						_overlays.add(new OverlayLineHorizontal(_colorScheme.Metal(), isSpanish ? 3 * _gridSize.Height / 4.0 : 2 * _gridSize.Height / 3.0, _gridSize.Height / 20.0, _gridSize.Width, _gridSize.Height));
+						overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), isSpanish ? gridSize.height / 4.0 : gridSize.height / 3.0, gridSize.height / 20.0, gridSize.width, gridSize.height));
+						overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), isSpanish ? 3 * gridSize.height / 4.0 : 2 * gridSize.height / 3.0, gridSize.height / 20.0, gridSize.width, gridSize.height));
 					}
 				}
 				else
 				{
-					c3 = _colorScheme.Metal();
-					hoistColor = _colorScheme.Color3();
-					emblemColor = _colorScheme.Metal();
+					c3 = colorScheme.getMetal();
+					hoistColor = colorScheme.getColor3();
+					emblemColor = colorScheme.getMetal();
 					probabilityOfHoist = 0.166667;
 					probabilityOfEmblem = 0.166667;
 				}
 			}
 			else
 			{
-				c2 = _colorScheme.Metal();
+				c2 = colorScheme.getMetal();
 
-				if (Randomizer.ProbabilityOfTrue(0.2564))
+				if (Randomizer.probabilityOfTrue(0.2564))
 				{
-					c3 = _colorScheme.Color1();
-					isSpanish = Randomizer.ProbabilityOfTrue(0.3);
-					isLatvian = !isSpanish && Randomizer.ProbabilityOfTrue(0.1429);
-					hoistColor = _colorScheme.Color2();
-					emblemColor = _colorScheme.Color2();
+					c3 = colorScheme.getColor1();
+					isSpanish = Randomizer.probabilityOfTrue(0.3);
+					isLatvian = !isSpanish && Randomizer.probabilityOfTrue(0.1429);
+					hoistColor = colorScheme.getColor2();
+					emblemColor = colorScheme.getColor2();
 					probabilityOfHoist = 0.2;
 					probabilityOfEmblem = 0.7;
 				}
 				else
 				{
-					c3 = _colorScheme.Color2();
-					hoistColor = _colorScheme.Color3();
-					emblemColor = Randomizer.ProbabilityOfTrue(0.5) ? c1 : c3;
-					isColombian = Randomizer.ProbabilityOfTrue(0.0345);
+					c3 = colorScheme.getColor2();
+					hoistColor = colorScheme.getColor3();
+					emblemColor = Randomizer.probabilityOfTrue(0.5) ? c1 : c3;
+					isColombian = Randomizer.probabilityOfTrue(0.0345);
 					probabilityOfHoist = 0.2414;
 					probabilityOfEmblem = 0.6552;
 				}
@@ -311,76 +311,76 @@ public class RandomFlagFactory
 		else if (isLatvian) { probabilityOfEmblem = 0.0; }
 		else if (isColombian) { probabilityOfHoist = 0.0; }
 
-		if (Randomizer.ProbabilityOfTrue(probabilityOfHoist))
+		if (Randomizer.probabilityOfTrue(probabilityOfHoist))
 		{
-			emblemColor = _colorScheme.Metal();
-			AddTriangle(1.0, probabilityOfEmblem, HoistElementWidth(true), hoistColor, emblemColor);
+			emblemColor = colorScheme.getMetal();
+			addTriangle(1.0, probabilityOfEmblem, hoistElementWidth(true), hoistColor, emblemColor);
 		}
 		else
 		{
-			AddEmblem(probabilityOfEmblem, _gridSize.Width / 2.0, _gridSize.Height / 2.0, emblemColor, false, Color.TRANSPARENT, false);
+			addEmblem(probabilityOfEmblem, gridSize.width / 2.0, gridSize.height / 2.0, emblemColor, false, Color.TRANSPARENT, false);
 		}
 
 		return new DivisionFesses(c1, c2, c3, isLatvian || isColombian ? 2 : 1, isSpanish ? 2 : 1, isLatvian ? 2 : 1);
 	}
 
-	private DivisionGrid GetCross()
+	private DivisionGrid getCross()
 	{
-		boolean backgroundIsMetal = Randomizer.ProbabilityOfTrue(0.25);
-		boolean fimbriate = !backgroundIsMetal && Randomizer.ProbabilityOfTrue(0.4286);
+		boolean backgroundIsMetal = Randomizer.probabilityOfTrue(0.25);
+		boolean fimbriate = !backgroundIsMetal && Randomizer.probabilityOfTrue(0.4286);
 
-		Color background = backgroundIsMetal ? _colorScheme.Metal() : _colorScheme.Color1();
-		Color mainColor = backgroundIsMetal ? _colorScheme.Color1() : fimbriate ? _colorScheme.Color2() : _colorScheme.Metal();
-		Color fimbriation = _colorScheme.Metal();
-		double center = _gridSize.Height / 2.0;
+		Color background = backgroundIsMetal ? colorScheme.getMetal() : colorScheme.getColor1();
+		Color mainColor = backgroundIsMetal ? colorScheme.getColor1() : fimbriate ? colorScheme.getColor2() : colorScheme.getMetal();
+		Color fimbriation = colorScheme.getMetal();
+		double center = gridSize.height / 2.0;
 
-		int crossWidth = Randomizer.Clamp(Randomizer.NextNormalized(_gridSize.Width / 8.0, _gridSize.Width / 20.0), 2, _gridSize.Width / 4, false) - (fimbriate ? 1 : 0);
+		int crossWidth = Randomizer.clamp(Randomizer.nextNormalized(gridSize.width / 8.0, gridSize.width / 20.0), 2, gridSize.width / 4, false) - (fimbriate ? 1 : 0);
 		int fimbriationWidth = crossWidth + 2;
 
 		boolean canSaltire = false;
 
-		double intersection = _gridSize.Width / 2.0;
-		if (Randomizer.ProbabilityOfTrue(0.555556))
+		double intersection = gridSize.width / 2.0;
+		if (Randomizer.probabilityOfTrue(0.555556))
 		{
-			intersection = _gridSize.Width / 3.0;
+			intersection = gridSize.width / 3.0;
 		}
 		else
 		{
-			if (Randomizer.ProbabilityOfTrue(0.25))
+			if (Randomizer.probabilityOfTrue(0.25))
 			{
-				_overlays.add(new OverlayCross(_colorScheme.Metal(), crossWidth, intersection, center, _gridSize.Width, _gridSize.Height));
-				return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Color2(), 2, 2);
+				overlays.add(new OverlayCross(colorScheme.getMetal(), crossWidth, intersection, center, gridSize.width, gridSize.height));
+				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 2, 2);
 			}
 
 			canSaltire = !backgroundIsMetal;
 		}
 
-		if (canSaltire && Randomizer.ProbabilityOfTrue(0.5))
+		if (canSaltire && Randomizer.probabilityOfTrue(0.5))
 		{
 			if (fimbriate)
 			{
-				_overlays.add(new OverlaySaltire(fimbriation, fimbriationWidth, _gridSize.Width, _gridSize.Height));
-				_overlays.add(new OverlayHalfSaltire(mainColor, crossWidth + 2, _gridSize.Width, _gridSize.Height));
+				overlays.add(new OverlaySaltire(fimbriation, fimbriationWidth, gridSize.width, gridSize.height));
+				overlays.add(new OverlayHalfSaltire(mainColor, crossWidth + 2, gridSize.width, gridSize.height));
 			}
 			else
 			{
-				_overlays.add(new OverlaySaltire(_colorScheme.Color2(), crossWidth, _gridSize.Width, _gridSize.Height));
+				overlays.add(new OverlaySaltire(colorScheme.getColor2(), crossWidth, gridSize.width, gridSize.height));
 			}
 		}
 
 		if (fimbriate)
 		{
-			_overlays.add(new OverlayCross(fimbriation, fimbriationWidth, intersection, center, _gridSize.Width, _gridSize.Height));
+			overlays.add(new OverlayCross(fimbriation, fimbriationWidth, intersection, center, gridSize.width, gridSize.height));
 		}
 
-		_overlays.add(new OverlayCross(mainColor, crossWidth, intersection, center, _gridSize.Width, _gridSize.Height));
+		overlays.add(new OverlayCross(mainColor, crossWidth, intersection, center, gridSize.width, gridSize.height));
 
 		return new DivisionGrid(background, background, 1, 1);
 	}
 
-	private DivisionGrid GetBlank()
+	private DivisionGrid getBlank()
 	{
-		Color color = _colorScheme.Color1();
+		Color color = colorScheme.getColor1();
 
 		switch (new int[]
 				{
@@ -388,188 +388,188 @@ public class RandomFlagFactory
 					2,
 					3,
 					4
-				}[Randomizer.RandomWeighted(new int[] { _canHaveCanton ? 10 : 0, 26, 2, 1 })])
+				}[Randomizer.randomWeighted(new int[] { canHaveCanton ? 10 : 0, 26, 2, 1 })])
 		{
 			case 1:
 				// Canton
-				if (Randomizer.ProbabilityOfTrue(0.6))
+				if (Randomizer.probabilityOfTrue(0.6))
 				{
-					AddFlag(new RandomFlagFactory().GenerateFlag(_colorScheme.Swapped()));
-					AddEmblem(1.0, 3 * _gridSize.Width / 4.0, _gridSize.Height / 2.0, _colorScheme.Metal(), true, _colorScheme.Color2(), false);
+					addFlag(new RandomFlagFactory().generateFlag(colorScheme.swapped()));
+					addEmblem(1.0, 3 * gridSize.width / 4.0, gridSize.height / 2.0, colorScheme.getMetal(), true, colorScheme.getColor2(), false);
 				}
 				else
 				{
-					Color cantonColor = Randomizer.ProbabilityOfTrue(0.5) ? _colorScheme.Color2() : _colorScheme.Metal();
-					_overlays.add(new OverlayBox(cantonColor, 0, 0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _gridSize.Width, _gridSize.Height));
+					Color cantonColor = Randomizer.probabilityOfTrue(0.5) ? colorScheme.getColor2() : colorScheme.getMetal();
+					overlays.add(new OverlayBox(cantonColor, 0, 0, gridSize.width / 2.0, gridSize.height / 2.0, gridSize.width, gridSize.height));
 
 
-					if (Randomizer.ProbabilityOfTrue(0.5))
+					if (Randomizer.probabilityOfTrue(0.5))
 					{
-						AddRepeater(_gridSize.Width / 4.0, _gridSize.Height / 4.0, _gridSize.Width / 3.0, _gridSize.Height / 3.0, cantonColor == _colorScheme.Metal() ? _colorScheme.Color1() : _colorScheme.Metal(), false);
+						addRepeater(gridSize.width / 4.0, gridSize.height / 4.0, gridSize.width / 3.0, gridSize.height / 3.0, cantonColor == colorScheme.getMetal() ? colorScheme.getColor1() : colorScheme.getMetal(), false);
 					}
 					else
 					{
-						AddEmblem(1.0, _gridSize.Width / 4.0, _gridSize.Height / 4.0, cantonColor == _colorScheme.Metal() ? _colorScheme.Color1() : _colorScheme.Metal(), true, cantonColor == _colorScheme.Metal() ? _colorScheme.Metal() : _colorScheme.Color1(), false);
+						addEmblem(1.0, gridSize.width / 4.0, gridSize.height / 4.0, cantonColor == colorScheme.getMetal() ? colorScheme.getColor1() : colorScheme.getMetal(), true, cantonColor == colorScheme.getMetal() ? colorScheme.getMetal() : colorScheme.getColor1(), false);
 					}
 				}
 				break;
 			case 2:
 				// Center emblem
-				color = GetCenterEmblemForBlank();
+				color = getCenterEmblemForBlank();
 				break;
 			case 3:
 				// Triangle
-				int width = HoistElementWidth(true);
-				if (Randomizer.ProbabilityOfTrue(0.5))
+				int width = hoistElementWidth(true);
+				if (Randomizer.probabilityOfTrue(0.5))
 				{
-					AddTriangle(1.0, 0.0, width <= _gridSize.Width / 2.0 ? width * 2 : _gridSize.Width, _colorScheme.Metal(), _colorScheme.Metal());
+					addTriangle(1.0, 0.0, width <= gridSize.width / 2.0 ? width * 2 : gridSize.width, colorScheme.getMetal(), colorScheme.getMetal());
 				}
 				else
 				{
-					AddTriangle(1.0, 0.0, width + 2, _colorScheme.Metal(), _colorScheme.Metal());
+					addTriangle(1.0, 0.0, width + 2, colorScheme.getMetal(), colorScheme.getMetal());
 				}
-				AddTriangle(1.0, 1.0, width, _colorScheme.Color2(), _colorScheme.Metal());
+				addTriangle(1.0, 1.0, width, colorScheme.getColor2(), colorScheme.getMetal());
 				break;
 			case 4:
 				// Rays
-				_overlays.add(new OverlayRays(_colorScheme.Metal(), _gridSize.Width / 2.0, _gridSize.Height / 2.0,
-						Randomizer.Clamp(Randomizer.NextNormalized(_gridSize.Width * 3 / 4.0, _gridSize.Width / 10.0), 4, 20, false), _gridSize.Width / 4.0, _gridSize.Width, _gridSize.Height));
-				AddCircleEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), _colorScheme.Color1(), _colorScheme.Metal());
+				overlays.add(new OverlayRays(colorScheme.getMetal(), gridSize.width / 2.0, gridSize.height / 2.0,
+						Randomizer.clamp(Randomizer.nextNormalized(gridSize.width * 3 / 4.0, gridSize.width / 10.0), 4, 20, false), gridSize.width / 4.0, gridSize.width, gridSize.height));
+				addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), colorScheme.getColor1(), colorScheme.getMetal());
 				break;
 		}
 
-		return new DivisionGrid(color, _colorScheme.Color2(), 1, 1);
+		return new DivisionGrid(color, colorScheme.getColor2(), 1, 1);
 	}
 
-	private Color GetCenterEmblemForBlank()
+	private Color getCenterEmblemForBlank()
 	{
-		switch (new int[] { 1, 2, 3, 4, 5 }[Randomizer.RandomWeighted(new int[] { 20, 3, 1, _canHaveCanton ? 3 : 0, 2 })])
+		switch (new int[] { 1, 2, 3, 4, 5 }[Randomizer.randomWeighted(new int[] { 20, 3, 1, canHaveCanton ? 3 : 0, 2 })])
 		{
 			case 1:
 				// Plain
-				boolean isInverted = Randomizer.ProbabilityOfTrue(0.1);
-				boolean useColor2 = Randomizer.ProbabilityOfTrue(.11);
-				AddEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0,
-					useColor2 ? _colorScheme.Color2() : (isInverted ? _colorScheme.Color1() : _colorScheme.Metal()),
-					!isInverted, useColor2 ? _colorScheme.Metal() : _colorScheme.Color2(), false);
-				return isInverted ? _colorScheme.Metal() : _colorScheme.Color1();
+				boolean isInverted = Randomizer.probabilityOfTrue(0.1);
+				boolean useColor2 = Randomizer.probabilityOfTrue(.11);
+				addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0,
+					useColor2 ? colorScheme.getColor2() : (isInverted ? colorScheme.getColor1() : colorScheme.getMetal()),
+					!isInverted, useColor2 ? colorScheme.getMetal() : colorScheme.getColor2(), false);
+				return isInverted ? colorScheme.getMetal() : colorScheme.getColor1();
 			case 2:
 				// Circled
-				AddCircleEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), _colorScheme.Color1(), _colorScheme.Metal());
-				return _colorScheme.Color1();
+				addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), colorScheme.getColor1(), colorScheme.getMetal());
+				return colorScheme.getColor1();
 			case 3:
 				// Repeater
-				AddRepeater(_gridSize.Width / 2.0, _gridSize.Height / 2.0, _gridSize.Height, 0, _colorScheme.Metal(), true);
-				return _colorScheme.Color1();
+				addRepeater(gridSize.width / 2.0, gridSize.height / 2.0, gridSize.height, 0, colorScheme.getMetal(), true);
+				return colorScheme.getColor1();
 			case 4:
 				// Border
-				_overlays.add(new OverlayBorder(_colorScheme.Color2(), _gridSize.Width / 8.0, _gridSize.Width, _gridSize.Height));
-				AddEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), true, _colorScheme.Color2(), false);
-				return _colorScheme.Color1();
+				overlays.add(new OverlayBorder(colorScheme.getColor2(), gridSize.width / 8.0, gridSize.width, gridSize.height));
+				addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), true, colorScheme.getColor2(), false);
+				return colorScheme.getColor1();
 			default:
 				// Stripes
-				_overlays.add(new OverlayLineHorizontal(_colorScheme.Color1(), _gridSize.Height * (1 / 6.0), _gridSize.Height / 8.0, _gridSize.Width, _gridSize.Height));
-				_overlays.add(new OverlayLineHorizontal(_colorScheme.Color1(), _gridSize.Height * (5 / 6.0), _gridSize.Height / 8.0, _gridSize.Width, _gridSize.Height));
-				AddEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Color1(), false, _colorScheme.Color2(), false);
-				return _colorScheme.Metal();
+				overlays.add(new OverlayLineHorizontal(colorScheme.getColor1(), gridSize.height * (1 / 6.0), gridSize.height / 8.0, gridSize.width, gridSize.height));
+				overlays.add(new OverlayLineHorizontal(colorScheme.getColor1(), gridSize.height * (5 / 6.0), gridSize.height / 8.0, gridSize.width, gridSize.height));
+				addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getColor1(), false, colorScheme.getColor2(), false);
+				return colorScheme.getMetal();
 		}
 	}
 
-	private DivisionGrid GetVertical()
+	private DivisionGrid getVertical()
 	{
 		switch (new int[]
 				{
 					1,
 					2,
 					3
-				}[Randomizer.RandomWeighted(new int[] { 2, 1, 3 })])
+				}[Randomizer.randomWeighted(new int[] { 2, 1, 3 })])
 		{
 			case 1:
 				// Color 1 / Metal
-				AddEmblem(1.0, Randomizer.ProbabilityOfTrue(0.5) ? _gridSize.Width / 2.0 : 3 * _gridSize.Width / 4.0, _gridSize.Height / 2.0, _colorScheme.Color2(), false, _colorScheme.Metal(), false);
-				return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Metal(), 2, 1);
+				addEmblem(1.0, Randomizer.probabilityOfTrue(0.5) ? gridSize.width / 2.0 : 3 * gridSize.width / 4.0, gridSize.height / 2.0, colorScheme.getColor2(), false, colorScheme.getMetal(), false);
+				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getMetal(), 2, 1);
 			case 2:
 				// Color 1 / Color 2
-				AddEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), false, _colorScheme.Metal(), false);
-				return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Color2(), 2, 1);
+				addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), false, colorScheme.getMetal(), false);
+				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 2, 1);
 			default:
 				// Metal / Color 1
-				AddEmblem(0.5, _gridSize.Width / 4.0, _gridSize.Height / 4.0, _colorScheme.Color2(), false, _colorScheme.Metal(), false);
-				return new DivisionGrid(_colorScheme.Metal(), _colorScheme.Color1(), 2, 1);
+				addEmblem(0.5, gridSize.width / 4.0, gridSize.height / 4.0, colorScheme.getColor2(), false, colorScheme.getMetal(), false);
+				return new DivisionGrid(colorScheme.getMetal(), colorScheme.getColor1(), 2, 1);
 		}
 	}
 
-	private DivisionGrid GetHorizontal()
+	private DivisionGrid getHorizontal()
 	{
-		switch (new int[]{ 1, 2, 3 }[Randomizer.RandomWeighted(new int[] { 4, 11, 6 })])
+		switch (new int[]{ 1, 2, 3 }[Randomizer.randomWeighted(new int[] { 4, 11, 6 })])
 		{
 			case 1:
 				// Color 1 / Metal
-				AddEmblem(0.25, _gridSize.Width / 4.0, _gridSize.Height / 4.0, _colorScheme.Metal(), false, _colorScheme.Metal(), false);
-				return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Metal(), 1, 2);
+				addEmblem(0.25, gridSize.width / 4.0, gridSize.height / 4.0, colorScheme.getMetal(), false, colorScheme.getMetal(), false);
+				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getMetal(), 1, 2);
 			case 2:
 				// Color 1 / Color 2
 
-				if (Randomizer.ProbabilityOfTrue(0.181818))
+				if (Randomizer.probabilityOfTrue(0.181818))
 				{
-					double width = _gridSize.Width / 3.0;
-					AddTriangle(1.0, 0.5, (int)width, Color.BLACK, _colorScheme.Metal());
-					_overlays.add(new OverlayPall(_colorScheme.Metal(), width, _gridSize.Width / 8.0, _gridSize.Width, _gridSize.Height));
-					_overlays.add(new OverlayPall(_colorScheme.Color3(), width, _gridSize.Width / 5.0, _gridSize.Width, _gridSize.Height));
+					double width = gridSize.width / 3.0;
+					addTriangle(1.0, 0.5, (int)width, Color.BLACK, colorScheme.getMetal());
+					overlays.add(new OverlayPall(colorScheme.getMetal(), width, gridSize.width / 8.0, gridSize.width, gridSize.height));
+					overlays.add(new OverlayPall(colorScheme.getColor3(), width, gridSize.width / 5.0, gridSize.width, gridSize.height));
 				}
 				else
 				{
-					if (Randomizer.ProbabilityOfTrue(0.1111))
+					if (Randomizer.probabilityOfTrue(0.1111))
 					{
-						AddHoistForHorizontal(false, true);
+						addHoistForHorizontal(false, true);
 					}
-					else if (Randomizer.ProbabilityOfTrue(0.375))
+					else if (Randomizer.probabilityOfTrue(0.375))
 					{
-						boolean isTriangleMetal = Randomizer.ProbabilityOfTrue(0.6667);
-						AddTriangle(1.0, 1.0, HoistElementWidth(true), isTriangleMetal ? _colorScheme.Metal() : _colorScheme.Color3(),
-							isTriangleMetal ? _colorScheme.Color1() : _colorScheme.Metal());
+						boolean isTriangleMetal = Randomizer.probabilityOfTrue(0.6667);
+						addTriangle(1.0, 1.0, hoistElementWidth(true), isTriangleMetal ? colorScheme.getMetal() : colorScheme.getColor3(),
+							isTriangleMetal ? colorScheme.getColor1() : colorScheme.getMetal());
 					}
 					else
 					{
 						// Plain with emblem
-						double offset = Randomizer.ProbabilityOfTrue(0.25) ? 4.0 : 2.0;
-						AddEmblem(1.0, _gridSize.Width / offset, _gridSize.Height / offset, _colorScheme.Metal(), false, _colorScheme.Metal(), false);
+						double offset = Randomizer.probabilityOfTrue(0.25) ? 4.0 : 2.0;
+						addEmblem(1.0, gridSize.width / offset, gridSize.height / offset, colorScheme.getMetal(), false, colorScheme.getMetal(), false);
 					}
 				}
 
-				return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Color2(), 1, 2);
+				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 1, 2);
 			default:
 				// Metal / Color 1
-				if (Randomizer.ProbabilityOfTrue(0.333))
+				if (Randomizer.probabilityOfTrue(0.333))
 				{
-					AddHoistForHorizontal(Randomizer.ProbabilityOfTrue(0.5), false);
+					addHoistForHorizontal(Randomizer.probabilityOfTrue(0.5), false);
 				}
-				return new DivisionGrid(_colorScheme.Metal(), _colorScheme.Color1(), 1, 2);
+				return new DivisionGrid(colorScheme.getMetal(), colorScheme.getColor1(), 1, 2);
 		}
 	}
 
-	private void AddHoistForHorizontal(boolean isHalfSize, boolean isMetal)
+	private void addHoistForHorizontal(boolean isHalfSize, boolean isMetal)
 	{
-		int width = HoistElementWidth(false);
-		_overlays.add(new OverlayBox(isMetal ? _colorScheme.Metal() : _colorScheme.Color2(), 0, 0, width,
-			isHalfSize ? _gridSize.Height / 2.0 : _gridSize.Height, _gridSize.Width, _gridSize.Height));
-		AddEmblem(1.0, width / 2.0, isHalfSize ? _gridSize.Height / 4.0 : _gridSize.Height / 2.0, isMetal ? _colorScheme.Color1() : _colorScheme.Metal(), false, _colorScheme.Metal(), false);
+		int width = hoistElementWidth(false);
+		overlays.add(new OverlayBox(isMetal ? colorScheme.getMetal() : colorScheme.getColor2(), 0, 0, width,
+			isHalfSize ? gridSize.height / 2.0 : gridSize.height, gridSize.width, gridSize.height));
+		addEmblem(1.0, width / 2.0, isHalfSize ? gridSize.height / 4.0 : gridSize.height / 2.0, isMetal ? colorScheme.getColor1() : colorScheme.getMetal(), false, colorScheme.getMetal(), false);
 	}
 
-	private Division GetDiagonal()
+	private Division getDiagonal()
 	{
-		boolean isForward = Randomizer.ProbabilityOfTrue(0.7);
+		boolean isForward = Randomizer.probabilityOfTrue(0.7);
 
 		Color[][] schemes = new Color[][]
 					  {
-						  new Color[] { _colorScheme.Metal(), _colorScheme.Color1(), Color.TRANSPARENT, Color.TRANSPARENT, _colorScheme.Color2() },
-						  new Color[] { _colorScheme.Color1(), _colorScheme.Color2(), Color.TRANSPARENT, Color.TRANSPARENT, _colorScheme.Metal() },
-						  new Color[] { _colorScheme.Color1(), _colorScheme.Color1(), _colorScheme.Color2(), _colorScheme.Metal(), _colorScheme.Metal() },
-						  new Color[] { _colorScheme.Color1(), _colorScheme.Color2(), _colorScheme.Color3(), _colorScheme.Metal(), _colorScheme.Metal() },
-						  new Color[] { _colorScheme.Metal(), _colorScheme.Metal(), _colorScheme.Color1(), Color.TRANSPARENT, _colorScheme.Color2() },
-						  new Color[] { _colorScheme.Color1(), _colorScheme.Color2(), _colorScheme.Metal(), Color.TRANSPARENT , _colorScheme.Metal() }
+						  new Color[] { colorScheme.getMetal(), colorScheme.getColor1(), Color.TRANSPARENT, Color.TRANSPARENT, colorScheme.getColor2() },
+						  new Color[] { colorScheme.getColor1(), colorScheme.getColor2(), Color.TRANSPARENT, Color.TRANSPARENT, colorScheme.getMetal() },
+						  new Color[] { colorScheme.getColor1(), colorScheme.getColor1(), colorScheme.getColor2(), colorScheme.getMetal(), colorScheme.getMetal() },
+						  new Color[] { colorScheme.getColor1(), colorScheme.getColor2(), colorScheme.getColor3(), colorScheme.getMetal(), colorScheme.getMetal() },
+						  new Color[] { colorScheme.getMetal(), colorScheme.getMetal(), colorScheme.getColor1(), Color.TRANSPARENT, colorScheme.getColor2() },
+						  new Color[] { colorScheme.getColor1(), colorScheme.getColor2(), colorScheme.getMetal(), Color.TRANSPARENT , colorScheme.getMetal() }
 					  };
-		Color[] scheme = schemes[Randomizer.RandomWeighted(new int[] { 1, 1, 2, 3, 1, 2 })];
+		Color[] scheme = schemes[Randomizer.randomWeighted(new int[] { 1, 1, 2, 3, 1, 2 })];
 
 		Color topColor = scheme[0];
 		Color bottomColor = scheme[1];
@@ -586,30 +586,30 @@ public class RandomFlagFactory
 			{
 				if (isForward)
 				{
-					_overlays.add(new OverlayFimbriationForward(fimbriationColor, _gridSize.Width / 3.0, _gridSize.Width, _gridSize.Height));
+					overlays.add(new OverlayFimbriationForward(fimbriationColor, gridSize.width / 3.0, gridSize.width, gridSize.height));
 				}
 				else
 				{
-					_overlays.add(new OverlayFimbriationBackward(fimbriationColor, _gridSize.Width / 3.0, _gridSize.Width, _gridSize.Height));
+					overlays.add(new OverlayFimbriationBackward(fimbriationColor, gridSize.width / 3.0, gridSize.width, gridSize.height));
 				}
 			}
 			if (isForward)
 			{
-				_overlays.add(new OverlayFimbriationForward(stripeColor, _gridSize.Width / 4.0, _gridSize.Width, _gridSize.Height));
+				overlays.add(new OverlayFimbriationForward(stripeColor, gridSize.width / 4.0, gridSize.width, gridSize.height));
 			}
 			else
 			{
-				_overlays.add(new OverlayFimbriationBackward(stripeColor, _gridSize.Width / 4.0, _gridSize.Width, _gridSize.Height));
+				overlays.add(new OverlayFimbriationBackward(stripeColor, gridSize.width / 4.0, gridSize.width, gridSize.height));
 			}
 		}
 
 		double emblemLeft = hasStripe
-			? (isForward ? 1.0 : 5.0) * _gridSize.Width / 6.0
-			: _gridSize.Width / 2.0;
+			? (isForward ? 1.0 : 5.0) * gridSize.width / 6.0
+			: gridSize.width / 2.0;
 		double emblemTop = hasStripe
-			? _gridSize.Height / 4.0
-			: _gridSize.Height / 2.0;
-		AddEmblem(1.0, emblemLeft, emblemTop, emblemColor, false, emblemColor, false);
+			? gridSize.height / 4.0
+			: gridSize.height / 2.0;
+		addEmblem(1.0, emblemLeft, emblemTop, emblemColor, false, emblemColor, false);
 
 		if (isForward)
 		{
@@ -619,180 +619,180 @@ public class RandomFlagFactory
 		return new DivisionBendsBackward(topColor, bottomColor);
 	}
 
-	private DivisionGrid GetStripe()
+	private DivisionGrid getStripe()
 	{
-		return Randomizer.ProbabilityOfTrue(0.58333) 
-			? GetSingleStripe()
-			: GetMultiStripe();
+		return Randomizer.probabilityOfTrue(0.58333) 
+			? getSingleStripe()
+			: getMultiStripe();
 	}
 
-	private DivisionGrid GetSingleStripe()
+	private DivisionGrid getSingleStripe()
 	{
-		if (Randomizer.ProbabilityOfTrue(0.142))
+		if (Randomizer.probabilityOfTrue(0.142))
 		{
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Metal(), _gridSize.Height / 2.0, _gridSize.Height / 6.0, _gridSize.Width, _gridSize.Height));
-			AddEmblem(0.75, _gridSize.Width / 3.0, _gridSize.Height / 1.333, _colorScheme.Metal(), false, _colorScheme.Metal(), false);
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height / 2.0, gridSize.height / 6.0, gridSize.width, gridSize.height));
+			addEmblem(0.75, gridSize.width / 3.0, gridSize.height / 1.333, colorScheme.getMetal(), false, colorScheme.getMetal(), false);
 		}
 		else
 		{
-			boolean isThick = Randomizer.ProbabilityOfTrue(0.66667);
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Metal(), _gridSize.Height / 2.0, _gridSize.Height / (isThick ? 1.5 : 3.0), _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Color2(), _gridSize.Height / 2.0, _gridSize.Height / (isThick ? 3.0 : 4.0), _gridSize.Width, _gridSize.Height));
-			AddEmblem(isThick ? 0.5 : 0.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), false, _colorScheme.Metal(), false);
+			boolean isThick = Randomizer.probabilityOfTrue(0.66667);
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height / 2.0, gridSize.height / (isThick ? 1.5 : 3.0), gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.height / 2.0, gridSize.height / (isThick ? 3.0 : 4.0), gridSize.width, gridSize.height));
+			addEmblem(isThick ? 0.5 : 0.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), false, colorScheme.getMetal(), false);
 		}
 
-		return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Color2(), 1, 1);
+		return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 1, 1);
 	}
 
-	private DivisionGrid GetMultiStripe()
+	private DivisionGrid getMultiStripe()
 	{
-		if (Randomizer.ProbabilityOfTrue(0.2))
+		if (Randomizer.probabilityOfTrue(0.2))
 		{
 			// Symmetric
-			boolean swap = Randomizer.ProbabilityOfTrue(0.5);
-			_overlays.add(new OverlayLineHorizontal(swap ? _colorScheme.Color2() : _colorScheme.Metal(), _gridSize.Height / 2.0, _gridSize.Height / 1.4, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayLineHorizontal(swap ? _colorScheme.Metal() : _colorScheme.Color2(), _gridSize.Height / 2.0, _gridSize.Height / 2.3333, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Color3(), _gridSize.Height / 2.0, _gridSize.Height / 7.0, _gridSize.Width, _gridSize.Height));
+			boolean swap = Randomizer.probabilityOfTrue(0.5);
+			overlays.add(new OverlayLineHorizontal(swap ? colorScheme.getColor2() : colorScheme.getMetal(), gridSize.height / 2.0, gridSize.height / 1.4, gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(swap ? colorScheme.getMetal() : colorScheme.getColor2(), gridSize.height / 2.0, gridSize.height / 2.3333, gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor3(), gridSize.height / 2.0, gridSize.height / 7.0, gridSize.width, gridSize.height));
 		}
-		else if (Randomizer.ProbabilityOfTrue(0.75))
+		else if (Randomizer.probabilityOfTrue(0.75))
 		{
 			// Asymmetric
-			boolean swap = Randomizer.ProbabilityOfTrue(0.3333);
-			_overlays.add(new OverlayBox(swap ? _colorScheme.Color2() : _colorScheme.Metal(), 0, _gridSize.Height / 4.0, _gridSize.Width, _gridSize.Height * 3 / 4.0, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayBox(swap ? _colorScheme.Metal() : _colorScheme.Color2(), 0, _gridSize.Height / 2.0, _gridSize.Width, _gridSize.Height * 2.0, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayBox(_colorScheme.Color3(), 0, _gridSize.Height * 3/4.0, _gridSize.Width, _gridSize.Height / 4.0, _gridSize.Width, _gridSize.Height));
+			boolean swap = Randomizer.probabilityOfTrue(0.3333);
+			overlays.add(new OverlayBox(swap ? colorScheme.getColor2() : colorScheme.getMetal(), 0, gridSize.height / 4.0, gridSize.width, gridSize.height * 3 / 4.0, gridSize.width, gridSize.height));
+			overlays.add(new OverlayBox(swap ? colorScheme.getMetal() : colorScheme.getColor2(), 0, gridSize.height / 2.0, gridSize.width, gridSize.height * 2.0, gridSize.width, gridSize.height));
+			overlays.add(new OverlayBox(colorScheme.getColor3(), 0, gridSize.height * 3/4.0, gridSize.width, gridSize.height / 4.0, gridSize.width, gridSize.height));
 		}
 		else
 		{
 			// Uganda
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Metal(), _gridSize.Height * 3 / 12.0, _gridSize.Height / 6.0, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Color2(), _gridSize.Height * 5 / 12.0, _gridSize.Height / 6.0, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Metal(), _gridSize.Height * 9 / 12.0, _gridSize.Height / 6.0, _gridSize.Width, _gridSize.Height));
-			_overlays.add(new OverlayLineHorizontal(_colorScheme.Color2(), _gridSize.Height * 11 / 12.0, _gridSize.Height / 6.0, _gridSize.Width, _gridSize.Height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height * 3 / 12.0, gridSize.height / 6.0, gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.height * 5 / 12.0, gridSize.height / 6.0, gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height * 9 / 12.0, gridSize.height / 6.0, gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.height * 11 / 12.0, gridSize.height / 6.0, gridSize.width, gridSize.height));
 		}
 
-		if (Randomizer.ProbabilityOfTrue(0.4))
+		if (Randomizer.probabilityOfTrue(0.4))
 		{
-			AddTriangle(1.0, 1.0, HoistElementWidth(true), _colorScheme.Metal(), _colorScheme.Color1());
+			addTriangle(1.0, 1.0, hoistElementWidth(true), colorScheme.getMetal(), colorScheme.getColor1());
 		}
 		else
 		{
-			AddCircleEmblem(0.5, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), _colorScheme.Color1(), _colorScheme.Metal());
+			addCircleEmblem(0.5, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), colorScheme.getColor1(), colorScheme.getMetal());
 		}
 
-		return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Color2(), 1, 1);
+		return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 1, 1);
 	}
 
-	private Division GetX()
+	private Division getX()
 	{
 		switch (new int[]
 				{
 					1,
 					2,
 					3
-				}[Randomizer.RandomWeighted(new int[] { 2, 1, 1 })])
+				}[Randomizer.randomWeighted(new int[] { 2, 1, 1 })])
 		{
 			case 1:
 				// Two-color, fimbriation
-				_overlays.add(new OverlaySaltire(_colorScheme.Metal(), _gridSize.Width / 6.0, _gridSize.Width, _gridSize.Height));
-				AddCircleEmblem(0.5, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), _colorScheme.Color1(), _colorScheme.Color1());
-				return new DivisionX(_colorScheme.Color1(), _colorScheme.Color2());
+				overlays.add(new OverlaySaltire(colorScheme.getMetal(), gridSize.width / 6.0, gridSize.width, gridSize.height));
+				addCircleEmblem(0.5, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), colorScheme.getColor1(), colorScheme.getColor1());
+				return new DivisionX(colorScheme.getColor1(), colorScheme.getColor2());
 			case 2:
 				// Two-color, no fimbriation
-				AddCircleEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Color2(), _colorScheme.Metal(), _colorScheme.Metal());
-				if (Randomizer.ProbabilityOfTrue(0.5))
+				addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getColor2(), colorScheme.getMetal(), colorScheme.getMetal());
+				if (Randomizer.probabilityOfTrue(0.5))
 				{
-					_overlays.add(new OverlayBorder(_colorScheme.Color2(), _gridSize.Width / 8.0, _gridSize.Width, _gridSize.Height));
+					overlays.add(new OverlayBorder(colorScheme.getColor2(), gridSize.width / 8.0, gridSize.width, gridSize.height));
 				}
-				return new DivisionX(_colorScheme.Color1(), _colorScheme.Metal());
+				return new DivisionX(colorScheme.getColor1(), colorScheme.getMetal());
 			default:
 				// One-color
-				_overlays.add(new OverlaySaltire(_colorScheme.Metal(), _gridSize.Width / 6.0, _gridSize.Width, _gridSize.Height));
-				return new DivisionGrid(_colorScheme.Color1(), _colorScheme.Color1(), 1, 1);
+				overlays.add(new OverlaySaltire(colorScheme.getMetal(), gridSize.width / 6.0, gridSize.width, gridSize.height));
+				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor1(), 1, 1);
 		}
 	}
 
-	private DivisionGrid GetRay()
+	private DivisionGrid getRay()
 	{
-		_overlays.add(new OverlayRays(_colorScheme.Color1(), _gridSize.Width / 2.0, _gridSize.Height / 2.0, 20, _gridSize.Width / 4.0, _gridSize.Width, _gridSize.Height));
-		AddCircleEmblem(1.0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _colorScheme.Metal(), _colorScheme.Color1(), _colorScheme.Metal());
-		return new DivisionGrid(_colorScheme.Metal(), _colorScheme.Metal(), 1, 1);
+		overlays.add(new OverlayRays(colorScheme.getColor1(), gridSize.width / 2.0, gridSize.height / 2.0, 20, gridSize.width / 4.0, gridSize.width, gridSize.height));
+		addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), colorScheme.getColor1(), colorScheme.getMetal());
+		return new DivisionGrid(colorScheme.getMetal(), colorScheme.getMetal(), 1, 1);
 	}
 
-	private int HoistElementWidth(boolean isTriangle)
+	private int hoistElementWidth(boolean isTriangle)
 	{
-		return (int)(_gridSize.Width * Randomizer.NextNormalized(isTriangle ? 0.45 : 0.35, 0.05));
+		return (int)(gridSize.width * Randomizer.nextNormalized(isTriangle ? 0.45 : 0.35, 0.05));
 	}
 
-	private void AddTriangle(double probability, double probabilityOfEmblem, int width, Color color, Color emblemColor)
+	private void addTriangle(double probability, double probabilityOfEmblem, int width, Color color, Color emblemColor)
 	{
-		if (!Randomizer.ProbabilityOfTrue(probability)) return;
-		_overlays.add(new OverlayTriangle(color, 0, 0, width, _gridSize.Height / 2.0, 0, _gridSize.Height, _gridSize.Width, _gridSize.Height));
+		if (!Randomizer.probabilityOfTrue(probability)) return;
+		overlays.add(new OverlayTriangle(color, 0, 0, width, gridSize.height / 2.0, 0, gridSize.height, gridSize.width, gridSize.height));
 
-		if (Randomizer.ProbabilityOfTrue(probabilityOfEmblem))
+		if (Randomizer.probabilityOfTrue(probabilityOfEmblem))
 		{
-			AddEmblem(1.0, width / 3.0, _gridSize.Height / 2.0, emblemColor, false, Color.WHITE, false);
+			addEmblem(1.0, width / 3.0, gridSize.height / 2.0, emblemColor, false, Color.WHITE, false);
 		}
 	}
 
-	private void AddRepeater(double x, double y, double width, double height, Color color, boolean forceRadial)
+	private void addRepeater(double x, double y, double width, double height, Color color, boolean forceRadial)
 	{
 		boolean big = forceRadial;
-		if (!forceRadial && Randomizer.ProbabilityOfTrue(0.5))
+		if (!forceRadial && Randomizer.probabilityOfTrue(0.5))
 		{
-			_overlays.add(new OverlayRepeaterLateral(x, y, width, height,
-				Randomizer.Clamp(Randomizer.NextNormalized(5, 2), 2, 8, false),
-				Randomizer.Clamp(Randomizer.NextNormalized(4, 2), 2, 8, false), _gridSize.Width, _gridSize.Height));
+			overlays.add(new OverlayRepeaterLateral(x, y, width, height,
+				Randomizer.clamp(Randomizer.nextNormalized(5, 2), 2, 8, false),
+				Randomizer.clamp(Randomizer.nextNormalized(4, 2), 2, 8, false), gridSize.width, gridSize.height));
 		}
 		else
 		{
 			big = true;
-			_overlays.add(new OverlayRepeaterRadial(x, y, width / 3.0,
-				Randomizer.Clamp(Randomizer.NextNormalized(12, 4), 4, 25, false),
-				Randomizer.ProbabilityOfTrue(0.5), _gridSize.Width, _gridSize.Height));
+			overlays.add(new OverlayRepeaterRadial(x, y, width / 3.0,
+				Randomizer.clamp(Randomizer.nextNormalized(12, 4), 4, 25, false),
+				Randomizer.probabilityOfTrue(0.5), gridSize.width, gridSize.height));
 		}
 
-		AddEmblem(1, 0, 0, color, false, color, big);
+		addEmblem(1, 0, 0, color, false, color, big);
 	}
 
-	private void AddCircleEmblem(double probability, double x, double y, Color circleColor, Color emblemColor, Color colorIfStroke)
+	private void addCircleEmblem(double probability, double x, double y, Color circleColor, Color emblemColor, Color colorIfStroke)
 	{
-		if (!Randomizer.ProbabilityOfTrue(probability)) return;
+		if (!Randomizer.probabilityOfTrue(probability)) return;
 
-		_overlays.add(new OverlayEllipse(circleColor, x, y, _gridSize.Width / 4.0, 0.0, _gridSize.Width, _gridSize.Height));
+		overlays.add(new OverlayEllipse(circleColor, x, y, gridSize.width / 4.0, 0.0, gridSize.width, gridSize.height));
 
-		AddEmblem(1.0, x, y, emblemColor, true, colorIfStroke, false);
+		addEmblem(1.0, x, y, emblemColor, true, colorIfStroke, false);
 	}
 
-	private void AddEmblem(double probability, double x, double y, Color color, boolean canStroke, Color colorIfStroked, boolean isBig)
+	private void addEmblem(double probability, double x, double y, Color color, boolean canStroke, Color colorIfStroked, boolean isBig)
 	{
-		if (probability < 1 && !Randomizer.ProbabilityOfTrue(probability)) return;
+		if (probability < 1 && !Randomizer.probabilityOfTrue(probability)) return;
 
-		OverlayPath emblem = (OverlayPath)_emblems[Randomizer.Next(_emblems.length)];
-		emblem.SetMaximum(_gridSize.Width, _gridSize.Height);
-		emblem.SetAttribute("X", x);
-		emblem.SetAttribute("Y", y);
-		emblem.SetAttribute("Size", _gridSize.Width / (isBig ? 3.0 : 6.0));
-		emblem.SetAttribute("Rotation", 0.0);
+		OverlayPath emblem = (OverlayPath)emblems[Randomizer.next(emblems.length)];
+		emblem.setMaximum(gridSize.width, gridSize.height);
+		emblem.setAttribute("X", x);
+		emblem.setAttribute("Y", y);
+		emblem.setAttribute("Size", gridSize.width / (isBig ? 3.0 : 6.0));
+		emblem.setAttribute("Rotation", 0.0);
 
-		if (canStroke && Randomizer.ProbabilityOfTrue(0.1))
+		if (canStroke && Randomizer.probabilityOfTrue(0.1))
 		{
-			emblem.SetAttribute("Color", colorIfStroked);
-			emblem.SetAttribute("Stroke", 2.0);
-			emblem.SetAttribute("StrokeColor", color);
-			emblem.SetAttribute("StrokeCurved", true);
+			emblem.setAttribute("Color", colorIfStroked);
+			emblem.setAttribute("Stroke", 2.0);
+			emblem.setAttribute("StrokeColor", color);
+			emblem.setAttribute("StrokeCurved", true);
 		}
 		else
 		{
-			emblem.SetAttribute("Color", color);
-			emblem.SetAttribute("Stroke", 0.0);
+			emblem.setAttribute("Color", color);
+			emblem.setAttribute("Stroke", 0.0);
 		}
 
-		_overlays.add(emblem);
+		overlays.add(emblem);
 	}
 
-	private void AddFlag(Flag flag)
+	private void addFlag(Flag flag)
 	{
-		_overlays.add(new OverlayFlag(flag, new File(""), 0, 0, _gridSize.Width / 2.0, _gridSize.Height / 2.0, _gridSize.Width, _gridSize.Height));
+		overlays.add(new OverlayFlag(flag, new File(""), 0, 0, gridSize.width / 2.0, gridSize.height / 2.0, gridSize.width, gridSize.height));
 	}
 }

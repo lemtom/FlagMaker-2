@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
-    <Button onAction="#OnClicked">
+    <Button onAction="#onClicked">
 		<graphic>
 			<Pane>
 				<Rectangle fx:id="rect" fill="RED" height="16" width="20" stroke="SILVER" strokeWidth="1" />

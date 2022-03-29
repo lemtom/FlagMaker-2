@@ -38,7 +38,7 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		return new Shape[]
 		{
@@ -49,17 +49,17 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		if (Overlay == null || !Overlay.IsEnabled) return;
+		if (overlay == null || !overlay.isEnabled) return;
 
-		int countX = GetIntegerAttribute("CountX");
-		int countY = GetIntegerAttribute("CountY");
-		double width = canvas.getWidth() * (GetDoubleAttribute("Width") / MaximumX);
-		double height = canvas.getHeight() * (GetDoubleAttribute("Height") / MaximumY);
+		int countX = getIntegerAttribute("CountX");
+		int countY = getIntegerAttribute("CountY");
+		double width = canvas.getWidth() * (getDoubleAttribute("Width") / maximumX);
+		double height = canvas.getHeight() * (getDoubleAttribute("Height") / maximumY);
 
-		double locX = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX) - width / 2;
-		double locY = canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY) - height / 2;
+		double locX = canvas.getWidth() * (getDoubleAttribute("X") / maximumX) - width / 2;
+		double locY = canvas.getHeight() * (getDoubleAttribute("Y") / maximumY) - height / 2;
 
 		double intervalX = width / (countX > 1 ? countX - 1 : countX);
 		double intervalY = height / (countY > 1 ? countY - 1 : countY);
@@ -80,7 +80,7 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 				p.setBackground(Background.EMPTY);
 				s.setRoot(p);
 				
-				Overlay.Draw(p);
+				overlay.draw(p);
 				repeaterCanvas.getChildren().add(p);
 				
 				p.setLayoutX(x * intervalX);
@@ -92,18 +92,18 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		if (Overlay == null) return "";
-		if (!Overlay.IsEnabled) return "";
+		if (overlay == null) return "";
+		if (!overlay.isEnabled) return "";
 
-		int countX = GetIntegerAttribute("CountX");
-		int countY = GetIntegerAttribute("CountY");
-		double w = width * (GetDoubleAttribute("Width") / MaximumX);
-		double h = height * (GetDoubleAttribute("Height") / MaximumY);
+		int countX = getIntegerAttribute("CountX");
+		int countY = getIntegerAttribute("CountY");
+		double w = width * (getDoubleAttribute("Width") / maximumX);
+		double h = height * (getDoubleAttribute("Height") / maximumY);
 
-		double locX = width * (GetDoubleAttribute("X") / MaximumX) - w / 2;
-		double locY = height * (GetDoubleAttribute("Y") / MaximumY) - h / 2;
+		double locX = width * (getDoubleAttribute("X") / maximumX) - w / 2;
+		double locY = height * (getDoubleAttribute("Y") / maximumY) - h / 2;
 
 		double intervalX = w / (countX > 1 ? countX - 1 : countX);
 		double intervalY = h / (countY > 1 ? countY - 1 : countY);
@@ -112,7 +112,7 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(String.format("<defs><g id=\"%s\">%s</g></defs>\n",
-			id.toString(), Overlay.ExportSvg((int)w, (int)h)));
+			id.toString(), overlay.exportSvg((int)w, (int)h)));
 
 		for (int x = 0; x < countX; x++)
 		{

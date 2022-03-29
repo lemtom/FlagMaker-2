@@ -33,7 +33,7 @@ public class OverlayHalfSaltire extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l1 = new Line(0, 5, 30, 25);
 		Line l2 = new Line(30, 5, 0, 25);
@@ -43,10 +43,10 @@ public class OverlayHalfSaltire extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double widthX = canvas.getWidth() * (GetDoubleAttribute("Thickness") / MaximumX) / 4;
-		double widthY = canvas.getHeight() * (GetDoubleAttribute("Thickness") / MaximumX) / 4;
+		double widthX = canvas.getWidth() * (getDoubleAttribute("Thickness") / maximumX) / 4;
+		double widthY = canvas.getHeight() * (getDoubleAttribute("Thickness") / maximumX) / 4;
 
 		double centerX = canvas.getWidth()/2;
 		double centerY = canvas.getHeight()/2;
@@ -87,10 +87,10 @@ public class OverlayHalfSaltire extends Overlay
 			new LineTo(centerX, centerY)
 		});
 		
-		pathTopLeft.setFill(GetColorAttribute("Color"));
-		pathTopRight.setFill(GetColorAttribute("Color"));
-		pathBottomLeft.setFill(GetColorAttribute("Color"));
-		pathBottomRight.setFill(GetColorAttribute("Color"));
+		pathTopLeft.setFill(getColorAttribute("Color"));
+		pathTopRight.setFill(getColorAttribute("Color"));
+		pathBottomLeft.setFill(getColorAttribute("Color"));
+		pathBottomRight.setFill(getColorAttribute("Color"));
 		pathTopLeft.setStrokeWidth(0);
 		pathTopRight.setStrokeWidth(0);
 		pathBottomLeft.setStrokeWidth(0);
@@ -100,15 +100,15 @@ public class OverlayHalfSaltire extends Overlay
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double wX = width * (GetDoubleAttribute("Thickness") / MaximumX) / 4;
-		double wY = height * (GetDoubleAttribute("Thickness") / MaximumX) / 4;
+		double wX = width * (getDoubleAttribute("Thickness") / maximumX) / 4;
+		double wY = height * (getDoubleAttribute("Thickness") / maximumX) / 4;
 
 		double centerX = width/2;
 		double centerY = height/2;
 
-		String c = ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color"));
+		String c = ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color"));
 
 		StringBuilder sb = new StringBuilder();
 

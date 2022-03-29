@@ -13,70 +13,70 @@ public class DivisionFesses extends Division
 	}
 
 	@Override
-	public String Name()
+	public String getName()
 	{
 		return "fesses";
 	}
 	
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		double height = canvas.getHeight();
 		double width = canvas.getWidth();
 		
-		double sizeSum = Values[0] + Values[1] + Values[2];
+		double sizeSum = values[0] + values[1] + values[2];
 		
-		double r1Size = height * Values[0] / sizeSum;
-		double r2Size = height * (Values[0] + Values[1]) / sizeSum;
+		double r1Size = height * values[0] / sizeSum;
+		double r2Size = height * (values[0] + values[1]) / sizeSum;
 				
-		Rectangle top = new Rectangle(width, r1Size, Colors[0]);
-		Rectangle middle = new Rectangle(width, r2Size, Colors[1]);
-		Rectangle bottom = new Rectangle(width, height, Colors[2]);
+		Rectangle top = new Rectangle(width, r1Size, colors[0]);
+		Rectangle middle = new Rectangle(width, r2Size, colors[1]);
+		Rectangle bottom = new Rectangle(width, height, colors[2]);
 		canvas.getChildren().addAll(bottom, middle, top);
 	}
 	
 	@Override
-	public void SetColors(Color[] colors)
+	public void setColors(Color[] newColors)
 	{
-		Colors[0] = colors[0];
-		Colors[1] = colors[1];
-		Colors[2] = colors[2];
+		colors[0] = newColors[0];
+		colors[1] = newColors[1];
+		colors[2] = newColors[2];
 	}
 	
 	@Override
-	public void SetValues(int[] values)
+	public void setValues(int[] newValues)
 	{
-		Values[0] = values[0];
-		Values[1] = values[1];
-		Values[2] = values[2];
+		values[0] = newValues[0];
+		values[1] = newValues[1];
+		values[2] = newValues[2];
 	}
 	
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		StringBuilder sb = new StringBuilder();
 
-		double sizeSum = Values[0] + Values[1] + Values[2];
-		double r1Size = height * Values[0] / sizeSum;
-		double r2Size = height * (Values[0] + Values[1]) / sizeSum;
+		double sizeSum = values[0] + values[1] + values[2];
+		double r1Size = height * values[0] / sizeSum;
+		double r2Size = height * (values[0] + values[1]) / sizeSum;
 			
 		// Bottom
 		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />",
 				width,
 				height,
-				ColorExtensions.ToSvgFillWithOpacity(Colors[2])));
+				ColorExtensions.toSvgFillWithOpacity(colors[2])));
 		
 		// Middle
 		sb.append(String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />",
 				width,
 				r2Size,
-				ColorExtensions.ToSvgFillWithOpacity(Colors[1])));
+				ColorExtensions.toSvgFillWithOpacity(colors[1])));
 		
 		// Top
 		sb.append(String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />",
 				width,
 				r1Size,
-				ColorExtensions.ToSvgFillWithOpacity(Colors[0])));
+				ColorExtensions.toSvgFillWithOpacity(colors[0])));
 		
 		return sb.toString();
 	}

@@ -2,12 +2,12 @@ package flagmaker.Data;
 
 public class Vector
 {
-	public double X;
-	public double Y;
+	public double x;
+	public double y;
 	
 	public Vector(double x, double y)
 	{
-		X = x;
-		Y = y;
+		this.x = x;
+		this.y = y;
 	}
 }

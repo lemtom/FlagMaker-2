@@ -12,15 +12,15 @@ public class ColorScheme
 	private static final Color Green = Color.rgb(20, 77, 41);
 	private static final Color Blue = Color.rgb(0, 57, 166);
 	
-	private final Color _color1;
-	private final Color _color2;
-	private final Color _color3;
-	private final Color _metal;
+	private final Color color1;
+	private final Color color2;
+	private final Color color3;
+	private final Color metal;
 	
 	public ColorScheme()
 	{
 		Color[] colors = new Color[] { Black, Red, Orange, Green, Blue };
-		int color1Index = Randomizer.RandomWeighted(new int[] { 27, 102, 4, 45, 58 });
+		int color1Index = Randomizer.randomWeighted(new int[] { 27, 102, 4, 45, 58 });
 		
 		int[][] firstOrderBase = new int[][]
 		{            //  B   R  O   G   U
@@ -31,12 +31,12 @@ public class ColorScheme
 			new int[] { 11, 69, 1, 34,  0 }  // Blue
 		};
 		
-		int color2Index = Randomizer.RandomWeighted(firstOrderBase[color1Index]);
+		int color2Index = Randomizer.randomWeighted(firstOrderBase[color1Index]);
 		
 		int color3Index;
 		do
 		{
-			color3Index = Randomizer.RandomWeighted(firstOrderBase[color1Index]);
+			color3Index = Randomizer.randomWeighted(firstOrderBase[color1Index]);
 		} while (color3Index == color2Index);
 		
 		double[][] yellowProbabilities = new double[][]
@@ -49,31 +49,31 @@ public class ColorScheme
 		};
 		double yellowProbability = yellowProbabilities[color1Index][color2Index];
 
-		_color1 = TweakColor(colors[color1Index]);
-		_color2 = TweakColor(colors[color2Index]);
-		_color3 = TweakColor(colors[color3Index]);
-		_metal = Randomizer.ProbabilityOfTrue(yellowProbability) ? TweakColor(Yellow) : White;
+		this.color1 = tweakColor(colors[color1Index]);
+		this.color2 = tweakColor(colors[color2Index]);
+		this.color3 = tweakColor(colors[color3Index]);
+		this.metal = Randomizer.probabilityOfTrue(yellowProbability) ? tweakColor(Yellow) : White;
 	}
 	
 	private ColorScheme(Color color1, Color color2, Color color3, Color metal)
 	{
-		_color1 = color1;
-		_color2 = color2;
-		_color3 = color3;
-		_metal = metal;
+		this.color1 = color1;
+		this.color2 = color2;
+		this.color3 = color3;
+		this.metal = metal;
 	}
 	
-	public Color Color1() { return _color1; }
-	public Color Color2() { return _color2; }
-	public Color Color3() { return _color3; }
-	public Color Metal() { return _metal; }
+	public Color getColor1() { return color1; }
+	public Color getColor2() { return color2; }
+	public Color getColor3() { return color3; }
+	public Color getMetal() { return metal; }
 	
-	public ColorScheme Swapped()
+	public ColorScheme swapped()
 	{
-		return new ColorScheme(_color3, _color1, _color2, _metal);
+		return new ColorScheme(color3, color1, color2, metal);
 	}
 	
-	private Color TweakColor(Color color)
+	private Color tweakColor(Color color)
 	{
 		if (color == Color.BLACK || color == Color.WHITE)
 		{ // Don't adjust black or white, it looks bad
@@ -82,8 +82,8 @@ public class ColorScheme
 
 		final int spread = 15;
 		return Color.rgb(
-			Randomizer.Clamp(Randomizer.NextNormalized(color.getRed() * 255, spread), 0, 255, false),
-			Randomizer.Clamp(Randomizer.NextNormalized(color.getGreen() * 255, spread), 0, 255, false),
-			Randomizer.Clamp(Randomizer.NextNormalized(color.getBlue() * 255, spread), 0, 255, false));
+			Randomizer.clamp(Randomizer.nextNormalized(color.getRed() * 255, spread), 0, 255, false),
+			Randomizer.clamp(Randomizer.nextNormalized(color.getGreen() * 255, spread), 0, 255, false),
+			Randomizer.clamp(Randomizer.nextNormalized(color.getBlue() * 255, spread), 0, 255, false));
 	}
 }

@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class ColorList
 {
-	public static ArrayList<NamedColor> FlagsOfTheWorld()
+	public static ArrayList<NamedColor> flagsOfTheWorld()
 	{
 		ArrayList<NamedColor> list = new ArrayList<>();
 		list.add(new NamedColor(new Color(1, 0.4, 0.4, 1), "Very light red"));
@@ -43,7 +43,7 @@ public class ColorList
 		return list;
 	}
 	
-	public static ArrayList<NamedColor> FlagsOfAllNations()
+	public static ArrayList<NamedColor> flagsOfAllNations()
 	{
 		ArrayList<NamedColor> list = new ArrayList<>();
 		list.add(new NamedColor(new Color(0.365, 0.208, 0.153, 1),"Red brown"));

@@ -2,17 +2,17 @@ package flagmaker.Data;
 
 public class Size
 {
-	public int X;
-	public int Y;
+	public int x;
+	public int y;
 	
 	public Size(int x, int y)
 	{
-		X = x;
-		Y = y;
+		this.x = x;
+		this.y = y;
 	}
 	
-	public String ToString()
+	public String toString()
 	{
-		return Y + ":" + X;
+		return y + ":" + x;
 	}
 }

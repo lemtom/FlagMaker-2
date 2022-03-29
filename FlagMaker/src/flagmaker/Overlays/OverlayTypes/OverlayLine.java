@@ -37,7 +37,7 @@ public class OverlayLine extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		Line l = new Line(10, 5, 20, 25);
 		l.setStrokeWidth(5);
@@ -45,27 +45,27 @@ public class OverlayLine extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		Line line = new Line(
-				canvas.getWidth() * GetDoubleAttribute("X1") / MaximumX,
-				canvas.getHeight() * GetDoubleAttribute("Y1") / MaximumY,
-				canvas.getWidth() * GetDoubleAttribute("X2") / MaximumX,
-				canvas.getHeight() * GetDoubleAttribute("Y2") / MaximumY);
-		line.setStrokeWidth(canvas.getWidth() * (GetDoubleAttribute("Thickness") / MaximumX));
-		line.setStroke(GetColorAttribute("Color"));
+				canvas.getWidth() * getDoubleAttribute("X1") / maximumX,
+				canvas.getHeight() * getDoubleAttribute("Y1") / maximumY,
+				canvas.getWidth() * getDoubleAttribute("X2") / maximumX,
+				canvas.getHeight() * getDoubleAttribute("Y2") / maximumY);
+		line.setStrokeWidth(canvas.getWidth() * (getDoubleAttribute("Thickness") / maximumX));
+		line.setStroke(getColorAttribute("Color"));
 		canvas.getChildren().add(line);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
 		return String.format("<line x1=\"%.3f\" y1=\"%.3f\" x2=\"%.3f\" y2=\"%.3f\" stroke=\"#%s\" stroke-width=\"%.3f\" />",
-			width * GetDoubleAttribute("X1") / MaximumX,
-			height * GetDoubleAttribute("Y1") / MaximumY,
-			width * GetDoubleAttribute("X2") / MaximumX,
-			height * GetDoubleAttribute("Y2") / MaximumY,
-			ColorExtensions.ToHexString(GetColorAttribute("Color"), false),
-			width * (GetDoubleAttribute("Thickness") / MaximumX));
+			width * getDoubleAttribute("X1") / maximumX,
+			height * getDoubleAttribute("Y1") / maximumY,
+			width * getDoubleAttribute("X2") / maximumX,
+			height * getDoubleAttribute("Y2") / maximumY,
+			ColorExtensions.toHexString(getColorAttribute("Color"), false),
+			width * (getDoubleAttribute("Thickness") / maximumX));
 	}
 }

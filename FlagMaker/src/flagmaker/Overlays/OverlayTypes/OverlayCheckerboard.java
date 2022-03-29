@@ -40,7 +40,7 @@ public class OverlayCheckerboard extends Overlay
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		ArrayList<Shape> shapes = new ArrayList<>();
 
@@ -62,15 +62,15 @@ public class OverlayCheckerboard extends Overlay
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double centerX = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX);
-		double centerY = canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY);
-		double width = canvas.getWidth() * (GetDoubleAttribute("Width") / MaximumX);
-		double height = canvas.getHeight() * (GetDoubleAttribute("Height") / MaximumY);
+		double centerX = canvas.getWidth() * (getDoubleAttribute("X") / maximumX);
+		double centerY = canvas.getHeight() * (getDoubleAttribute("Y") / maximumY);
+		double width = canvas.getWidth() * (getDoubleAttribute("Width") / maximumX);
+		double height = canvas.getHeight() * (getDoubleAttribute("Height") / maximumY);
 		if (height == 0) height = width;
-		int countX = GetIntegerAttribute("CountX");
-		int countY = GetIntegerAttribute("CountY");
+		int countX = getIntegerAttribute("CountX");
+		int countY = getIntegerAttribute("CountY");
 
 		double left = centerX - width / 2;
 		double top = centerY - height / 2;
@@ -84,22 +84,22 @@ public class OverlayCheckerboard extends Overlay
 				if ((x + y) % 2 != 0) continue;
 
 				Rectangle rect = new Rectangle(left + x * blockWidth, top + y * blockHeight, blockWidth, blockHeight);
-				rect.setFill(GetColorAttribute("Color"));
+				rect.setFill(getColorAttribute("Color"));
 				canvas.getChildren().add(rect);
 			}
 		}
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double centerX = width * (GetDoubleAttribute("X") / MaximumX);
-		double centerY = height * (GetDoubleAttribute("Y") / MaximumY);
-		double w = width * (GetDoubleAttribute("Width") / MaximumX);
-		double h = height * (GetDoubleAttribute("Height") / MaximumY);
+		double centerX = width * (getDoubleAttribute("X") / maximumX);
+		double centerY = height * (getDoubleAttribute("Y") / maximumY);
+		double w = width * (getDoubleAttribute("Width") / maximumX);
+		double h = height * (getDoubleAttribute("Height") / maximumY);
 		if (h == 0) h = w;
-		int countX = GetIntegerAttribute("CountX");
-		int countY = GetIntegerAttribute("CountY");
+		int countX = getIntegerAttribute("CountX");
+		int countY = getIntegerAttribute("CountY");
 
 		double left = centerX - w / 2;
 		double top = centerY - h / 2;
@@ -116,7 +116,7 @@ public class OverlayCheckerboard extends Overlay
 
 				sb.append(String.format("<rect width=\"%.3f\" height=\"%.3f\" %s x=\"%.3f\" y=\"%.3f\"/>",
 						blockWidth, blockHeight,
-						ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")),
+						ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")),
 						left + x * blockWidth, top + y * blockHeight));
 			}
 		}

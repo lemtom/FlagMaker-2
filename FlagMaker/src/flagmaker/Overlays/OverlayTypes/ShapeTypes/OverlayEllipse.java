@@ -19,7 +19,7 @@ public class OverlayEllipse extends OverlayShape
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		return new Shape[]
 		{
@@ -28,32 +28,32 @@ public class OverlayEllipse extends OverlayShape
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		double width = canvas.getWidth() * (GetDoubleAttribute("Width") / (double)MaximumX);
-		double height = GetDoubleAttribute("Height") == 0
+		double width = canvas.getWidth() * (getDoubleAttribute("Width") / (double)maximumX);
+		double height = getDoubleAttribute("Height") == 0
 				? width
-				: canvas.getHeight() * (GetDoubleAttribute("Height") / MaximumY);
-		double left = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX);
-		double top = canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY);
+				: canvas.getHeight() * (getDoubleAttribute("Height") / maximumY);
+		double left = canvas.getWidth() * (getDoubleAttribute("X") / maximumX);
+		double top = canvas.getHeight() * (getDoubleAttribute("Y") / maximumY);
 		Ellipse ellipse = new Ellipse(left, top, width / 2, height / 2);
-		ellipse.setFill(GetColorAttribute("Color"));
+		ellipse.setFill(getColorAttribute("Color"));
 		canvas.getChildren().add(ellipse);
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		double w = width * (GetDoubleAttribute("Width") / (double)MaximumX);
-		double h = GetDoubleAttribute("Height") == 0
+		double w = width * (getDoubleAttribute("Width") / (double)maximumX);
+		double h = getDoubleAttribute("Height") == 0
 				? w
-				: height * (GetDoubleAttribute("Height") / MaximumY);
+				: height * (getDoubleAttribute("Height") / maximumY);
 		
-		double x = width * (GetDoubleAttribute("X") / MaximumX);
-		double y = height * (GetDoubleAttribute("Y") / MaximumY);
+		double x = width * (getDoubleAttribute("X") / maximumX);
+		double y = height * (getDoubleAttribute("Y") / maximumY);
 		
 		return String.format("<ellipse cx=\"%.3f\" cy=\"%.3f\" rx=\"%.3f\" ry=\"%.3f\" %s />",
 				x, y, w / 2, h / 2,
-				ColorExtensions.ToSvgFillWithOpacity(GetColorAttribute("Color")));
+				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

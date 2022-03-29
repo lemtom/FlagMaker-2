@@ -2,6 +2,8 @@ package flagmaker.Color;
 
 import flagmaker.Files.LocalizationHandler;
 import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +28,7 @@ import javafx.stage.Stage;
 
 public class ColorSelector extends VBox
 {
-	private Stage _stage;
+	private Stage stage;
 
 	@FXML private TabPane tabs;
 	@FXML private Tab tabStandard;
@@ -41,7 +43,7 @@ public class ColorSelector extends VBox
 	@FXML private FlowPane paneUsed;
 	
 	@FXML private Tab tabAdvanced;
-	private boolean _shouldTrigger;
+	private boolean shouldTrigger;
 	@FXML private Slider sldR;
 	@FXML private Label lblR;
 	@FXML private Slider sldG;
@@ -58,42 +60,42 @@ public class ColorSelector extends VBox
 	@FXML private Button btnCancelStandard;
 	@FXML private Button btnCancelAdvanced;
 	
-	private Image _colorCircle;
-	private Image _colorTriangles;
-	private Color _color;
-	private Color _tempColor;
+	private Image colorCircle;
+	private Image colorTriangles;
+	private Color color;
+	private Color tempColor;
 	
-	public ColorSelector(Stage stage, Color currentColor, ArrayList<Color> usedColors, ArrayList<Color> recentColors)
+	public ColorSelector(Stage stage, Color currentColor, List<Color> usedColors, List<Color> recentColors)
 	{
-		Load(stage);
-		SetWindowStrings();
-		FillNamedColorList(paneFotw, ColorList.FlagsOfTheWorld());
-		FillNamedColorList(paneFoan, ColorList.FlagsOfAllNations());
-		FillColorList(paneUsed, usedColors);
-		FillColorList(paneRecent, new ArrayList(new ArrayList(recentColors).subList(0, Math.min(recentColors.size(), 10))));
+		load(stage);
+		setWindowStrings();
+		fillNamedColorList(paneFotw, ColorList.flagsOfTheWorld());
+		fillNamedColorList(paneFoan, ColorList.flagsOfAllNations());
+		fillColorList(paneUsed, usedColors);
+		fillColorList(paneRecent, new ArrayList<Color>(new ArrayList<Color>(recentColors).subList(0, Math.min(recentColors.size(), 10))));
 		
-		SetAdvanced(currentColor);
+		setAdvanced(currentColor);
 		
-		stage.titleProperty().set(LocalizationHandler.Get("Color"));
+		stage.titleProperty().set(LocalizationHandler.get("Color"));
 		stage.getIcons().add(new Image("flagmaker/Images/icon.png"));
 	}
 
-	private void SetWindowStrings()
+	private void setWindowStrings()
 	{
-		btnCancelStandard.setText(LocalizationHandler.Get("Cancel"));
-		btnCancelAdvanced.setText(LocalizationHandler.Get("Cancel"));
-		tabStandard.setText(LocalizationHandler.Get("Standard"));
-		tabAdvanced.setText(LocalizationHandler.Get("Advanced"));
-		labelFotw.setText(LocalizationHandler.Get("LargePaletteName"));
-		labelFoan.setText(LocalizationHandler.Get("SmallPaletteName"));
-		labelRecent.setText(LocalizationHandler.Get("RecentPaletteName"));
-		labelUsed.setText(LocalizationHandler.Get("UsedPaletteName"));
-		btnSaveAdvanced.setText(LocalizationHandler.Get("Save"));
+		btnCancelStandard.setText(LocalizationHandler.get("Cancel"));
+		btnCancelAdvanced.setText(LocalizationHandler.get("Cancel"));
+		tabStandard.setText(LocalizationHandler.get("Standard"));
+		tabAdvanced.setText(LocalizationHandler.get("Advanced"));
+		labelFotw.setText(LocalizationHandler.get("LargePaletteName"));
+		labelFoan.setText(LocalizationHandler.get("SmallPaletteName"));
+		labelRecent.setText(LocalizationHandler.get("RecentPaletteName"));
+		labelUsed.setText(LocalizationHandler.get("UsedPaletteName"));
+		btnSaveAdvanced.setText(LocalizationHandler.get("Save"));
 	}
 	
-	private void Load(Stage stage)
+	private void load(Stage stage)
 	{
-		_stage = stage;
+		this.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ColorSelector.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);
@@ -108,24 +110,24 @@ public class ColorSelector extends VBox
 		}
 	}
 
-	private void FillNamedColorList(FlowPane pane, ArrayList<NamedColor> colors)
+	private void fillNamedColorList(FlowPane pane, ArrayList<NamedColor> colors)
 	{
 		for (NamedColor c : colors)
 		{
 			Button b = new Button();
 			pane.getChildren().add(b);
 			Rectangle r = new Rectangle(20, 20);
-			r.setFill(c.Color);
+			r.setFill(c.color);
 			r.setStroke(Color.SILVER);
 			Pane p = new Pane();
 			p.getChildren().add(r);
 			b.setGraphic(p);
-			b.setTooltip(new Tooltip(c.Name));
-			b.setOnAction(o -> { _color = c.Color; _stage.close(); });
+			b.setTooltip(new Tooltip(c.name));
+			b.setOnAction(o -> { color = c.color; stage.close(); });
 		}
 	}
 	
-	private void FillColorList(FlowPane pane, ArrayList<Color> colors)
+	private void fillColorList(FlowPane pane, List<Color> colors)
 	{
 		for (Color c : colors)
 		{
@@ -137,58 +139,58 @@ public class ColorSelector extends VBox
 			Pane p = new Pane();
 			p.getChildren().add(r);
 			b.setGraphic(p);
-			b.setOnAction(o -> { _color = c; _stage.close(); });
+			b.setOnAction(o -> { color = c; stage.close(); });
 		}
 	}
 
-	private void SetAdvanced(Color currentColor)
+	private void setAdvanced(Color currentColor)
 	{
-		_tempColor = currentColor;
-		_shouldTrigger = true;
-		_colorCircle = new Image("flagmaker/Images/color-circle.png");
-		_colorTriangles = new Image("flagmaker/Images/color-triangles.png");
-		FillSatLightCanvas(_tempColor);
-		SetColorCircle(_tempColor);
-		SetColorTriangles(_tempColor);
+		tempColor = currentColor;
+		shouldTrigger = true;
+		colorCircle = new Image("flagmaker/Images/color-circle.png");
+		colorTriangles = new Image("flagmaker/Images/color-triangles.png");
+		fillSatLightCanvas(tempColor);
+		setColorCircle(tempColor);
+		setColorTriangles(tempColor);
 		
-		lblR.setText(Integer.toString((int)(_tempColor.getRed() * 255)));
-		lblG.setText(Integer.toString((int)(_tempColor.getGreen() * 255)));
-		lblB.setText(Integer.toString((int)(_tempColor.getBlue() * 255)));
-		lblA.setText(Integer.toString((int)(_tempColor.getOpacity() * 255)));
+		lblR.setText(Integer.toString((int)(tempColor.getRed() * 255)));
+		lblG.setText(Integer.toString((int)(tempColor.getGreen() * 255)));
+		lblB.setText(Integer.toString((int)(tempColor.getBlue() * 255)));
+		lblA.setText(Integer.toString((int)(tempColor.getOpacity() * 255)));
 		
-		sldR.setValue(_tempColor.getRed() * 255);
-		sldG.setValue(_tempColor.getGreen() * 255);
-		sldB.setValue(_tempColor.getBlue() * 255);
-		sldA.setValue(_tempColor.getOpacity() * 255);
+		sldR.setValue(tempColor.getRed() * 255);
+		sldG.setValue(tempColor.getGreen() * 255);
+		sldB.setValue(tempColor.getBlue() * 255);
+		sldA.setValue(tempColor.getOpacity() * 255);
 		
 		sldR.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (_shouldTrigger && !oldval.equals(newval)) SliderChanged(sldR, lblR);
+			if (shouldTrigger && !oldval.equals(newval)) sliderChanged(sldR, lblR);
 		});
 		sldG.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (_shouldTrigger && !oldval.equals(newval)) SliderChanged(sldG, lblG);
+			if (shouldTrigger && !oldval.equals(newval)) sliderChanged(sldG, lblG);
 		});
 		sldB.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (_shouldTrigger && !oldval.equals(newval)) SliderChanged(sldB, lblB);
+			if (shouldTrigger && !oldval.equals(newval)) sliderChanged(sldB, lblB);
 		});
 		sldA.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (_shouldTrigger && !oldval.equals(newval)) SetNumberLabel(sldA, lblA);
+			if (shouldTrigger && !oldval.equals(newval)) setNumberLabel(sldA, lblA);
 		});
 	}
 	
-	private void SliderChanged(Slider slider, Label label)
+	private void sliderChanged(Slider slider, Label label)
 	{
-		SetNumberLabel(slider, label);
-		SetColorFromSliders();
-		SetColorTriangles(_tempColor);
-		FillSatLightCanvas(_tempColor);
-		SetColorCircle(_tempColor);
+		setNumberLabel(slider, label);
+		setColorFromSliders();
+		setColorTriangles(tempColor);
+		fillSatLightCanvas(tempColor);
+		setColorCircle(tempColor);
 	}
 	
-	private void SetColorCircle(Color color)
+	private void setColorCircle(Color color)
 	{
 		double brightness = color.getBrightness();
 		double y = (1 - brightness) * cnvSatLight.getHeight();
@@ -197,46 +199,46 @@ public class ColorSelector extends VBox
 		double x = saturation * cnvSatLight.getWidth();
 		
 		GraphicsContext gc = cnvSatLight.getGraphicsContext2D();
-		gc.drawImage(_colorCircle, x - 5, y - 5);
+		gc.drawImage(colorCircle, x - 5, y - 5);
 		
 		rctPreview.setFill(color);
 	}
 	
-	private void SetColorTriangles(Color color)
+	private void setColorTriangles(Color color)
 	{
-		FillHueCanvas();
+		fillHueCanvas();
 		double hue = color.getHue();
 		double y = hue / 360 * cnvHue.getHeight();
 		
 		GraphicsContext gc = cnvHue.getGraphicsContext2D();
-		gc.drawImage(_colorTriangles, 0, y - 4);
+		gc.drawImage(colorTriangles, 0, y - 4);
 	}
 	
-	@FXML private void CnvSatLightDrag(MouseEvent e)
+	@FXML private void cnvSatLightDrag(MouseEvent e)
 	{
-		_shouldTrigger = false;
+		shouldTrigger = false;
 		double x = e.getX() / cnvSatLight.getWidth();
 		double y = 1 - (e.getY() / cnvSatLight.getHeight());
-		_tempColor = Color.hsb(_tempColor.getHue(), Clamp(x), Clamp(y));
-		FillSatLightCanvas(_tempColor);
-		SetColorCircle(_tempColor);
-		SetSlidersFromColor();
-		_shouldTrigger = true;
+		tempColor = Color.hsb(tempColor.getHue(), clamp(x), clamp(y));
+		fillSatLightCanvas(tempColor);
+		setColorCircle(tempColor);
+		setSlidersFromColor();
+		shouldTrigger = true;
 	}
 	
-	@FXML private void CnvHueDrag(MouseEvent e)
+	@FXML private void cnvHueDrag(MouseEvent e)
 	{
-		_shouldTrigger = false;
+		shouldTrigger = false;
 		double y = 360 * (e.getY() / cnvSatLight.getHeight());
-		_tempColor = Color.hsb(y, _tempColor.getSaturation(), _tempColor.getBrightness());
-		FillSatLightCanvas(_tempColor);
-		SetColorTriangles(_tempColor);
-		SetColorCircle(_tempColor);
-		SetSlidersFromColor();
-		_shouldTrigger = true;
+		tempColor = Color.hsb(y, tempColor.getSaturation(), tempColor.getBrightness());
+		fillSatLightCanvas(tempColor);
+		setColorTriangles(tempColor);
+		setColorCircle(tempColor);
+		setSlidersFromColor();
+		shouldTrigger = true;
 	}
 
-	private void FillHueCanvas()
+	private void fillHueCanvas()
 	{
 		int width = (int)cnvHue.getWidth();
 		int height = (int)cnvHue.getHeight();
@@ -245,10 +247,10 @@ public class ColorSelector extends VBox
 		
 		for (int y = 0; y < height; y++)
 		{
-			Color color = Color.hsb(360.0 * y / height, 1, 1);
+			Color newColor = Color.hsb(360.0 * y / height, 1, 1);
 			for (int x = 0; x < width; x++)
 			{
-				pw.setColor(x, y, color);
+				pw.setColor(x, y, newColor);
 			}
 		}
 		
@@ -256,7 +258,7 @@ public class ColorSelector extends VBox
 		gc.drawImage(img, 0, 0);
 	}
 	
-	private void FillSatLightCanvas(Color input)
+	private void fillSatLightCanvas(Color input)
 	{
 		int width = (int)cnvSatLight.getWidth();
 		int height = (int)cnvSatLight.getHeight();
@@ -267,8 +269,8 @@ public class ColorSelector extends VBox
 		{
 			for (int x = 0; x < width; x++)
 			{
-				Color color = Color.hsb(input.getHue(), x / (double)width, 1 - y / (double)height);
-				pw.setColor(x, y, color);
+				Color newColor = Color.hsb(input.getHue(), x / (double)width, 1 - y / (double)height);
+				pw.setColor(x, y, newColor);
 			}
 		}
 		
@@ -276,49 +278,49 @@ public class ColorSelector extends VBox
 		gc.drawImage(img, 0, 0);
 	}
 	
-	private void SetNumberLabel(Slider slider, Label label)
+	private void setNumberLabel(Slider slider, Label label)
 	{
 		label.setText(Integer.toString((int)slider.getValue()));
 	}
 	
-	public Color GetSelectedColor()
+	public Color getSelectedColor()
 	{
-		return _color;
+		return color;
 	}
 	
 	@FXML
-	private void SaveAdvanced()
+	private void saveAdvanced()
 	{
-		SetColorFromSliders();
-		_color = _tempColor;
-		_stage.close();
+		setColorFromSliders();
+		color = tempColor;
+		stage.close();
 	}
 
-	private void SetColorFromSliders()
+	private void setColorFromSliders()
 	{
-		_tempColor = new Color(sldR.getValue() / 255, sldG.getValue() / 255, sldB.getValue() / 255, sldA.getValue() / 255);
+		tempColor = new Color(sldR.getValue() / 255, sldG.getValue() / 255, sldB.getValue() / 255, sldA.getValue() / 255);
 	}
 	
-	private void SetSlidersFromColor()
+	private void setSlidersFromColor()
 	{
-		sldR.setValue(_tempColor.getRed() * 255);
-		sldG.setValue(_tempColor.getGreen() * 255);
-		sldB.setValue(_tempColor.getBlue() * 255);
-		sldA.setValue(_tempColor.getOpacity() * 255);
+		sldR.setValue(tempColor.getRed() * 255);
+		sldG.setValue(tempColor.getGreen() * 255);
+		sldB.setValue(tempColor.getBlue() * 255);
+		sldA.setValue(tempColor.getOpacity() * 255);
 		
-		SetNumberLabel(sldR, lblR);
-		SetNumberLabel(sldG, lblG);
-		SetNumberLabel(sldB, lblB);
-		SetNumberLabel(sldA, lblA);
+		setNumberLabel(sldR, lblR);
+		setNumberLabel(sldG, lblG);
+		setNumberLabel(sldB, lblB);
+		setNumberLabel(sldA, lblA);
 	}
 	
 	@FXML
-	private void Cancel()
+	private void cancel()
 	{
-		_stage.close();
+		stage.close();
 	}
 	
-	private double Clamp(double input)
+	private double clamp(double input)
 	{
 		return Math.max(0, Math.min(1, input));
 	}

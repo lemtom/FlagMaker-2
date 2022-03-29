@@ -22,7 +22,7 @@
 					<Label fx:id="labelUsed" style="-fx-padding: 8 0 0 0;" />
 					<FlowPane fx:id="paneUsed" alignment="TOP_LEFT" orientation="HORIZONTAL" />
 					<AnchorPane VBox.vgrow="ALWAYS">
-						<Button fx:id="btnCancelStandard" cancelButton="true" onAction="#Cancel" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" />
+						<Button fx:id="btnCancelStandard" cancelButton="true" onAction="#cancel" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" />
 					</AnchorPane>
 				</VBox>
    			</Tab>
@@ -30,8 +30,8 @@
 				<VBox fillWidth="true" style="-fx-padding: 5;">
 					<HBox spacing="10">
 						<children>
-							<Canvas fx:id="cnvSatLight" width="350" height="190" onMouseClicked="#CnvSatLightDrag" onMouseDragged="#CnvSatLightDrag" />
-							<Canvas fx:id="cnvHue" width="17" height="190" onMouseClicked="#CnvHueDrag" onMouseDragged="#CnvHueDrag" />
+							<Canvas fx:id="cnvSatLight" width="350" height="190" onMouseClicked="#cnvSatLightDrag" onMouseDragged="#cnvSatLightDrag" />
+							<Canvas fx:id="cnvHue" width="17" height="190" onMouseClicked="#cnvHueDrag" onMouseDragged="#cnvHueDrag" />
 						</children>
 					</HBox>
 					<HBox>
@@ -67,8 +67,8 @@
 
 					<AnchorPane VBox.vgrow="ALWAYS">
 						<HBox AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
-							<Button fx:id="btnSaveAdvanced" onAction="#SaveAdvanced" />
-							<Button fx:id="btnCancelAdvanced" cancelButton="true" onAction="#Cancel" />
+							<Button fx:id="btnSaveAdvanced" onAction="#saveAdvanced" />
+							<Button fx:id="btnCancelAdvanced" cancelButton="true" onAction="#cancel" />
 						</HBox>
 					</AnchorPane>
 				</VBox>

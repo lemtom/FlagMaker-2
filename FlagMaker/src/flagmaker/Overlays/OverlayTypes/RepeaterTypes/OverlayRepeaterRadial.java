@@ -37,7 +37,7 @@ public class OverlayRepeaterRadial extends OverlayRepeater
 	}
 
 	@Override
-	protected Shape[] Thumbnail()
+	protected Shape[] thumbnail()
 	{
 		final int count = 7;
 		final int radius = 10;
@@ -55,17 +55,17 @@ public class OverlayRepeaterRadial extends OverlayRepeater
 	}
 
 	@Override
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
-		if (Overlay == null || !Overlay.IsEnabled) return;
+		if (overlay == null || !overlay.isEnabled) return;
 
-		double locX = canvas.getWidth() * (GetDoubleAttribute("X") / MaximumX);
-		double locY = canvas.getHeight() * (GetDoubleAttribute("Y") / MaximumY);
-		double radius = canvas.getWidth() * (GetDoubleAttribute("Radius") / MaximumX);
-		double interval = 2 * Math.PI / GetIntegerAttribute("Count");
-		boolean rotate = GetBooleanAttribute("Rotate");
+		double locX = canvas.getWidth() * (getDoubleAttribute("X") / maximumX);
+		double locY = canvas.getHeight() * (getDoubleAttribute("Y") / maximumY);
+		double radius = canvas.getWidth() * (getDoubleAttribute("Radius") / maximumX);
+		double interval = 2 * Math.PI / getIntegerAttribute("Count");
+		boolean rotate = getBooleanAttribute("Rotate");
 
-		for (int i = 0; i < GetIntegerAttribute("Count"); i++)
+		for (int i = 0; i < getIntegerAttribute("Count"); i++)
 		{
 			AnchorPane a = new AnchorPane();
 			a.setBackground(Background.EMPTY);
@@ -79,10 +79,10 @@ public class OverlayRepeaterRadial extends OverlayRepeater
 			
 			if (rotate)
 			{
-				p.getTransforms().add(new Rotate(i * 360 / GetIntegerAttribute("Count"), 0, 0));
+				p.getTransforms().add(new Rotate(i * 360 / getIntegerAttribute("Count"), 0, 0));
 			}
 
-			Overlay.Draw(p);
+			overlay.draw(p);
 			canvas.getChildren().add(p);
 
 			p.setLayoutX(x);
@@ -91,29 +91,29 @@ public class OverlayRepeaterRadial extends OverlayRepeater
 	}
 
 	@Override
-	public String ExportSvg(int width, int height)
+	public String exportSvg(int width, int height)
 	{
-		if (Overlay == null) return "";
-		if (!Overlay.IsEnabled) return "";
+		if (overlay == null) return "";
+		if (!overlay.isEnabled) return "";
 
-		double locX = width * (GetDoubleAttribute("X") / MaximumX);
-		double locY = height * (GetDoubleAttribute("Y") / MaximumY);
-		double radius = width * (GetDoubleAttribute("Radius") / MaximumX);
-		double interval = 2 * Math.PI / GetIntegerAttribute("Count");
-		boolean rotate = GetBooleanAttribute("Rotate");
+		double locX = width * (getDoubleAttribute("X") / maximumX);
+		double locY = height * (getDoubleAttribute("Y") / maximumY);
+		double radius = width * (getDoubleAttribute("Radius") / maximumX);
+		double interval = 2 * Math.PI / getIntegerAttribute("Count");
+		boolean rotate = getBooleanAttribute("Rotate");
 
 		UUID id = UUID.randomUUID();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(String.format("<defs><g id=\"%s\">%s</g></defs>",
-			id.toString(), Overlay.ExportSvg((int)radius, (int)radius)));
+			id.toString(), overlay.exportSvg((int)radius, (int)radius)));
 
-		for (int i = 0; i < GetIntegerAttribute("Count"); i++)
+		for (int i = 0; i < getIntegerAttribute("Count"); i++)
 		{
 			sb.append(String.format("<g transform=\"translate(%.3f,%.3f)%s\">\n",
 				locX + Math.cos(i * interval - Math.PI / 2) * radius,
 				locY + Math.sin(i * interval - Math.PI / 2) * radius,
-				rotate ? String.format("rotate(%.3f)", i * 360.0 / GetIntegerAttribute("Count")) : ""));
+				rotate ? String.format("rotate(%.3f)", i * 360.0 / getIntegerAttribute("Count")) : ""));
 			sb.append(String.format("<use xlink:href=\"#%s\" />\n", id.toString()));
 			sb.append("</g>\n");
 		}

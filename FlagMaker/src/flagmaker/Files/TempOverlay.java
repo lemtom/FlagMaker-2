@@ -7,36 +7,36 @@ import java.util.HashMap;
 
 public class TempOverlay
 {
-	public String Type;
-	public final HashMap<String, String> Values;
+	public String type;
+	public final HashMap<String, String> values;
 
 	public TempOverlay()
 	{
-		Values = new HashMap<>();
+		values = new HashMap<>();
 	}
 
-	public Overlay ToOverlay(int maximumX, int maximumY, String directory) throws Exception
+	public Overlay toOverlay(int maximumX, int maximumY, String directory) throws Exception
 	{
 		Overlay overlay = null;
 
-		if (Values.containsKey("path"))
+		if (values.containsKey("path"))
 		{
-			File path = FileHandler.GetFilePossiblyRelative(new File(Values.get("path")), directory);
+			File path = FileHandler.getFilePossiblyRelative(new File(values.get("path")), directory);
 			if (path != null)
 			{
-				overlay = Type.equals("flag")
-					? OverlayFactory.GetFlagInstance(path, maximumX, maximumY)
-					: OverlayFactory.GetImageInstance(path, maximumX, maximumY);
+				overlay = type.equals("flag")
+					? OverlayFactory.getFlagInstance(path, maximumX, maximumY)
+					: OverlayFactory.getImageInstance(path, maximumX, maximumY);
 			}
 		}
 		else
 		{
-			overlay = OverlayFactory.GetInstanceByShortName(Type, maximumX, maximumY);
+			overlay = OverlayFactory.getInstanceByShortName(type, maximumX, maximumY);
 		}
 
 		if (overlay == null) return null;
 
-		overlay.SetValuesFromStrings(Values);
+		overlay.setValuesFromStrings(values);
 		return overlay;
 	}
 }

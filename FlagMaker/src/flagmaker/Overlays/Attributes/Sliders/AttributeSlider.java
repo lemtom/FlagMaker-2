@@ -5,23 +5,23 @@ import javafx.scene.layout.HBox;
 
 public abstract class AttributeSlider extends HBox
 {
-	public String Name;
+	public String name;
 	
-	private final OverlayControl _parent;
-	protected boolean TriggeredByUser;
+	private final OverlayControl parent;
+	protected boolean triggeredByUser;
 	
 	protected AttributeSlider(OverlayControl parent, String name)
 	{
-		_parent = parent;
-		Name = name;
-		TriggeredByUser = true;
+		this.parent = parent;
+		this.name = name;
+		triggeredByUser = true;
 	}
 	
-	protected void ValueChanged()
+	protected void valueChanged()
 	{
-		_parent.OverlaySliderChanged(TriggeredByUser);
+		parent.overlaySliderChanged(triggeredByUser);
 	}
 	
-	public abstract Object GetValue();
-	public abstract void SetValue(Object value);
+	public abstract Object getValue();
+	public abstract void setValue(Object value);
 }

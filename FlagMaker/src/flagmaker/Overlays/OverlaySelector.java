@@ -26,47 +26,47 @@ import javafx.stage.Stage;
 
 public class OverlaySelector extends VBox
 {
-	private Stage _stage;
+	private Stage stage;
 
 	@FXML private TabPane tabs;
 	@FXML private Button btnCancel;
 
-	private final int _defaultMaximumX;
-	private final int _defaultMaximumY;
-	private Overlay _selectedOverlay;
+	private final int defaultMaximumX;
+	private final int defaultMaximumY;
+	private Overlay selectedOverlay;
 	
 	public OverlaySelector(Stage stage, int defaultMaximumX, int defaultMaximumY)
 	{
-		Load(stage);
+		load(stage);
 
-		_defaultMaximumX = defaultMaximumX;
-		_defaultMaximumY = defaultMaximumY;
-		stage.titleProperty().set(LocalizationHandler.Get("Overlays"));
+		this.defaultMaximumX = defaultMaximumX;
+		this.defaultMaximumY = defaultMaximumY;
+		stage.titleProperty().set(LocalizationHandler.get("Overlays"));
 		stage.getIcons().add(new Image("flagmaker/Images/icon.png"));
-		btnCancel.setText(LocalizationHandler.Get("Cancel"));
-		FillOverlays();
+		btnCancel.setText(LocalizationHandler.get("Cancel"));
+		fillOverlays();
 	}
 
-	public Overlay GetSelectedOverlay()
+	public Overlay getSelectedOverlay()
 	{
-		return _selectedOverlay;
+		return selectedOverlay;
 	}
 
-	private void SetSelectedOverlay(Overlay value)
+	private void setSelectedOverlay(Overlay value)
 	{
-		_selectedOverlay = value;
-		_stage.close();
+		selectedOverlay = value;
+		this.stage.close();
 	}
 
-	private void FillOverlays()
+	private void fillOverlays()
 	{
-		AddTab(OverlayFactory.GetShapes(), LocalizationHandler.Get("Shapes"));
-		AddTab(OverlayFactory.GetEmblems(), LocalizationHandler.Get("Emblems"));
-		AddTab(OverlayFactory.GetCustom(), LocalizationHandler.Get("Custom"));
-		AddTab(OverlayFactory.GetSpecial(), LocalizationHandler.Get("Special"));
+		addTab(OverlayFactory.getShapes(), LocalizationHandler.get("Shapes"));
+		addTab(OverlayFactory.getEmblems(), LocalizationHandler.get("Emblems"));
+		addTab(OverlayFactory.getCustom(), LocalizationHandler.get("Custom"));
+		addTab(OverlayFactory.getSpecial(), LocalizationHandler.get("Special"));
 	}
 
-	private void AddTab(Overlay[] overlays, String tabName)
+	private void addTab(Overlay[] overlays, String tabName)
 	{
 		Tab tab = new Tab(tabName);
 		FlowPane panel = new FlowPane(Orientation.HORIZONTAL);
@@ -80,21 +80,21 @@ public class OverlaySelector extends VBox
 			Button b = new Button();
 			b.setPrefHeight(30);
 			b.setPrefWidth(30);
-			b.graphicProperty().set(overlay.PaneThumbnail());
-			b.tooltipProperty().set(new Tooltip(overlay.Name));
+			b.graphicProperty().set(overlay.paneThumbnail());
+			b.tooltipProperty().set(new Tooltip(overlay.name));
 			b.addEventHandler(ActionEvent.ACTION, event ->
 			{
 				String name = b.getTooltip().getText();
 				switch (name)
 				{
 					case "flag":
-						LoadFlag();
+						loadFlag();
 						break;
 					case "image":
-						LoadImage();
+						loadImage();
 						break;
 					default:
-						SetSelectedOverlay(OverlayFactory.GetInstanceByShortName(name, _defaultMaximumX, _defaultMaximumY));
+						setSelectedOverlay(OverlayFactory.getInstanceByShortName(name, defaultMaximumX, defaultMaximumY));
 						break;
 				}
 			});
@@ -105,48 +105,48 @@ public class OverlaySelector extends VBox
 		tabs.getTabs().add(tab);
 	}
 
-	private void LoadFlag()
+	private void loadFlag()
 	{
 		FileChooser fileChooserF = new FileChooser();
-		fileChooserF.setTitle(LocalizationHandler.Get("Open"));
-		fileChooserF.getExtensionFilters().add(new FileChooser.ExtensionFilter(LocalizationHandler.Get("FlagFileFilter"), "*.flag"));
-		File flagFile = fileChooserF.showOpenDialog(_stage);
+		fileChooserF.setTitle(LocalizationHandler.get("Open"));
+		fileChooserF.getExtensionFilters().add(new FileChooser.ExtensionFilter(LocalizationHandler.get("FlagFileFilter"), "*.flag"));
+		File flagFile = fileChooserF.showOpenDialog(stage);
 		if (flagFile != null)
 		{
 			Flag flag;
 			try
 			{
-				flag = FileHandler.LoadFlagFromFile(flagFile);
-				SetSelectedOverlay(new OverlayFlag(flag, flagFile, _defaultMaximumX, _defaultMaximumY));
+				flag = FileHandler.loadFlagFromFile(flagFile);
+				setSelectedOverlay(new OverlayFlag(flag, flagFile, defaultMaximumX, defaultMaximumY));
 			}
 			catch (Exception ex)
 			{
-				new Alert(Alert.AlertType.ERROR, String.format(LocalizationHandler.Get("OverlayFlagLoadError"), ex.getMessage()), ButtonType.OK).showAndWait();
+				new Alert(Alert.AlertType.ERROR, String.format(LocalizationHandler.get("OverlayFlagLoadError"), ex.getMessage()), ButtonType.OK).showAndWait();
 			}
 		}
 	}
 
-	private void LoadImage()
+	private void loadImage()
 	{
 		FileChooser fileChooserI = new FileChooser();
-		fileChooserI.setTitle(LocalizationHandler.Get("OpenImage"));
-		fileChooserI.getExtensionFilters().add(new FileChooser.ExtensionFilter(LocalizationHandler.Get("ImageFileFilter"), "*.png", "*.jpg"));
-		File imageFile = fileChooserI.showOpenDialog(_stage);
+		fileChooserI.setTitle(LocalizationHandler.get("OpenImage"));
+		fileChooserI.getExtensionFilters().add(new FileChooser.ExtensionFilter(LocalizationHandler.get("ImageFileFilter"), "*.png", "*.jpg"));
+		File imageFile = fileChooserI.showOpenDialog(stage);
 		if (imageFile != null)
 		{
-			SetSelectedOverlay(new OverlayImage(imageFile, _defaultMaximumX, _defaultMaximumY));
+			setSelectedOverlay(new OverlayImage(imageFile, defaultMaximumX, defaultMaximumY));
 		}
 	}
 
 	@FXML
-	private void Cancel()
+	private void cancel()
 	{
-		_stage.close();
+		stage.close();
 	}
 
-	private void Load(Stage stage)
+	private void load(Stage stage)
 	{
-		_stage = stage;
+		this.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("OverlaySelector.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);

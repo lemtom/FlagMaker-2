@@ -5,15 +5,15 @@ import flagmaker.Overlays.Overlay;
 
 public abstract class OverlayRepeater extends Overlay
 {	
-	protected Overlay Overlay;
+	protected Overlay overlay;
 	
 	public OverlayRepeater(String name, Attribute[] attributes, int maximumX, int maximumY)
 	{
 		super(name, attributes, maximumX, maximumY);
 	}
 	
-	public void SetOverlay(Overlay overlay)
+	public void setOverlay(Overlay overlay)
 	{
-		Overlay = overlay;
+		this.overlay = overlay;
 	}
 }

@@ -17,158 +17,158 @@ import javafx.scene.paint.Color;
 
 public class Flag
 {
-	public String Name;
-	public Ratio Ratio;
-	public Ratio GridSize;
-	public Division Division;
-	public Overlay[] Overlays;
+	public String name;
+	public Ratio ratio;
+	public Ratio gridSize;
+	public Division division;
+	public Overlay[] overlays;
 	
 	public Flag(String name, Ratio ratio, Ratio gridSize, Division division, Overlay[] overlays)
 	{
-		Name = name;
-		Ratio = ratio;
-		GridSize = gridSize;
-		Division = division;
-		Overlays = overlays;
+		this.name = name;
+		this.ratio = ratio;
+		this.gridSize = gridSize;
+		this.division = division;
+		this.overlays = overlays;
 	}
 	
-	public static String GetFlagPath()
+	public static String getFlagPath()
 	{
 		return null;
 	}
 	
-	public void Draw(Pane canvas)
+	public void draw(Pane canvas)
 	{
 		canvas.getChildren().clear();
-		Division.Draw(canvas);
-		SetRepeaterOverlays();
+		division.draw(canvas);
+		setRepeaterOverlays();
 		
-		for (int i = 0; i < Overlays.length; i++)
+		for (int i = 0; i < overlays.length; i++)
 		{
 			// Skip overlays used in repeaters
-			if (i > 0 && Overlays[i - 1] instanceof OverlayRepeater) continue;
+			if (i > 0 && overlays[i - 1] instanceof OverlayRepeater) continue;
 
 			// Skip overlays disabled in editor
-			if (!Overlays[i].IsEnabled) continue;
+			if (!overlays[i].isEnabled) continue;
 
-			Overlays[i].Draw(canvas);
+			overlays[i].draw(canvas);
 		}
 	}
 	
-	public String ExportToString()
+	public String exportToString()
 	{
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(String.format("name=%s\n", Name));
-		sb.append(String.format("ratio=%d:%d\n", Ratio.Height, Ratio.Width));
-		sb.append(String.format("gridSize=%s\n\n", GridSize.ToString()));
-		sb.append(String.format("type=%s\n", Division.Name()));
+		sb.append(String.format("name=%s\n", name));
+		sb.append(String.format("ratio=%d:%d\n", ratio.height, ratio.width));
+		sb.append(String.format("gridSize=%s\n\n", gridSize.toString()));
+		sb.append(String.format("type=%s\n", division.getName()));
 		
-		for (int i = 0; i < Division.Colors.length; i++)
+		for (int i = 0; i < division.colors.length; i++)
 		{
-			sb.append(String.format("color%d=%s\n", i + 1, ColorExtensions.ToHexString(Division.Colors[i], false)));
+			sb.append(String.format("color%d=%s\n", i + 1, ColorExtensions.toHexString(division.colors[i], false)));
 		}
 
-		for (int i = 0; i < Division.Values.length; i++)
+		for (int i = 0; i < division.values.length; i++)
 		{
-			sb.append(String.format("size%d=%d\n", i + 1, Division.Values[i]));
+			sb.append(String.format("size%d=%d\n", i + 1, division.values[i]));
 		}
 		
-		for (Overlay overlay : Overlays)
+		for (Overlay overlay : overlays)
 		{
-			sb.append(overlay.ExportToString());
+			sb.append(overlay.exportToString());
 		}
 		
 		return sb.toString();
 	}
 	
-	public void ShuffleColors()
+	public void shuffleColors()
 	{
-		RotateColors(ColorsUsed());
+		rotateColors(colorsUsed());
 	}
 	
-	public void RotateColors(Color[] colorsUsed)
+	public void rotateColors(Color[] colorsUsed)
 	{
-		boolean skip2 = Division instanceof DivisionGrid &&
-				Division.Values[0] == 1 &&
-				Division.Values[0] == 1;
-		Division.Colors[0] = GetNextColor(Division.Colors[0], colorsUsed);
+		boolean skip2 = division instanceof DivisionGrid &&
+				division.values[0] == 1 &&
+				division.values[0] == 1;
+		division.colors[0] = getNextColor(division.colors[0], colorsUsed);
 
 		if (!skip2)
 		{
-			Division.Colors[1] = GetNextColor(Division.Colors[1], colorsUsed);
+			division.colors[1] = getNextColor(division.colors[1], colorsUsed);
 		}
 
-		if (Division instanceof DivisionPales || Division instanceof DivisionFesses)
+		if (division instanceof DivisionPales || division instanceof DivisionFesses)
 		{
-			Division.Colors[2] = GetNextColor(Division.Colors[2], colorsUsed);
+			division.colors[2] = getNextColor(division.colors[2], colorsUsed);
 		}
 
-		for (Overlay overlay : Overlays)
+		for (Overlay overlay : overlays)
 		{
-			for (Attribute a : overlay.Attributes)
+			for (Attribute a : overlay.attributes)
 			{
 				if (a instanceof ColorAttribute)
 				{
 					ColorAttribute c = (ColorAttribute)a;
 					
-					if (a.Name.equalsIgnoreCase("StrokeColor"))
+					if (a.name.equalsIgnoreCase("StrokeColor"))
 					{
-						double strokeWidth = overlay.GetDoubleAttribute("Stroke");
+						double strokeWidth = overlay.getDoubleAttribute("Stroke");
 						if (strokeWidth > 0)
 						{
-							c.SetValue(GetNextColor(c.Value, colorsUsed));
+							c.setValue(getNextColor(c.value, colorsUsed));
 						}
 					}
 					else
 					{
-						c.SetValue(GetNextColor(c.Value, colorsUsed));
+						c.setValue(getNextColor(c.value, colorsUsed));
 					}
 				}
 			}
 			
 			if (overlay instanceof OverlayFlag)
 			{
-				((OverlayFlag)overlay).Flag.RotateColors(colorsUsed);
+				((OverlayFlag)overlay).flag.rotateColors(colorsUsed);
 			}
 		}
 	}
 	
-	public Color[] ColorsUsed()
+	public Color[] colorsUsed()
 	{
 		ArrayList<Color> colors = new ArrayList<>();
 		
-		if (Division instanceof DivisionGrid && Division.Values[0] == 1 && Division.Values[1] == 1)
+		if (division instanceof DivisionGrid && division.values[0] == 1 && division.values[1] == 1)
 		{
-			colors.add(Division.Colors[0]);
+			colors.add(division.colors[0]);
 		}
 		else
 		{
-			colors.addAll(Arrays.asList(Division.Colors));
+			colors.addAll(Arrays.asList(division.colors));
 		}
 		
-		for (Overlay overlay : Overlays)
+		for (Overlay overlay : overlays)
 		{
 			if (overlay instanceof OverlayFlag)
 			{
-				colors.addAll(Arrays.asList(((OverlayFlag)overlay).Flag.ColorsUsed()));
+				colors.addAll(Arrays.asList(((OverlayFlag)overlay).flag.colorsUsed()));
 			}
 			else if (overlay instanceof OverlayPath)
 			{
 				OverlayPath p = (OverlayPath)overlay;
-				colors.add(p.GetColorAttribute("Color"));
-				if (p.GetDoubleAttribute("Stroke") > 0)
+				colors.add(p.getColorAttribute("Color"));
+				if (p.getDoubleAttribute("Stroke") > 0)
 				{
-					colors.add(p.GetColorAttribute("StrokeColor"));
+					colors.add(p.getColorAttribute("StrokeColor"));
 				}
 			}
 			else
 			{
-				for (Attribute a : overlay.Attributes)
+				for (Attribute a : overlay.attributes)
 				{
 					if (a instanceof ColorAttribute)
 					{
-						colors.add(((ColorAttribute)a).Value);
+						colors.add(((ColorAttribute)a).value);
 					}
 				}
 			}
@@ -180,27 +180,27 @@ public class Flag
 		return hs.toArray(returnValue);
 	}
 
-	private Color GetNextColor(Color c, Color[] colors)
+	private Color getNextColor(Color c, Color[] colors)
 	{
 		int index = Arrays.asList(colors).indexOf(c);
 		return colors[(index + 1) % colors.length];
 	}
 	
-	public void SetRepeaterOverlays()
+	public void setRepeaterOverlays()
 	{
 		// Clear last repeater in list
-		if (Overlays.length > 0 && Overlays[Overlays.length - 1] instanceof OverlayRepeater)
+		if (overlays.length > 0 && overlays[overlays.length - 1] instanceof OverlayRepeater)
 		{
-			((OverlayRepeater)Overlays[Overlays.length - 1]).SetOverlay(null);
+			((OverlayRepeater)overlays[overlays.length - 1]).setOverlay(null);
 		}
 
 		// Set overlays for others
-		for (int i = Overlays.length - 1; i > 0; i--)
+		for (int i = overlays.length - 1; i > 0; i--)
 		{
-			if (Overlays[i - 1] instanceof OverlayRepeater)
+			if (overlays[i - 1] instanceof OverlayRepeater)
 			{
-				OverlayRepeater repeater = (OverlayRepeater)Overlays[i - 1];
-				repeater.SetOverlay(Overlays[i]);
+				OverlayRepeater repeater = (OverlayRepeater)overlays[i - 1];
+				repeater.setOverlay(overlays[i]);
 			}
 		}
 	}

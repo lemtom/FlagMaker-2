@@ -24,105 +24,105 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 	@FXML private Slider slider;
 	@FXML private CheckBox chkDiscrete;
 	
-	private boolean _isDiscrete;
+	private boolean isDiscrete;
 	
-	private double _oldValue;
-	private boolean _wasDiscrete;
+	private double oldValue;
+	private boolean wasDiscrete;
 	
 	public DoubleAttributeSlider(OverlayControl parent, String name, boolean isDiscrete, double value, int maximum, boolean useMaxX)
 	{
 		super(parent, name, useMaxX);
-		Load();
+		load();
 		
-		String label = LocalizationHandler.Get(name);
+		String label = LocalizationHandler.get(name);
 		lblName.setText(label);
 		lblName.setTooltip(new Tooltip(label));
-		_isDiscrete = isDiscrete && (value % 1 == 0);
-		chkDiscrete.setSelected(_isDiscrete);
-		chkDiscrete.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean oldval, Boolean newval) -> CheckChanged());
-		lblValue.setText(_isDiscrete ? String.format("%d", (int)value) : String.format("%.3f", value));
+		this.isDiscrete = isDiscrete && (value % 1 == 0);
+		chkDiscrete.setSelected(this.isDiscrete);
+		chkDiscrete.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean oldval, Boolean newval) -> checkChanged());
+		lblValue.setText(this.isDiscrete ? String.format("%d", (int)value) : String.format("%.3f", value));
 		slider.setMax(maximum);
-		slider.setSnapToTicks(_isDiscrete);
+		slider.setSnapToTicks(this.isDiscrete);
 		slider.setValue(value);
 		slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldval, Number newval) ->
 		{
-			if (TriggeredByUser && !oldval.equals(newval)) SliderValueChanged();
-			TriggeredByUser = true;
+			if (triggeredByUser && !oldval.equals(newval)) sliderValueChanged();
+			triggeredByUser = true;
 		});
-		ControlExtensions.HideControl(txtValue);
-		txtValue.setOnKeyPressed((KeyEvent event) -> TxtValueKeyDown(event));
+		ControlExtensions.hideControl(txtValue);
+		txtValue.setOnKeyPressed((KeyEvent event) -> txtValueKeyDown(event));
 		txtValue.focusedProperty().addListener((arg0, oldval, newval) ->
 		{
 			if (oldval && !newval)
 			{
-				HideTxtValue();
+				hideTxtValue();
 			}
 		});
 	}
 	
 	@Override
-	public int GetMaximum()
+	public int getMaximum()
 	{
 		return (int)slider.getMax();
 	}
 	
 	@Override
-	public void SetMaximum(int value)
+	public void setMaximum(int value)
 	{
 		double currentValue = slider.getValue();
 		double ratio = currentValue / slider.getMax();
 		double newValue = ratio * value;
 		
 		slider.setMax(value);
-		SetValue(newValue);
+		setValue(newValue);
 	}
 	
 	@Override
-	public Double GetValue()
+	public Double getValue()
 	{
 		return slider.getValue();
 	}
 	
-	public void SetValue(double value)
+	public void setValue(double value)
 	{
-		TriggeredByUser = false;
+		triggeredByUser = false;
 		slider.setValue(value);
-		SliderValueChanged();
-		TriggeredByUser = true;
+		sliderValueChanged();
+		triggeredByUser = true;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object value)
 	{
-		SetValue((double)value);
+		setValue((double)value);
 	}
 	
-	public void SetDiscrete(boolean isDiscrete)
+	public void setDiscrete(boolean isDiscrete)
 	{
-		_isDiscrete = isDiscrete;
+		this.isDiscrete = isDiscrete;
 		chkDiscrete.setSelected(isDiscrete);
 	}
 	
-	private void SliderValueChanged()
+	private void sliderValueChanged()
 	{
-		lblValue.setText(_isDiscrete
+		lblValue.setText(isDiscrete
 				? String.format("%d", (int)slider.getValue())
 				: String.format("%.3f", slider.getValue()));
-		ValueChanged();
+		valueChanged();
 	}
 	
-	private void CheckChanged()
+	private void checkChanged()
 	{
-		_isDiscrete = chkDiscrete.isSelected();
-		slider.setSnapToTicks(_isDiscrete);
+		isDiscrete = chkDiscrete.isSelected();
+		slider.setSnapToTicks(isDiscrete);
 		
-		if (_isDiscrete)
+		if (isDiscrete)
 		{
-			SetValue((int)Math.round(slider.getValue()));
+			setValue((int)Math.round(slider.getValue()));
 		}
 	}
 
-	private void Load()
+	private void load()
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DoubleAttributeSlider.fxml"));
 		loader.setRoot(this);
@@ -139,25 +139,25 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 	}
 	
 	@FXML
-	private void Clicked()
+	private void clicked()
 	{
-		ControlExtensions.HideControl(lblValue);
-		ControlExtensions.ShowControl(txtValue);
-		_oldValue = slider.getValue();
-		_wasDiscrete = _isDiscrete;
-		txtValue.setText(Double.toString(_oldValue));
+		ControlExtensions.hideControl(lblValue);
+		ControlExtensions.showControl(txtValue);
+		oldValue = slider.getValue();
+		wasDiscrete = isDiscrete;
+		txtValue.setText(Double.toString(oldValue));
 		txtValue.selectAll();
 		txtValue.requestFocus();
 	}
 	
 	@FXML
-	private void TxtValueKeyDown(KeyEvent e)
+	private void txtValueKeyDown(KeyEvent e)
 	{
 		KeyCode k = e.getCode();
 		switch (k)
 		{
 			case ENTER:
-				HideTxtValue();
+				hideTxtValue();
 				String text = txtValue.getText();
 				
 				if (text.contains("%"))
@@ -166,7 +166,7 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 					try
 					{
 						double percentValue = Double.parseDouble(stringVal);
-						SetValueByFraction(percentValue / 100);
+						setValueByFraction(percentValue / 100);
 					}
 					catch (Exception ex)
 					{
@@ -187,7 +187,7 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 						double num = Double.parseDouble(numerator);
 						double den = Double.parseDouble(denominator);
 						if (den <= 0) return;
-						SetValueByFraction(num / den);
+						setValueByFraction(num / den);
 					}
 					catch (Exception ex)
 					{
@@ -207,9 +207,9 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 				}
 				break;
 			case ESCAPE:
-				chkDiscrete.setSelected(_wasDiscrete);
-				slider.setValue(_oldValue);
-				HideTxtValue();
+				chkDiscrete.setSelected(wasDiscrete);
+				slider.setValue(oldValue);
+				hideTxtValue();
 				break;
 			case DOWN:
 			case UP:
@@ -232,7 +232,7 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 		}
 	}
 	
-	private void SetValueByFraction(double fraction)
+	private void setValueByFraction(double fraction)
 	{
 		if (fraction > 1) fraction = 1;
 		if (fraction < 0) fraction = 0;
@@ -243,9 +243,9 @@ public class DoubleAttributeSlider extends NumericAttributeSlider
 		slider.setValue(result);
 	}
 	
-	private void HideTxtValue()
+	private void hideTxtValue()
 	{
-		ControlExtensions.HideControl(txtValue);
-		ControlExtensions.ShowControl(lblValue);
+		ControlExtensions.hideControl(txtValue);
+		ControlExtensions.showControl(lblValue);
 	}
 }

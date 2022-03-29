@@ -10,47 +10,47 @@ import javafx.scene.shape.Shape;
 
 public abstract class Overlay
 {
-	public final String Name;
-	public boolean IsEnabled;
-	public Attribute[] Attributes;
-	protected int MaximumX;
-	protected int MaximumY;
+	public final String name;
+	public boolean isEnabled;
+	public Attribute[] attributes;
+	protected int maximumX;
+	protected int maximumY;
 	
-	protected abstract Shape[] Thumbnail();
+	protected abstract Shape[] thumbnail();
 	
-	public abstract void Draw(Pane canvas);
-	public abstract String ExportSvg(int width, int height);
+	public abstract void draw(Pane canvas);
+	public abstract String exportSvg(int width, int height);
 	
 	protected Overlay(String name, Attribute[] attributes, int maximumX, int maximumY)
 	{
-		Name = name;
-		IsEnabled = true;
-		Attributes = attributes;
-		SetMaximum(maximumX, maximumY);
+		this.name = name;
+		isEnabled = true;
+		this.attributes = attributes;
+		setMaximum(maximumX, maximumY);
 	}
 	
-	public final void SetMaximum(int maximumX, int maximumY)
+	public final void setMaximum(int newMaximumX, int newMaximumY)
 	{
-		MaximumX = maximumX;
-		MaximumY = maximumY;
+		maximumX = newMaximumX;
+		maximumY = newMaximumY;
 		
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
 			if (a instanceof NumericAttribute)
 			{
 				NumericAttribute n = (NumericAttribute)a;
-				n.Maximum = n.UseMaxX ? MaximumX : MaximumY;
+				n.maximum = n.useMaxX ? maximumX : maximumY;
 			}
 		}
 	}
 	
-	public Pane PaneThumbnail()
+	public Pane paneThumbnail()
 	{
 		Pane p = new Pane();
 		p.setMinHeight(30);
 		p.setMinWidth(30);
 	
-		for (Shape thumb : Thumbnail())
+		for (Shape thumb : thumbnail())
 		{
 			thumb.setStroke(Color.BLACK);
 			if (thumb.getStrokeWidth() == 1.0) thumb.setStrokeWidth(0);
@@ -61,19 +61,19 @@ public abstract class Overlay
 		return p;
 	}
 	
-	public void SetValues(HashMap<String, Object> values)
+	public void setValues(HashMap<String, Object> values)
 	{
 		values.entrySet().stream().forEach((v) ->
 		{
 			String name = v.getKey();
 			Object value = v.getValue();
 			
-			// Will fail for missing sttributes
-			SetAttribute(name, value);
+			// Will fail for missing attributes
+			setAttribute(name, value);
 		});
 	}
 	
-	public void SetValuesFromStrings(HashMap<String, String> values)
+	public void setValuesFromStrings(HashMap<String, String> values)
 	{
 		values.entrySet().stream().forEach((v) ->
 		{
@@ -84,19 +84,19 @@ public abstract class Overlay
 			{
 				// Backwards-compatibility for 1.x file format
 				int attributeIndex = Integer.parseInt(name.substring(4, 5));
-				if (attributeIndex < Attributes.length)
+				if (attributeIndex < attributes.length)
 				{
-					Attributes[attributeIndex].SetValue(value);
+					attributes[attributeIndex].setValue(value);
 				}
 			}
 			else
 			{
 				// Will fail for missing sttributes
-				for (Attribute a : Attributes)
+				for (Attribute a : attributes)
 				{
-					if (a.Name.equalsIgnoreCase(name))
+					if (a.name.equalsIgnoreCase(name))
 					{
-						a.SetValue(value);
+						a.setValue(value);
 						return;
 					}
 				}
@@ -104,13 +104,13 @@ public abstract class Overlay
 		});
 	}
 	
-	public <T> void SetAttribute(String name, T value)
+	public <T> void setAttribute(String name, T value)
 	{
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
-			if (a.Name.equalsIgnoreCase(name))
+			if (a.name.equalsIgnoreCase(name))
 			{
-				a.SetValue(value);
+				a.setValue(value);
 				return;
 			}
 		}
@@ -118,11 +118,11 @@ public abstract class Overlay
 		// Attribute not found
 	}
 	
-	public Attribute GetAttribute(String name)
+	public Attribute getAttribute(String name)
 	{
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
-			if (a.Name.equalsIgnoreCase(name))
+			if (a.name.equalsIgnoreCase(name))
 			{
 				return a;
 			}
@@ -132,13 +132,13 @@ public abstract class Overlay
 		return null;
 	}
 	
-	public double GetDoubleAttribute(String name)
+	public double getDoubleAttribute(String name)
 	{
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
-			if (a.Name.equalsIgnoreCase(name) && a instanceof DoubleAttribute)
+			if (a.name.equalsIgnoreCase(name) && a instanceof DoubleAttribute)
 			{
-				return ((DoubleAttribute)a).Value;
+				return ((DoubleAttribute)a).value;
 			}
 		}
 		
@@ -146,13 +146,13 @@ public abstract class Overlay
 		return 0;
 	}
 	
-	public int GetIntegerAttribute(String name)
+	public int getIntegerAttribute(String name)
 	{
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
-			if (a.Name.equalsIgnoreCase(name) && a instanceof IntegerAttribute)
+			if (a.name.equalsIgnoreCase(name) && a instanceof IntegerAttribute)
 			{
-				return ((IntegerAttribute)a).Value;
+				return ((IntegerAttribute)a).value;
 			}
 		}
 		
@@ -160,13 +160,13 @@ public abstract class Overlay
 		return 0;
 	}
 	
-	public boolean GetBooleanAttribute(String name)
+	public boolean getBooleanAttribute(String name)
 	{
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
-			if (a.Name.equalsIgnoreCase(name) && a instanceof BooleanAttribute)
+			if (a.name.equalsIgnoreCase(name) && a instanceof BooleanAttribute)
 			{
-				return ((BooleanAttribute)a).Value;
+				return ((BooleanAttribute)a).value;
 			}
 		}
 		
@@ -174,13 +174,13 @@ public abstract class Overlay
 		return false;
 	}
 	
-	public Color GetColorAttribute(String name)
+	public Color getColorAttribute(String name)
 	{
-		for (Attribute a : Attributes)
+		for (Attribute a : attributes)
 		{
-			if (a.Name.equalsIgnoreCase(name) && a instanceof ColorAttribute)
+			if (a.name.equalsIgnoreCase(name) && a instanceof ColorAttribute)
 			{
-				return ((ColorAttribute)a).Value;
+				return ((ColorAttribute)a).value;
 			}
 		}
 		
@@ -188,24 +188,24 @@ public abstract class Overlay
 		return Color.BLACK;
 	}
 	
-	public String ExportToString()
+	public String exportToString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("\ntype=%s\n", Name));
+		sb.append(String.format("\ntype=%s\n", name));
 				
-		if (Name.equals("flag"))
+		if (name.equals("flag"))
 		{
-			sb.append(String.format("path=%s\n", ((OverlayFlag)this).Path));
+			sb.append(String.format("path=%s\n", ((OverlayFlag)this).path));
 		}
 
-		if (Name.equals("image"))
+		if (name.equals("image"))
 		{
-			sb.append(String.format("path=%s\n", ((OverlayImage)this).GetPath()));
+			sb.append(String.format("path=%s\n", ((OverlayImage)this).getPath()));
 		}
 
-		for (Attribute Attribute : Attributes)
+		for (Attribute Attribute : attributes)
 		{
-			sb.append(String.format("%s=%s\n", Attribute.Name, Attribute.ExportAsString()));
+			sb.append(String.format("%s=%s\n", Attribute.name, Attribute.exportAsString()));
 		}
 		
 		return sb.toString();

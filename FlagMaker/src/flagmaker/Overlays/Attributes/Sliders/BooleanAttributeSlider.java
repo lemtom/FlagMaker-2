@@ -17,39 +17,39 @@ public class BooleanAttributeSlider extends AttributeSlider
 	public BooleanAttributeSlider(OverlayControl parent, String name, boolean value)
 	{
 		super(parent, name);
-		Load();
+		load();
 		
-		String label = LocalizationHandler.Get(name);
+		String label = LocalizationHandler.get(name);
 		lblName.setText(label);
 		lblName.setTooltip(new Tooltip(label));
 		chkEnabled.setSelected(value);
 		chkEnabled.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean oldval, Boolean newval) ->
 		{
-			if (TriggeredByUser && !newval.equals(oldval)) ValueChanged();
-			TriggeredByUser = true;
+			if (triggeredByUser && !newval.equals(oldval)) valueChanged();
+			triggeredByUser = true;
 		});
 	}
 	
 	@Override
-	public Boolean GetValue()
+	public Boolean getValue()
 	{
 		return chkEnabled.isSelected();
 	}
 	
-	public void SetValue(boolean value)
+	public void setValue(boolean value)
 	{
-		TriggeredByUser = false;
+		triggeredByUser = false;
 		chkEnabled.setSelected(value);
-		TriggeredByUser = true;
+		triggeredByUser = true;
 	}
 
 	@Override
-	public void SetValue(Object value)
+	public void setValue(Object value)
 	{
-		SetValue((boolean)value);
+		setValue((boolean)value);
 	}
 
-	private void Load()
+	private void load()
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("BooleanAttributeSlider.fxml"));
 		loader.setRoot(this);
