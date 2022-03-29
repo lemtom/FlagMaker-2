@@ -8,8 +8,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import flagmaker.Color.* ?>
-<?import flagmaker.Overlays.* ?>
+<?import flagmaker.color.* ?>
+<?import flagmaker.overlays.* ?>
 
 <VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flagmaker.MainWindowController">
 	<children>
@@ -76,7 +76,7 @@
 					<graphic>
 						<ImageView fitHeight="32.0" fitWidth="32.0">
 							<image>
-								<Image url="flagmaker/Images/rotate.png" />
+								<Image url="flagmaker/images/rotate.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -88,7 +88,7 @@
 					<graphic>
 						<ImageView fitHeight="32.0" fitWidth="51.0">
 							<image>
-								<Image url="flagmaker/Images/Texture/1.png" />
+								<Image url="flagmaker/images/Texture/1.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -100,7 +100,7 @@
 					<graphic>
 						<ImageView fitHeight="32.0" fitWidth="32.0">
 							<image>
-								<Image url="flagmaker/Images/die.png" />
+								<Image url="flagmaker/images/die.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -325,7 +325,7 @@
 									<graphic>
 										<ImageView fitHeight="32.0" fitWidth="32.0">
 											<image>
-												<Image url="flagmaker/Images/add.png" />
+												<Image url="flagmaker/images/add.png" />
 											</image>
 										</ImageView>
 									</graphic>
@@ -340,7 +340,7 @@
 									<graphic>
 										<ImageView fitHeight="32.0" fitWidth="32.0">
 											<image>
-												<Image url="flagmaker/Images/expand.png" />
+												<Image url="flagmaker/images/expand.png" />
 											</image>
 										</ImageView>
 									</graphic>
@@ -355,7 +355,7 @@
 									<graphic>
 										<ImageView fitHeight="32.0" fitWidth="32.0">
 											<image>
-												<Image url="flagmaker/Images/collapse.png" />
+												<Image url="flagmaker/images/collapse.png" />
 											</image>
 										</ImageView>
 									</graphic>

@@ -1,22 +1,23 @@
 package flagmaker;
 
-import flagmaker.About.AboutController;
-import flagmaker.Color.ColorButton;
-import flagmaker.Color.ColorButtonListener;
-import flagmaker.Files.LocalizationHandler;
-import flagmaker.Extensions.StringExtensions;
-import flagmaker.Extensions.ControlExtensions;
-import flagmaker.Data.Ratio;
-import flagmaker.Data.Size;
-import flagmaker.Data.Flag;
-import flagmaker.Files.FileHandler;
-import flagmaker.Divisions.*;
-import flagmaker.Extensions.CommonExtensions;
-import flagmaker.Overlays.Overlay;
-import flagmaker.Overlays.OverlayControl;
-import flagmaker.Overlays.OverlayFactory;
-import flagmaker.Overlays.OverlayTypes.SpecialTypes.OverlayFlag;
-import flagmaker.RandomFlag.RandomFlagFactory;
+import flagmaker.about.AboutController;
+import flagmaker.color.ColorButton;
+import flagmaker.color.ColorButtonListener;
+import flagmaker.data.Flag;
+import flagmaker.data.Ratio;
+import flagmaker.data.Size;
+import flagmaker.divisions.*;
+import flagmaker.extensions.CommonExtensions;
+import flagmaker.extensions.ControlExtensions;
+import flagmaker.extensions.StringExtensions;
+import flagmaker.files.FileHandler;
+import flagmaker.files.LocalizationHandler;
+import flagmaker.overlays.Overlay;
+import flagmaker.overlays.OverlayControl;
+import flagmaker.overlays.OverlayFactory;
+import flagmaker.overlays.overlaytypes.SpecialTypes.OverlayFlag;
+import flagmaker.randomflag.RandomFlagFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -564,7 +565,7 @@ public class MainWindowController implements ColorButtonListener
 	{
 		setDefaultColors();
 		
-		recentColors = new ArrayList<Color>();
+		recentColors = new ArrayList<>();
 		divisionPicker1.setListener(this, stage, this);
 		divisionPicker2.setListener(this, stage, this);
 		divisionPicker3.setListener(this, stage, this);
@@ -630,7 +631,7 @@ public class MainWindowController implements ColorButtonListener
 		{
 			return;
 		}
-		if (cmbRatio.getItems().size() == 0)
+		if (cmbRatio.getItems().isEmpty())
 		{
 			return;
 		}
@@ -696,7 +697,7 @@ public class MainWindowController implements ColorButtonListener
 	@FXML
 	private void gridSizeDropdownChanged()
 	{
-		if (cmbRatio.getItems().size() == 0) return;
+		if (cmbRatio.getItems().isEmpty()) return;
 		Ratio gridSize = selectedGridSize();
 		int sliderMax = Math.max(gridSize.width, gridSize.height);
 

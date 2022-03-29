@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
+	<FlowPane orientation="HORIZONTAL">
+		<Button onAction="#SetCollapsed">
+			<tooltip>
+				<Tooltip fx:id="ttpExpandCollapse" />
+			</tooltip>
+			<graphic>
+				<ImageView fx:id="btnExpandCollapse" fitHeight="24.0" fitWidth="24.0">
+					<image>
+						<Image url="flagmaker/images/collapse.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+		<Button fx:id="btnOverlay" onAction="#OverlaySelect" prefWidth="24.0" prefHeight="24.0">
+			<tooltip>
+				<Tooltip fx:id="ttpChangeType" />
+			</tooltip>
+		</Button>
+		<Button onAction="#SetVisibility">
+			<tooltip>
+				<Tooltip fx:id="ttpVisibility" />
+			</tooltip>
+			<graphic>
+				<ImageView fx:id="btnVisibility" fitHeight="24.0" fitWidth="24.0">
+					<image>
+						<Image url="flagmaker/images/check_on.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+		<Button onAction="#Remove">
+			<tooltip>
+				<Tooltip fx:id="ttpRemove" />
+			</tooltip>
+			<graphic>
+				<ImageView fitHeight="24.0" fitWidth="24.0">
+					<image>
+						<Image url="flagmaker/images/remove.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+		<Button onAction="#MoveUp">
+			<tooltip>
+				<Tooltip fx:id="ttpMoveUp" />
+			</tooltip>
+			<graphic>
+				<ImageView fitHeight="24.0" fitWidth="24.0">
+					<image>
+						<Image url="flagmaker/images/moveup.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+		<Button onAction="#MoveDown">
+			<tooltip>
+				<Tooltip fx:id="ttpMoveDown" />
+			</tooltip>
+			<graphic>
+				<ImageView fitHeight="24.0" fitWidth="24.0">
+					<image>
+						<Image url="flagmaker/images/movedown.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+		<Button onAction="#CloneThis">
+			<tooltip>
+				<Tooltip fx:id="ttpClone" />
+			</tooltip>
+			<graphic>
+				<ImageView fitHeight="24.0" fitWidth="24.0">
+					<image>
+						<Image url="flagmaker/images/clone.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+	</FlowPane>
+	
+	<VBox fx:id="pnlSliders">
+		<VBox.margin>
+			<Insets top="10.0" />
+		</VBox.margin>
+	</VBox>
+</fx:root>

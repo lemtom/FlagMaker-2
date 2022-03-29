@@ -921,10 +921,10 @@ is divided into following sections:
     </target>
     <target name="-post-compile">
         <copy todir="${dist.dir}/Presets">
-            <fileset dir="${src.dir}/flagmaker/Presets/" />
+            <fileset dir="${src.dir}/flagmaker/presets/" />
         </copy>
         <copy todir="${dist.dir}/Custom">
-            <fileset dir="${src.dir}/flagmaker/Custom/" />
+            <fileset dir="${src.dir}/flagmaker/custom/" />
         </copy>
     </target>
     <target depends="init,deps-jar,-verify-automatic-build,-pre-pre-compile,-pre-compile,-do-compile,-post-compile" description="Compile project." name="compile"/>
