@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.Base64;
+import java.util.Locale;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -143,7 +144,7 @@ public class OverlayImage extends Overlay
 			byte[] bytes = Base64.getEncoder().encode(Files.readAllBytes(path.toPath()));
 			String base64String = new String(bytes);
 			
-			return String.format("<image x=\"%.3f\" y=\"%.3f\" width=\"%.3f\" height=\"%.3f\" preserveAspectRatio=\"none\" xlink:href=\"data:image/%s;base64,%s\" />",
+			return String.format(Locale.US, "<image x=\"%.3f\" y=\"%.3f\" width=\"%.3f\" height=\"%.3f\" preserveAspectRatio=\"none\" xlink:href=\"data:image/%s;base64,%s\" />",
 					width * (getDoubleAttribute("X") / maximumX) - imageWidth / 2,
 					height * (getDoubleAttribute("Y") / maximumY) - imageHeight / 2,
 					imageWidth,

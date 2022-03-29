@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -48,9 +49,9 @@ public class OverlaySaltire extends Overlay
 		SVGPath path1 = new SVGPath();
 		SVGPath path2 = new SVGPath();
 		
-		path1.setContent(String.format("M %1$.3f,0 0,0 0,%2$.3f %3$.3f,%4$.3f %5$.3f,%4$.3f %5$.3f,%6$.3f %1$.3f,0",
+		path1.setContent(String.format(Locale.US, "M %1$.3f,0 0,0 0,%2$.3f %3$.3f,%4$.3f %5$.3f,%4$.3f %5$.3f,%6$.3f %1$.3f,0",
 				widthX, widthY, canvas.getWidth() - widthX, canvas.getHeight(), canvas.getWidth(), canvas.getHeight() - widthY));
-		path2.setContent(String.format("M %1$.3f,0 %2$.3f,0 %2$.3f,%6$.3f %3$.3f,%4$.3f 0,%4$.3f 0,%5$.3f %1$.3f,0",
+		path2.setContent(String.format(Locale.US, "M %1$.3f,0 %2$.3f,0 %2$.3f,%6$.3f %3$.3f,%4$.3f 0,%4$.3f 0,%5$.3f %1$.3f,0",
 				canvas.getWidth() - widthX, canvas.getWidth(), widthX, canvas.getHeight(), canvas.getHeight() - widthY, widthY));
 
 		path1.setFill(getColorAttribute("Color"));
@@ -65,7 +66,7 @@ public class OverlaySaltire extends Overlay
 		double wX = width * (getDoubleAttribute("Thickness") / maximumX) / 2;
 		double wY = height * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
-		return String.format("<polygon points=\"%1$.3f,0 0,0 0,%6$.3f %2$.3f,%3$d %4$d,%3$d %4$d,%5$.3f %1$.3f,0\" %7$s /><polygon points=\"%2$.3f,0 %4$d,0 %4$d,%6$.3f %1$.3f,%3$d 0,%3$d 0,%5$.3f %2$.3f,0\" %7$s />",
+		return String.format(Locale.US, "<polygon points=\"%1$.3f,0 0,0 0,%6$.3f %2$.3f,%3$d %4$d,%3$d %4$d,%5$.3f %1$.3f,0\" %7$s /><polygon points=\"%2$.3f,0 %4$d,0 %4$d,%6$.3f %1$.3f,%3$d 0,%3$d 0,%5$.3f %2$.3f,0\" %7$s />",
 			wX, width - wX, height, width, height - wY, wY, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}
 }

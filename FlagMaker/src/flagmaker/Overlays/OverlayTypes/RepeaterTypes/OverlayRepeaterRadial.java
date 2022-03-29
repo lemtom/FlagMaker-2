@@ -1,6 +1,7 @@
 package flagmaker.Overlays.OverlayTypes.RepeaterTypes;
 
 import flagmaker.Overlays.Attributes.*;
+import java.util.Locale;
 import java.util.UUID;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -105,16 +106,16 @@ public class OverlayRepeaterRadial extends OverlayRepeater
 		UUID id = UUID.randomUUID();
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.format("<defs><g id=\"%s\">%s</g></defs>",
+		sb.append(String.format(Locale.US, "<defs><g id=\"%s\">%s</g></defs>",
 			id.toString(), overlay.exportSvg((int)radius, (int)radius)));
 
 		for (int i = 0; i < getIntegerAttribute("Count"); i++)
 		{
-			sb.append(String.format("<g transform=\"translate(%.3f,%.3f)%s\">\n",
+			sb.append(String.format(Locale.US, "<g transform=\"translate(%.3f,%.3f)%s\">\n",
 				locX + Math.cos(i * interval - Math.PI / 2) * radius,
 				locY + Math.sin(i * interval - Math.PI / 2) * radius,
-				rotate ? String.format("rotate(%.3f)", i * 360.0 / getIntegerAttribute("Count")) : ""));
-			sb.append(String.format("<use xlink:href=\"#%s\" />\n", id.toString()));
+				rotate ? String.format(Locale.US, "rotate(%.3f)", i * 360.0 / getIntegerAttribute("Count")) : ""));
+			sb.append(String.format(Locale.US, "<use xlink:href=\"#%s\" />\n", id.toString()));
 			sb.append("</g>\n");
 		}
 

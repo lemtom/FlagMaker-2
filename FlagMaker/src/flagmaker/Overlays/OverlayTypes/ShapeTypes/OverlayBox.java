@@ -1,6 +1,7 @@
 package flagmaker.Overlays.OverlayTypes.ShapeTypes;
 
 import flagmaker.Extensions.ColorExtensions;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -48,7 +49,7 @@ public class OverlayBox extends OverlayShape
 		double h = getDoubleAttribute("Height") == 0
 				? w
 				: height * (getDoubleAttribute("Height") / maximumY);
-		return String.format("<rect width=\"%.3f\" height=\"%.3f\" x=\"%.3f\" y=\"%.3f\" %s />",
+		return String.format(Locale.US, "<rect width=\"%.3f\" height=\"%.3f\" x=\"%.3f\" y=\"%.3f\" %s />",
 				w,
 				h,
 				width * (getDoubleAttribute("X") / maximumX),

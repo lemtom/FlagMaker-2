@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -112,16 +113,16 @@ public class OverlayHalfSaltire extends Overlay
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.format("<polygon points=\"0,0 %1$.3f,%2$.3f %3$.3f,%2$.3f 0,%4$.3f\" %5$s />",
+		sb.append(String.format(Locale.US, "<polygon points=\"0,0 %1$.3f,%2$.3f %3$.3f,%2$.3f 0,%4$.3f\" %5$s />",
 			centerX, centerY, centerX - wX, wY, c));
 
-		sb.append(String.format("<polygon points=\"%1$.3f,%2$.3f %1$.3f,%3$.3f %4$.3f,0 %5$d,0\" %6$s />",
+		sb.append(String.format(Locale.US, "<polygon points=\"%1$.3f,%2$.3f %1$.3f,%3$.3f %4$.3f,0 %5$d,0\" %6$s />",
 			centerX, centerY, centerY - wY, width - wX, width, c));
 
-		sb.append(String.format("<polygon points=\"%1$.3f,%2$.3f %1$.3f,%3$.3f %4$.3f,%5$d 0,%5$d\" %6$s />",
+		sb.append(String.format(Locale.US, "<polygon points=\"%1$.3f,%2$.3f %1$.3f,%3$.3f %4$.3f,%5$d 0,%5$d\" %6$s />",
 			centerX, centerY, centerY + wY, wX, height, c));
 
-		sb.append(String.format("<polygon points=\"%1$.3f,%2$.3f %3$.3f,%2$.3f %4$d,%5$.3f %4$d,%6$d\" %7$s />",
+		sb.append(String.format(Locale.US, "<polygon points=\"%1$.3f,%2$.3f %3$.3f,%2$.3f %4$d,%5$.3f %4$d,%6$d\" %7$s />",
 			centerX, centerY, centerX + wX, width, height - wY, height, c));
 
 		return sb.toString();

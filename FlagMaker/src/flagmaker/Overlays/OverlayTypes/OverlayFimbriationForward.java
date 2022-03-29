@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -67,7 +68,7 @@ public class OverlayFimbriationForward extends Overlay
 		double wX = width * (getDoubleAttribute("Thickness") / maximumX) / 2;
 		double wY = height * (getDoubleAttribute("Thickness") / maximumX) / 2;
 
-		return String.format("<polygon points=\"%1$.3f,0 %2$d,0 %2$d,%6$.3f %3$.3f,%4$d 0,%4$d 0,%5$.3f %1$.3f,0\" %7$s />",
+		return String.format(Locale.US, "<polygon points=\"%1$.3f,0 %2$d,0 %2$d,%6$.3f %3$.3f,%4$d 0,%4$d 0,%5$.3f %1$.3f,0\" %7$s />",
 			width - wX, width, wX, height, height - wY, wY,
 			ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}

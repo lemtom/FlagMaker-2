@@ -2,6 +2,7 @@ package flagmaker.Overlays.OverlayTypes.RepeaterTypes;
 
 import flagmaker.Overlays.Attributes.Attribute;
 import flagmaker.Overlays.Attributes.DoubleAttribute;
+import java.util.Locale;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -65,7 +66,7 @@ public class OverlayTransformer extends OverlayRepeater
 
 		Transform matrix = getTransformation(width, height);
 
-		return String.format("<g transform=\"matrix(%.3f,%.3f,%.3f,%.3f,%.3f,%.3f)\">%s</g>",
+		return String.format(Locale.US, "<g transform=\"matrix(%.3f,%.3f,%.3f,%.3f,%.3f,%.3f)\">%s</g>",
 			matrix.getMxx(),
 			matrix.getMxy(),
 			matrix.getMyx(),

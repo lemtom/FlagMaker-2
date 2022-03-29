@@ -1,6 +1,7 @@
 package flagmaker.Overlays.OverlayTypes.ShapeTypes;
 
 import flagmaker.Extensions.ColorExtensions;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -52,7 +53,7 @@ public class OverlayEllipse extends OverlayShape
 		double x = width * (getDoubleAttribute("X") / maximumX);
 		double y = height * (getDoubleAttribute("Y") / maximumY);
 		
-		return String.format("<ellipse cx=\"%.3f\" cy=\"%.3f\" rx=\"%.3f\" ry=\"%.3f\" %s />",
+		return String.format(Locale.US, "<ellipse cx=\"%.3f\" cy=\"%.3f\" rx=\"%.3f\" ry=\"%.3f\" %s />",
 				x, y, w / 2, h / 2,
 				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}

@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcTo;
@@ -99,7 +100,7 @@ public class OverlayHalfEllipse extends Overlay
 		double y1 = y - yOffset;
 		double y2 = y + yOffset;
 		
-		return String.format("<path d=\"M %.3f,%.3f A %.3f,%.3f %.3f 1,1 %.3f,%.3f z\" %s />",
+		return String.format(Locale.US, "<path d=\"M %.3f,%.3f A %.3f,%.3f %.3f 1,1 %.3f,%.3f z\" %s />",
 				x1, y1, radX, radY, angle * 180 / Math.PI, x2, y2,
 				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")));
 	}

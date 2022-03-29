@@ -4,6 +4,7 @@ import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
 import flagmaker.Data.Vector;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
@@ -162,10 +163,10 @@ public class OverlayPath extends Overlay
 		double strokeThickness = strokeThickness(width, height);
 		boolean strokeCurved = getBooleanAttribute("StrokeCurved");
 
-		return String.format("<g transform=\"translate(%.3f,%.3f) rotate(%.3f) scale(%.3f)\"><path d=\"%s\" %s %s /></g>",
+		return String.format(Locale.US, "<g transform=\"translate(%.3f,%.3f) rotate(%.3f) scale(%.3f)\"><path d=\"%s\" %s %s /></g>",
 			finalCenterPoint.x, finalCenterPoint.y, rotate, scaleFactor(width, height), path, ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")),
 			strokeThickness > 0
-				? String.format("stroke=\"#%s\" stroke-width=\"$.3f\" stroke-linejoin=\"%s\"",
+				? String.format(Locale.US, "stroke=\"#%s\" stroke-width=\"$.3f\" stroke-linejoin=\"%s\"",
 					ColorExtensions.toHexString(getColorAttribute("StrokeColor"), false), strokeThickness, strokeCurved ? "round" : "miter")
 				: "");
 	}

@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -82,7 +83,7 @@ public class OverlayRing extends Overlay
 		double innerRadX = outerRadX * proportion;
 		double innerRadY = outerRadY * proportion;
 
-		return String.format("<path d=\"" +
+		return String.format(Locale.US, "<path d=\"" +
 			"M %1$.3f,%2$.3f m -%3$.3f,0 a %3$.3f,%4$.3f 0 1,0 %5$.3f,0 a %3$.3f,%4$.3f 0 1,0 -%5$.3f,0 z" +
 			"M %1$.3f,%2$.3f m %6$.3f,0 a %6$.3f,%7$.3f 0 1,1 -%8$.3f,0 a %6$.3f,%7$.3f 0 1,1 %8$.3f,0 z" +
 			"\" %8$s />",

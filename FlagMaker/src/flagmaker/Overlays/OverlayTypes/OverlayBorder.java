@@ -3,6 +3,7 @@ package flagmaker.Overlays.OverlayTypes;
 import flagmaker.Extensions.ColorExtensions;
 import flagmaker.Overlays.Attributes.*;
 import flagmaker.Overlays.Overlay;
+import java.util.Locale;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
@@ -101,7 +102,7 @@ public class OverlayBorder extends Overlay
 			thickness = height / 2.0;
 		}
 
-		return String.format("<path d=\"M 0,0 %1$d,0 %1$d,%2$d 0,%2$d Z M %3$.3f,%3$.3f %4$.3f,%3$.3f %4$.3f,%5$.3f %3$.3f,%5$.3f Z\" %6$s fill-rule=\"evenodd\" />",
+		return String.format(Locale.US, "<path d=\"M 0,0 %1$d,0 %1$d,%2$d 0,%2$d Z M %3$.3f,%3$.3f %4$.3f,%3$.3f %4$.3f,%5$.3f %3$.3f,%5$.3f Z\" %6$s fill-rule=\"evenodd\" />",
 			width, height,
 			thickness,
 			width - thickness,
