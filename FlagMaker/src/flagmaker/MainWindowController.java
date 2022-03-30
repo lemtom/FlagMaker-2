@@ -18,6 +18,8 @@ import flagmaker.overlays.OverlayFactory;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
 import flagmaker.randomflag.RandomFlagFactory;
 
+import static flagmaker.extensions.StringExtensions.isNullOrWhitespace;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -1187,9 +1189,10 @@ public class MainWindowController implements ColorButtonListener {
 	}
 
 	public Flag flag() {
-		String name = StringExtensions.isNullOrWhitespace(txtName.getText())
-				? StringExtensions.isNullOrWhitespace(fileName) ? "" : Paths.get(fileName).getFileName().toString()
-				: txtName.getText();
+		String name = txtName.getText();
+		if (isNullOrWhitespace(name)) {
+			name = isNullOrWhitespace(fileName) ? "" : Paths.get(fileName).getFileName().toString();
+		} 
 		return new Flag(name, ratio, selectedGridSize(), division, getOverlays());
 	}
 

@@ -26,18 +26,7 @@ public class StringExtensions {
 	}
 
 	public static boolean isNullOrWhitespace(String s) {
-		return s == null || isWhitespace(s);
+		return s == null || s.isBlank();
 	}
 
-	private static boolean isWhitespace(String s) {
-		int length = s.length();
-		if (length > 0) {
-			for (int i = 0; i < length; i++) {
-				if (!Character.isWhitespace(s.charAt(i))) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
 }

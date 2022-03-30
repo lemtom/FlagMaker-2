@@ -24,8 +24,8 @@ public class CommonExtensions {
 
 	public static String titleAndVersionString(Class c) {
 		Package p = c.getPackage();
-		String version = p.getImplementationVersion();
-		String title = p.getImplementationTitle();
+		String version = p.getImplementationVersion() != null ? p.getImplementationVersion() : "";
+		String title = p.getImplementationTitle() != null ? p.getImplementationTitle() : "FlagMaker";
 		return String.format("%s %s", title, version);
 	}
 }

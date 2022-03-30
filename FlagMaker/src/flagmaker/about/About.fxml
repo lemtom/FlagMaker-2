@@ -15,7 +15,7 @@
 					<content>
 						<ScrollPane fitToWidth="true">
 							<content>
-								<VBox fx:id="CreditBox" styleClass="padding">
+								<VBox fx:id="creditBox" styleClass="padding">
 									<children>
 										<Label styleClass="header" fx:id="lblVersion" />
 									</children>
@@ -28,7 +28,7 @@
 					<content>
 						<ScrollPane fitToWidth="true">
 							<content>
-								<VBox fx:id="HistoryBox" styleClass="padding" />
+								<VBox fx:id="historyBox" styleClass="padding" />
 							</content>
 						</ScrollPane>
 					</content>
