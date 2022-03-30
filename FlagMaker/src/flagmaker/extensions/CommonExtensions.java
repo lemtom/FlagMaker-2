@@ -1,28 +1,28 @@
 package flagmaker.extensions;
 
-public class CommonExtensions
-{
+public class CommonExtensions {
+
+	private CommonExtensions() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	private static final String OS = System.getProperty("os.name");
-	
+
 	public static final Runtime RunTime = Runtime.getRuntime();
-	
-	public static boolean isWindows()
-	{
+
+	public static boolean isWindows() {
 		return OS.contains("win");
 	}
-	
-	public static boolean isMac()
-	{
+
+	public static boolean isMac() {
 		return OS.contains("mac");
 	}
-	
-	public static boolean isLinux()
-	{
+
+	public static boolean isLinux() {
 		return OS.contains("nix") || OS.contains("nux");
 	}
-	
-	public static String titleAndVersionString(Class c)
-	{
+
+	public static String titleAndVersionString(Class c) {
 		Package p = c.getPackage();
 		String version = p.getImplementationVersion();
 		String title = p.getImplementationTitle();

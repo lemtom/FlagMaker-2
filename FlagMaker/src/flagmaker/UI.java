@@ -7,25 +7,18 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class UI extends Application
-{
+public class UI extends Application {
 	@Override
-	public void start(Stage stage) throws Exception
-	{
+	public void start(Stage stage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
-		loader.setControllerFactory(type ->
-		{
-			try
-			{
-				Object controller = type.newInstance();
-				if (controller instanceof MainWindowController)
-				{
+		loader.setControllerFactory(type -> {
+			try {
+				Object controller = type.getDeclaredConstructor().newInstance();
+				if (controller instanceof MainWindowController) {
 					((MainWindowController) controller).setPrimaryStage(stage);
 				}
 				return controller;
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -38,8 +31,7 @@ public class UI extends Application
 		stage.show();
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		launch(args);
 	}
 }

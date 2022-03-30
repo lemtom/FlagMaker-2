@@ -1,8 +1,8 @@
-package flagmaker.overlays.overlaytypes.SpecialTypes;
+package flagmaker.overlays.overlaytypes.specialtypes;
 
 import flagmaker.data.Flag;
 import flagmaker.files.FileHandler;
-import flagmaker.overlays.overlaytypes.RepeaterTypes.OverlayRepeater;
+import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeater;
 
 import java.io.File;
 import java.util.Locale;

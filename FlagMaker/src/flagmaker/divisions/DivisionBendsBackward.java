@@ -9,62 +9,46 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
 import javafx.scene.shape.Rectangle;
 
-public class DivisionBendsBackward extends Division
-{
-	public DivisionBendsBackward(Color color1, Color color2)
-	{
+public class DivisionBendsBackward extends Division {
+	public DivisionBendsBackward(Color color1, Color color2) {
 		super(new Color[] { color1, color2 }, new int[] {});
 	}
 
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return "bends backward";
 	}
 
 	@Override
-	public void draw(Pane canvas)
-	{
+	public void draw(Pane canvas) {
 		double height = canvas.getHeight();
 		double width = canvas.getWidth();
-		
+
 		canvas.getChildren().add(new Rectangle(width, height, colors[0]));
-		
-		Path p = new Path(new PathElement[]
-		{
-			new MoveTo(width, height),
-			new LineTo(0, height),
-			new LineTo(0, 0),
-			new LineTo(width, height)
-		});
+
+		Path p = new Path(new PathElement[] { new MoveTo(width, height), new LineTo(0, height), new LineTo(0, 0),
+				new LineTo(width, height) });
 		p.fillProperty().set(colors[1]);
 		p.strokeWidthProperty().set(0);
 		canvas.getChildren().add(p);
 	}
 
 	@Override
-	public void setColors(Color[] newColors)
-	{
+	public void setColors(Color[] newColors) {
 		colors[0] = newColors[0];
 		colors[1] = newColors[1];
 	}
 
 	@Override
-	public void setValues(int[] newValues)
-	{
+	public void setValues(int[] newValues) {
 	}
 
 	@Override
-	public String exportSvg(int width, int height)
-	{
+	public String exportSvg(int width, int height) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />",
-				width,
-				height,
+		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
 				ColorExtensions.toSvgFillWithOpacity(colors[0])));
-		sb.append(String.format("<polygon points=\"0,0 0,%1$d %1$d,%2$d\" %3$s />",
-				width,
-				height,
+		sb.append(String.format("<polygon points=\"0,0 0,%1$d %1$d,%2$d\" %3$s />", width, height,
 				ColorExtensions.toSvgFillWithOpacity(colors[1])));
 		return sb.toString();
 	}

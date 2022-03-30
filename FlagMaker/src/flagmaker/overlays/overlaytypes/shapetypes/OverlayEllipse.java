@@ -1,4 +1,4 @@
-package flagmaker.overlays.overlaytypes.ShapeTypes;
+package flagmaker.overlays.overlaytypes.shapetypes;
 
 import java.util.Locale;
 

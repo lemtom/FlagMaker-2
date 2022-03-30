@@ -58,6 +58,7 @@ public class AboutController extends VBox
 		}
 		catch (URISyntaxException ex)
 		{
+			System.out.println("Error handling URL");
 		}
 	}
 	

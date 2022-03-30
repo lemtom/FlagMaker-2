@@ -1,4 +1,4 @@
-package flagmaker.overlays.overlaytypes.RepeaterTypes;
+package flagmaker.overlays.overlaytypes.repeatertypes;
 
 import java.util.Locale;
 

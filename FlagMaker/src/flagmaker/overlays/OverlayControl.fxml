@@ -10,79 +10,79 @@
 
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
 	<FlowPane orientation="HORIZONTAL">
-		<Button onAction="#SetCollapsed">
+		<Button onAction="#setCollapsed">
 			<tooltip>
 				<Tooltip fx:id="ttpExpandCollapse" />
 			</tooltip>
 			<graphic>
 				<ImageView fx:id="btnExpandCollapse" fitHeight="24.0" fitWidth="24.0">
 					<image>
-						<Image url="flagmaker/images/collapse.png" />
+						<Image url="@../images/collapse.png" />
 					</image>
 				</ImageView>
 			</graphic>
 		</Button>
-		<Button fx:id="btnOverlay" onAction="#OverlaySelect" prefWidth="24.0" prefHeight="24.0">
+		<Button fx:id="btnOverlay" onAction="#overlaySelect" prefWidth="24.0" prefHeight="24.0">
 			<tooltip>
 				<Tooltip fx:id="ttpChangeType" />
 			</tooltip>
 		</Button>
-		<Button onAction="#SetVisibility">
+		<Button onAction="#setVisibility">
 			<tooltip>
 				<Tooltip fx:id="ttpVisibility" />
 			</tooltip>
 			<graphic>
 				<ImageView fx:id="btnVisibility" fitHeight="24.0" fitWidth="24.0">
 					<image>
-						<Image url="flagmaker/images/check_on.png" />
+						<Image url="@../images/check_on.png" />
 					</image>
 				</ImageView>
 			</graphic>
 		</Button>
-		<Button onAction="#Remove">
+		<Button onAction="#remove">
 			<tooltip>
 				<Tooltip fx:id="ttpRemove" />
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
 					<image>
-						<Image url="flagmaker/images/remove.png" />
+						<Image url="@../images/remove.png" />
 					</image>
 				</ImageView>
 			</graphic>
 		</Button>
-		<Button onAction="#MoveUp">
+		<Button onAction="#moveUp">
 			<tooltip>
 				<Tooltip fx:id="ttpMoveUp" />
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
 					<image>
-						<Image url="flagmaker/images/moveup.png" />
+						<Image url="@../images/moveup.png" />
 					</image>
 				</ImageView>
 			</graphic>
 		</Button>
-		<Button onAction="#MoveDown">
+		<Button onAction="#moveDown">
 			<tooltip>
 				<Tooltip fx:id="ttpMoveDown" />
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
 					<image>
-						<Image url="flagmaker/images/movedown.png" />
+						<Image url="@../images/movedown.png" />
 					</image>
 				</ImageView>
 			</graphic>
 		</Button>
-		<Button onAction="#CloneThis">
+		<Button onAction="#cloneThis">
 			<tooltip>
 				<Tooltip fx:id="ttpClone" />
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
 					<image>
-						<Image url="flagmaker/images/clone.png" />
+						<Image url="@../images/clone.png" />
 					</image>
 				</ImageView>
 			</graphic>

@@ -76,7 +76,7 @@
 					<graphic>
 						<ImageView fitHeight="32.0" fitWidth="32.0">
 							<image>
-								<Image url="flagmaker/images/rotate.png" />
+								<Image url="@./images/rotate.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -88,7 +88,7 @@
 					<graphic>
 						<ImageView fitHeight="32.0" fitWidth="51.0">
 							<image>
-								<Image url="flagmaker/images/Texture/1.png" />
+								<Image url="@./images/texture/1.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -100,7 +100,7 @@
 					<graphic>
 						<ImageView fitHeight="32.0" fitWidth="32.0">
 							<image>
-								<Image url="flagmaker/images/die.png" />
+								<Image url="@./images/die.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -325,7 +325,7 @@
 									<graphic>
 										<ImageView fitHeight="32.0" fitWidth="32.0">
 											<image>
-												<Image url="flagmaker/images/add.png" />
+												<Image url="@./images/add.png" />
 											</image>
 										</ImageView>
 									</graphic>
@@ -340,7 +340,7 @@
 									<graphic>
 										<ImageView fitHeight="32.0" fitWidth="32.0">
 											<image>
-												<Image url="flagmaker/images/expand.png" />
+												<Image url="@./images/expand.png" />
 											</image>
 										</ImageView>
 									</graphic>
@@ -355,7 +355,7 @@
 									<graphic>
 										<ImageView fitHeight="32.0" fitWidth="32.0">
 											<image>
-												<Image url="flagmaker/images/collapse.png" />
+												<Image url="@./images/collapse.png" />
 											</image>
 										</ImageView>
 									</graphic>

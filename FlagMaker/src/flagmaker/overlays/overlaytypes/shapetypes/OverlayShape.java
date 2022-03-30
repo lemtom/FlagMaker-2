@@ -1,4 +1,4 @@
-package flagmaker.overlays.overlaytypes.ShapeTypes;
+package flagmaker.overlays.overlaytypes.shapetypes;
 
 import flagmaker.overlays.Overlay;
 import flagmaker.overlays.attributes.*;
