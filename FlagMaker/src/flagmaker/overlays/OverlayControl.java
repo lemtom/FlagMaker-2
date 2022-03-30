@@ -147,7 +147,7 @@ public class OverlayControl extends VBox {
 	}
 
 	private Attribute[] saveOldEmblemAttributes(Overlay value) {
-		if (overlay != null && overlay instanceof OverlayPath && value instanceof OverlayPath) {
+		if (overlay instanceof OverlayPath && value instanceof OverlayPath) {
 			return ((OverlayPath) overlay).attributes;
 		}
 

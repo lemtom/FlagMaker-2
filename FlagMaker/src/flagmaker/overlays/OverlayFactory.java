@@ -251,7 +251,7 @@ public class OverlayFactory {
 	}
 
 	public static void fillCustomOverlays() {
-		customTypes = new TreeMap<String, OverlayPath>() {
+		customTypes = new TreeMap<>() {
 		};
 
 		File directory;
@@ -311,7 +311,7 @@ public class OverlayFactory {
 
 	private static Overlay getInstance(Class c, int defaultMaximumX, int defaultMaximumY) {
 		try {
-			Constructor<Overlay> constructor = c.getDeclaredConstructor(new Class[] { int.class, int.class });
+			Constructor<Overlay> constructor = c.getDeclaredConstructor(int.class, int.class);
 			return constructor.newInstance(defaultMaximumX, defaultMaximumY);
 		} catch (Exception ex) {
 			return null;

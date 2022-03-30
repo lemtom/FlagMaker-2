@@ -12,7 +12,7 @@ public class StringExtensions {
 			fname = fname.substring(0, period);
 		}
 		if (slash > 0) {
-			fname = fname.substring(slash + 1, fname.length());
+			fname = fname.substring(slash + 1);
 		}
 		return fname;
 	}
@@ -20,7 +20,7 @@ public class StringExtensions {
 	public static String getFilenameExtension(String fname) {
 		int period = fname.lastIndexOf(".");
 		if (period > 0) {
-			return fname.substring(period + 1, fname.length());
+			return fname.substring(period + 1);
 		}
 		return "";
 	}

@@ -96,7 +96,7 @@ public class ColorSelector extends VBox {
 		fillNamedColorList(paneFoan, ColorList.flagsOfAllNations());
 		fillColorList(paneUsed, usedColors);
 		fillColorList(paneRecent,
-				new ArrayList<>(new ArrayList<Color>(recentColors).subList(0, Math.min(recentColors.size(), 10))));
+				new ArrayList<>(new ArrayList<>(recentColors).subList(0, Math.min(recentColors.size(), 10))));
 
 		setAdvanced(currentColor);
 

@@ -1,6 +1,5 @@
 package flagmaker.overlays;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import flagmaker.overlays.attributes.*;
@@ -60,7 +59,7 @@ public abstract class Overlay {
 	}
 
 	public void setValues(Map<String, Object> values) {
-		values.entrySet().stream().forEach(v -> {
+		values.entrySet().forEach(v -> {
 			String key = v.getKey();
 			Object value = v.getValue();
 
@@ -70,7 +69,7 @@ public abstract class Overlay {
 	}
 
 	public void setValuesFromStrings(Map<String, String> values) {
-		values.entrySet().stream().forEach(v -> {
+		values.entrySet().forEach(v -> {
 			String key = v.getKey();
 			String value = v.getValue();
 

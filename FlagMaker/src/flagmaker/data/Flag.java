@@ -137,8 +137,7 @@ public class Flag {
 			}
 		}
 
-		Set<Color> hs = new HashSet<>();
-		hs.addAll(colors);
+		Set<Color> hs = new HashSet<>(colors);
 		Color[] returnValue = new Color[] {};
 		return hs.toArray(returnValue);
 	}

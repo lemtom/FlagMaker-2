@@ -19,6 +19,7 @@ import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
 import flagmaker.randomflag.RandomFlagFactory;
 
 import static flagmaker.extensions.StringExtensions.isNullOrWhitespace;
+import static java.lang.Boolean.FALSE;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,7 +39,6 @@ import java.util.TreeSet;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventType;
@@ -99,7 +99,7 @@ public class MainWindowController implements ColorButtonListener {
 	@FXML
 	private TextField txtRatioWidth;
 	@FXML
-	private ComboBox cmbRatio;
+	private ComboBox<String> cmbRatio;
 
 	@FXML
 	private Tooltip ttpShowGrid;
@@ -153,7 +153,7 @@ public class MainWindowController implements ColorButtonListener {
 	@FXML
 	private ColorButton divisionPicker3;
 	@FXML
-	private ComboBox cmbPresets;
+	private ComboBox<String> cmbPresets;
 
 	@FXML
 	private VBox lstOverlays;
@@ -521,7 +521,7 @@ public class MainWindowController implements ColorButtonListener {
 	public void clone(OverlayControl controlToClone) {
 		int index = lstOverlays.getChildren().indexOf(controlToClone);
 		Overlay original = controlToClone.getOverlay();
-		Class type = original.getClass();
+		Class<? extends Overlay> type = original.getClass();
 		Overlay copy = OverlayFactory.getInstanceByLongName(type.getName(), 1, 1);
 
 		for (int i = 0; i < original.attributes.length; i++) {
@@ -614,7 +614,7 @@ public class MainWindowController implements ColorButtonListener {
 
 	// Grid
 	private Ratio selectedGridSize() {
-		String value = (String) cmbRatio.getValue();
+		String value = cmbRatio.getValue();
 		return value == null ? new Ratio(2, 3) : new Ratio(value);
 	}
 
@@ -700,7 +700,7 @@ public class MainWindowController implements ColorButtonListener {
 		divisionSlider3.setMax(sliderMax);
 
 		for (OverlayControl overlay : (List<OverlayControl>) (List<?>) lstOverlays.getChildren()) {
-			((OverlayControl) overlay).setMaximum(gridSize.width, gridSize.height);
+			overlay.setMaximum(gridSize.width, gridSize.height);
 		}
 
 		draw();
@@ -790,11 +790,11 @@ public class MainWindowController implements ColorButtonListener {
 
 		// If the ratio should be constrained, set the other value on blur
 		width.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue == false) {
+			if (FALSE.equals(newValue)) {
 				String value = width.getText().trim();
 
 				if (canParseInt(value) && constrain) {
-					Integer w = Integer.parseInt(value);
+					int w = Integer.parseInt(value);
 					Ratio r = selectedGridSize();
 					height.setText(Integer.toString((int) (r.height / (double) r.width * w)));
 					saveButton.setDisable(value.isEmpty() || height.getText().isEmpty() || !canParseInt(value));
@@ -803,11 +803,11 @@ public class MainWindowController implements ColorButtonListener {
 		});
 
 		height.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue == false) {
+			if (FALSE.equals(newValue)) {
 				String value = height.getText().trim();
 
 				if (canParseInt(value) && constrain) {
-					Integer h = Integer.parseInt(value);
+					int h = Integer.parseInt(value);
 					Ratio r = selectedGridSize();
 					width.setText(Integer.toString((int) (r.width / (double) r.height * h)));
 					saveButton.setDisable(value.isEmpty() || width.getText().isEmpty() || !canParseInt(value));
@@ -827,7 +827,7 @@ public class MainWindowController implements ColorButtonListener {
 		});
 
 		Optional<Size> result = dialog.showAndWait();
-		return result.isPresent() ? result.get() : new Size(0, 0);
+		return result.orElseGet(() -> new Size(0, 0));
 	}
 
 	public void menuExportSvgClick() {
@@ -1024,11 +1024,10 @@ public class MainWindowController implements ColorButtonListener {
 		fillGridCombobox();
 
 		for (int i = 0; i < cmbRatio.getItems().size(); i++) {
-			if (new Ratio(cmbRatio.getItems().get(i).toString()).width != flag.gridSize.width)
-				continue;
-
-			cmbRatio.getSelectionModel().select(i);
-			break;
+			if (new Ratio(cmbRatio.getItems().get(i)).width == flag.gridSize.width) {
+				cmbRatio.getSelectionModel().select(i);
+				break;
+			}
 		}
 
 		division = flag.division;
@@ -1070,13 +1069,12 @@ public class MainWindowController implements ColorButtonListener {
 	private void presetStripes() {
 		for (int i = 0; i < cmbRatio.getItems().size(); i++) {
 			Object item = cmbRatio.getItems().get(i);
-			Ratio ratio = new Ratio((String) item);
-			if (ratio.width >= 7) {
+			Ratio stripeRatio = new Ratio((String) item);
+			if (stripeRatio.width >= 7) {
 				cmbRatio.getSelectionModel().select(i);
 				break;
 			}
 		}
-
 		plainPreset(1, 7);
 	}
 
@@ -1096,23 +1094,18 @@ public class MainWindowController implements ColorButtonListener {
 		cmbPresets.getItems().add(LocalizationHandler.get("DivisionQuartered"));
 		cmbPresets.getItems().add(LocalizationHandler.get("DivisionStripes"));
 
-		cmbPresets.valueProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue == null || (oldValue != null && oldValue.equals(newValue))
-						|| StringExtensions.isNullOrWhitespace(newValue))
-					return;
-				else if (newValue.equals(LocalizationHandler.get("DivisionBlank")))
-					presetBlank();
-				else if (newValue.equals(LocalizationHandler.get("DivisionHorizontalHalves")))
-					presetHorizontal();
-				else if (newValue.equals(LocalizationHandler.get("DivisionVerticalHalves")))
-					presetVertical();
-				else if (newValue.equals(LocalizationHandler.get("DivisionQuartered")))
-					presetQuad();
-				else if (newValue.equals(LocalizationHandler.get("DivisionStripes")))
-					presetStripes();
-			}
+		cmbPresets.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null || (oldValue != null && oldValue.equals(newValue)) || isNullOrWhitespace(newValue)) {
+			} else if (newValue.equals(LocalizationHandler.get("DivisionBlank")))
+				presetBlank();
+			else if (newValue.equals(LocalizationHandler.get("DivisionHorizontalHalves")))
+				presetHorizontal();
+			else if (newValue.equals(LocalizationHandler.get("DivisionVerticalHalves")))
+				presetVertical();
+			else if (newValue.equals(LocalizationHandler.get("DivisionQuartered")))
+				presetQuad();
+			else if (newValue.equals(LocalizationHandler.get("DivisionStripes")))
+				presetStripes();
 		});
 	}
 
@@ -1151,8 +1144,9 @@ public class MainWindowController implements ColorButtonListener {
 	}
 
 	private void loadPreset(File file) {
-		if (checkUnsaved())
+		if (checkUnsaved()) {
 			return;
+		}
 		loadFlagFromFile(file);
 		setTitle();
 	}
@@ -1174,8 +1168,9 @@ public class MainWindowController implements ColorButtonListener {
 
 	@FXML
 	private void generateRandomFlag() {
-		if (checkUnsaved())
+		if (checkUnsaved()) {
 			return;
+		}
 		Flag f = new RandomFlagFactory().generateFlag();
 		loadFlag(f);
 		fileName = "";
@@ -1192,7 +1187,7 @@ public class MainWindowController implements ColorButtonListener {
 		String name = txtName.getText();
 		if (isNullOrWhitespace(name)) {
 			name = isNullOrWhitespace(fileName) ? "" : Paths.get(fileName).getFileName().toString();
-		} 
+		}
 		return new Flag(name, ratio, selectedGridSize(), division, getOverlays());
 	}
 

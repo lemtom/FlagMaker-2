@@ -26,8 +26,8 @@ public class DivisionBendsBackward extends Division {
 
 		canvas.getChildren().add(new Rectangle(width, height, colors[0]));
 
-		Path p = new Path(new PathElement[] { new MoveTo(width, height), new LineTo(0, height), new LineTo(0, 0),
-				new LineTo(width, height) });
+		Path p = new Path(new MoveTo(width, height), new LineTo(0, height), new LineTo(0, 0),
+				new LineTo(width, height));
 		p.fillProperty().set(colors[1]);
 		p.strokeWidthProperty().set(0);
 		canvas.getChildren().add(p);

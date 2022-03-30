@@ -11,49 +11,33 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 
-public class OverlayRepeaterLateral extends OverlayRepeater
-{
-	public OverlayRepeaterLateral(int maximumX, int maximumY)
-	{
-		super("repeater lateral", new Attribute[]
-		{
-			new DoubleAttribute("X", 1, maximumX, true),
-			new DoubleAttribute("Y", 1, maximumY, false),
-			new DoubleAttribute("Width", 1, maximumX, true),
-			new DoubleAttribute("Height", 1, maximumY, false),
-			new IntegerAttribute("CountX", 1, maximumX, true),
-			new IntegerAttribute("CountY", 1, maximumY, false)
-		}, maximumX, maximumY);
+public class OverlayRepeaterLateral extends OverlayRepeater {
+	public OverlayRepeaterLateral(int maximumX, int maximumY) {
+		super("repeater lateral", new Attribute[] { new DoubleAttribute("X", 1, maximumX, true),
+				new DoubleAttribute("Y", 1, maximumY, false), new DoubleAttribute("Width", 1, maximumX, true),
+				new DoubleAttribute("Height", 1, maximumY, false), new IntegerAttribute("CountX", 1, maximumX, true),
+				new IntegerAttribute("CountY", 1, maximumY, false) }, maximumX, maximumY);
 	}
-	
-	public OverlayRepeaterLateral(double x, double y, double width, double height, int countX, int countY, int maximumX, int maximumY)
-	{
-		super("repeater lateral", new Attribute[]
-		{
-			new DoubleAttribute("X", x, maximumX, true),
-			new DoubleAttribute("Y", y, maximumY, false),
-			new DoubleAttribute("Width", width, maximumX, true),
-			new DoubleAttribute("Height", height, maximumY, false),
-			new IntegerAttribute("CountX", countX, maximumX, true),
-			new IntegerAttribute("CountY", countY, maximumY, false)
-		}, maximumX, maximumY);
+
+	public OverlayRepeaterLateral(double x, double y, double width, double height, int countX, int countY, int maximumX,
+			int maximumY) {
+		super("repeater lateral", new Attribute[] { new DoubleAttribute("X", x, maximumX, true),
+				new DoubleAttribute("Y", y, maximumY, false), new DoubleAttribute("Width", width, maximumX, true),
+				new DoubleAttribute("Height", height, maximumY, false),
+				new IntegerAttribute("CountX", countX, maximumX, true),
+				new IntegerAttribute("CountY", countY, maximumY, false) }, maximumX, maximumY);
 	}
 
 	@Override
-	protected Shape[] thumbnail()
-	{
-		return new Shape[]
-		{
-			new Ellipse(5, 15, 2.5, 2.5),
-			new Ellipse(15, 15, 2.5, 2.5),
-			new Ellipse(25, 15, 2.5, 2.5)
-		};
+	protected Shape[] thumbnail() {
+		return new Shape[] { new Ellipse(5, 15, 2.5, 2.5), new Ellipse(15, 15, 2.5, 2.5),
+				new Ellipse(25, 15, 2.5, 2.5) };
 	}
 
 	@Override
-	public void draw(Pane canvas)
-	{
-		if (overlay == null || !overlay.isEnabled) return;
+	public void draw(Pane canvas) {
+		if (overlay == null || !overlay.isEnabled)
+			return;
 
 		int countX = getIntegerAttribute("CountX");
 		int countY = getIntegerAttribute("CountY");
@@ -71,20 +55,18 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 		repeaterCanvas.setLayoutY(locY);
 		repeaterCanvas.setBackground(Background.EMPTY);
 
-		for (int x = 0; x < countX; x++)
-		{
-			for (int y = 0; y < countY; y++)
-			{
+		for (int x = 0; x < countX; x++) {
+			for (int y = 0; y < countY; y++) {
 				AnchorPane a = new AnchorPane();
 				a.setBackground(Background.EMPTY);
 				Scene s = new Scene(a, width, height);
 				Pane p = new Pane();
 				p.setBackground(Background.EMPTY);
 				s.setRoot(p);
-				
+
 				overlay.draw(p);
 				repeaterCanvas.getChildren().add(p);
-				
+
 				p.setLayoutX(x * intervalX);
 				p.setLayoutY(y * intervalY);
 			}
@@ -94,10 +76,11 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 	}
 
 	@Override
-	public String exportSvg(int width, int height)
-	{
-		if (overlay == null) return "";
-		if (!overlay.isEnabled) return "";
+	public String exportSvg(int width, int height) {
+		if (overlay == null)
+			return "";
+		if (!overlay.isEnabled)
+			return "";
 
 		int countX = getIntegerAttribute("CountX");
 		int countY = getIntegerAttribute("CountY");
@@ -113,16 +96,13 @@ public class OverlayRepeaterLateral extends OverlayRepeater
 		UUID id = UUID.randomUUID();
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.format(Locale.US, "<defs><g id=\"%s\">%s</g></defs>\n",
-			id.toString(), overlay.exportSvg((int)w, (int)h)));
+		sb.append(String.format(Locale.US, "<defs><g id=\"%s\">%s</g></defs>\n", id.toString(),
+				overlay.exportSvg((int) w, (int) h)));
 
-		for (int x = 0; x < countX; x++)
-		{
-			for (int y = 0; y < countY; y++)
-			{
-				sb.append(String.format(Locale.US, "<g transform=\"translate(%.3f,%.3f)\">\n",
-					locX + x * intervalX,
-					locY + y * intervalY));
+		for (int x = 0; x < countX; x++) {
+			for (int y = 0; y < countY; y++) {
+				sb.append(String.format(Locale.US, "<g transform=\"translate(%.3f,%.3f)\">\n", locX + x * intervalX,
+						locY + y * intervalY));
 				sb.append(String.format(Locale.US, "<use xlink:href=\"#%s\" />\n", id.toString()));
 				sb.append("</g>\n");
 			}
