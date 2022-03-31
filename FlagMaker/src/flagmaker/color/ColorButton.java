@@ -2,8 +2,6 @@ package flagmaker.color;
 
 import flagmaker.MainWindowController;
 import flagmaker.UI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ColorButton extends VBox {
 	@FXML

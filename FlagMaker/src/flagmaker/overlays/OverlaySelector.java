@@ -5,25 +5,19 @@ import flagmaker.files.FileHandler;
 import flagmaker.files.LocalizationHandler;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayImage;
-
-import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class OverlaySelector extends VBox {
 	private Stage stage;

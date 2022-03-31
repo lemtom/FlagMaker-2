@@ -133,6 +133,8 @@ public class IntegerAttributeSlider extends NumericAttributeSlider {
 			} catch (Exception ex) {
 			}
 			break;
+		default:
+			break;
 		}
 	}
 

@@ -1,9 +1,9 @@
 package flagmaker.color;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.scene.paint.Color;
 
 public class ColorList {
 	public static List<NamedColor> flagsOfTheWorld() {

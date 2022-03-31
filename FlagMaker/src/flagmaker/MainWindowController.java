@@ -17,50 +17,35 @@ import flagmaker.overlays.OverlayControl;
 import flagmaker.overlays.OverlayFactory;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
 import flagmaker.randomflag.RandomFlagFactory;
-
-import static flagmaker.extensions.StringExtensions.isNullOrWhitespace;
-import static java.lang.Boolean.FALSE;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventType;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.SubScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
+import javafx.stage.*;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static flagmaker.extensions.StringExtensions.isNullOrWhitespace;
+import static java.lang.Boolean.FALSE;
 
 public class MainWindowController implements ColorButtonListener {
 	@FXML
@@ -281,8 +266,9 @@ public class MainWindowController implements ColorButtonListener {
 
 		// Draw whenever the left side changes size
 		leftStack.widthProperty().addListener((observable, oldValue, newValue) -> {
-			if (!isLoading && !oldValue.equals(newValue))
+			if (!isLoading && !oldValue.equals(newValue)) {
 				draw();
+			}
 		});
 		cmbRatio.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (!isLoading) {
@@ -294,13 +280,13 @@ public class MainWindowController implements ColorButtonListener {
 		subScene.widthProperty().bind(Bindings.createDoubleBinding(() -> leftStack.getWidth() - 10,
 				leftStack.widthProperty(), leftStack.heightProperty()));
 		subScene.heightProperty()
-				.bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * ratio.height / ratio.width,
+				.bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * ratio.getHeight() / ratio.getWidth(),
 						leftStack.widthProperty(), leftStack.heightProperty(), txtRatioHeight.textProperty(),
 						txtRatioWidth.textProperty()));
 		gridSubScene.widthProperty().bind(Bindings.createDoubleBinding(() -> leftStack.getWidth() - 10,
 				leftStack.widthProperty(), leftStack.heightProperty()));
 		gridSubScene.heightProperty()
-				.bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * ratio.height / ratio.width,
+				.bind(Bindings.createDoubleBinding(() -> (leftStack.getWidth() - 10) * ratio.getHeight() / ratio.getWidth(),
 						leftStack.widthProperty(), leftStack.heightProperty(), txtRatioHeight.textProperty(),
 						txtRatioWidth.textProperty()));
 	}
@@ -524,8 +510,8 @@ public class MainWindowController implements ColorButtonListener {
 		Class<? extends Overlay> type = original.getClass();
 		Overlay copy = OverlayFactory.getInstanceByLongName(type.getName(), 1, 1);
 
-		for (int i = 0; i < original.attributes.length; i++) {
-			copy.attributes[i] = original.attributes[i].clone();
+		for (int i = 0; i < original.getAttributes().length; i++) {
+			copy.getAttributes()[i] = original.getAttributes()[i].clone();
 		}
 
 		if (type.isAssignableFrom(OverlayFlag.class)) {
@@ -533,14 +519,14 @@ public class MainWindowController implements ColorButtonListener {
 		}
 
 		Ratio gridSize = selectedGridSize();
-		copy.setMaximum(gridSize.width, gridSize.height);
+		copy.setMaximum(gridSize.getWidth(), gridSize.getHeight());
 
 		overlayAdd(index + 1, copy, true);
 	}
 
 	private void overlayAdd(int index, Overlay overlay, boolean isLoading) {
 		Ratio gridSize = selectedGridSize();
-		OverlayControl control = new OverlayControl(stage, this, gridSize.width, gridSize.height, isLoading);
+		OverlayControl control = new OverlayControl(stage, this, gridSize.getWidth(), gridSize.getHeight(), isLoading);
 
 		if (control.wasCanceled) {
 			return;
@@ -641,17 +627,17 @@ public class MainWindowController implements ColorButtonListener {
 		}
 
 		Ratio gridSize = selectedGridSize();
-		double intervalX = gridPane.getWidth() / gridSize.width;
-		double intervalY = gridPane.getHeight() / gridSize.height;
+		double intervalX = gridPane.getWidth() / gridSize.getWidth();
+		double intervalY = gridPane.getHeight() / gridSize.getHeight();
 
-		for (int x = 0; x <= gridSize.width; x++) {
+		for (int x = 0; x <= gridSize.getWidth(); x++) {
 			Line line = new Line(x * intervalX, 0, x * intervalX, gridPane.getHeight());
 			line.setStrokeWidth(5);
 			line.setStroke(Color.SILVER);
 			gridPane.getChildren().add(line);
 		}
 
-		for (int y = 0; y <= gridSize.height; y++) {
+		for (int y = 0; y <= gridSize.getHeight(); y++) {
 			Line line = new Line(0, y * intervalY, gridPane.getWidth(), y * intervalX);
 			line.setStrokeWidth(5);
 			line.setStroke(Color.SILVER);
@@ -662,8 +648,8 @@ public class MainWindowController implements ColorButtonListener {
 	private void fillGridCombobox() {
 		cmbRatio.getItems().clear();
 		for (int i = 1; i <= 20; i++) {
-			int h = i * ratio.height;
-			int w = i * ratio.width;
+			int h = i * ratio.getHeight();
+			int w = i * ratio.getWidth();
 			cmbRatio.getItems().add(h + ":" + w);
 		}
 		cmbRatio.getSelectionModel().select(0);
@@ -693,14 +679,14 @@ public class MainWindowController implements ColorButtonListener {
 		if (cmbRatio.getItems().isEmpty())
 			return;
 		Ratio gridSize = selectedGridSize();
-		int sliderMax = Math.max(gridSize.width, gridSize.height);
+		int sliderMax = Math.max(gridSize.getWidth(), gridSize.getHeight());
 
 		divisionSlider1.setMax(sliderMax);
 		divisionSlider2.setMax(sliderMax);
 		divisionSlider3.setMax(sliderMax);
 
 		for (OverlayControl overlay : (List<OverlayControl>) (List<?>) lstOverlays.getChildren()) {
-			overlay.setMaximum(gridSize.width, gridSize.height);
+			overlay.setMaximum(gridSize.getWidth(), gridSize.getHeight());
 		}
 
 		draw();
@@ -744,7 +730,7 @@ public class MainWindowController implements ColorButtonListener {
 	// Export
 	public void menuExportPngClick() {
 		Size dimensions = getPngDimensions(true);
-		if (dimensions.x == 0 || dimensions.y == 0)
+		if (dimensions.getX() == 0 || dimensions.getY() == 0)
 			return;
 
 		FileChooser fileChooser = new FileChooser();
@@ -769,7 +755,6 @@ public class MainWindowController implements ColorButtonListener {
 		ButtonType saveButtonType = new ButtonType(LocalizationHandler.get("Save"), ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-		// Create the username and password labels and fields.
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
 		grid.setVgap(10);
@@ -796,7 +781,7 @@ public class MainWindowController implements ColorButtonListener {
 				if (canParseInt(value) && constrain) {
 					int w = Integer.parseInt(value);
 					Ratio r = selectedGridSize();
-					height.setText(Integer.toString((int) (r.height / (double) r.width * w)));
+					height.setText(Integer.toString((int) (r.getHeight() / (double) r.getWidth() * w)));
 					saveButton.setDisable(value.isEmpty() || height.getText().isEmpty() || !canParseInt(value));
 				}
 			}
@@ -809,7 +794,7 @@ public class MainWindowController implements ColorButtonListener {
 				if (canParseInt(value) && constrain) {
 					int h = Integer.parseInt(value);
 					Ratio r = selectedGridSize();
-					width.setText(Integer.toString((int) (r.width / (double) r.height * h)));
+					width.setText(Integer.toString((int) (r.getWidth() / (double) r.getHeight() * h)));
 					saveButton.setDisable(value.isEmpty() || width.getText().isEmpty() || !canParseInt(value));
 				}
 			}
@@ -854,7 +839,7 @@ public class MainWindowController implements ColorButtonListener {
 			return;
 
 		Size dimensions = getPngDimensions(false);
-		if (dimensions.x == 0 || dimensions.y == 0)
+		if (dimensions.getX() == 0 || dimensions.getY() == 0)
 			return;
 
 		File directory = getBulkSaveDirectory(files.get(0).getParentFile());
@@ -1018,27 +1003,27 @@ public class MainWindowController implements ColorButtonListener {
 
 	private void loadFlag(Flag flag) {
 		isLoading = true;
-		ratio = flag.ratio;
-		txtRatioHeight.setText(Integer.toString(flag.ratio.height));
-		txtRatioWidth.setText(Integer.toString(flag.ratio.width));
+		ratio = flag.getRatio();
+		txtRatioHeight.setText(Integer.toString(flag.getRatio().getHeight()));
+		txtRatioWidth.setText(Integer.toString(flag.getRatio().getWidth()));
 		fillGridCombobox();
 
 		for (int i = 0; i < cmbRatio.getItems().size(); i++) {
-			if (new Ratio(cmbRatio.getItems().get(i)).width == flag.gridSize.width) {
+			if (new Ratio(cmbRatio.getItems().get(i)).getWidth() == flag.getGridSize().getWidth()) {
 				cmbRatio.getSelectionModel().select(i);
 				break;
 			}
 		}
 
-		division = flag.division;
+		division = flag.getDivision();
 		setDivisionVisibility();
 
 		lstOverlays.getChildren().clear();
-		for (Overlay overlay : flag.overlays) {
+		for (Overlay overlay : flag.getOverlays()) {
 			overlayAdd(lstOverlays.getChildren().size(), overlay, true);
 		}
 
-		txtName.setText(flag.name);
+		txtName.setText(flag.getName());
 		isUnsaved = false;
 		isLoading = false;
 
@@ -1068,9 +1053,9 @@ public class MainWindowController implements ColorButtonListener {
 
 	private void presetStripes() {
 		for (int i = 0; i < cmbRatio.getItems().size(); i++) {
-			Object item = cmbRatio.getItems().get(i);
-			Ratio stripeRatio = new Ratio((String) item);
-			if (stripeRatio.width >= 7) {
+			String item = cmbRatio.getItems().get(i);
+			Ratio stripeRatio = new Ratio(item);
+			if (stripeRatio.getWidth() >= 7) {
 				cmbRatio.getSelectionModel().select(i);
 				break;
 			}

@@ -1,9 +1,9 @@
 package flagmaker.overlays.overlaytypes.repeatertypes;
 
-import java.util.Locale;
-import java.util.UUID;
-
-import flagmaker.overlays.attributes.*;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.BooleanAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
+import flagmaker.overlays.attributes.IntegerAttribute;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
+
+import java.util.Locale;
+import java.util.UUID;
 
 public class OverlayRepeaterRadial extends OverlayRepeater {
 	public OverlayRepeaterRadial(int maximumX, int maximumY) {

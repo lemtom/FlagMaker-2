@@ -1,7 +1,8 @@
 package flagmaker.overlays.overlaytypes.specialtypes;
 
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
 
 public abstract class OverlaySpecial extends Overlay
 {

@@ -1,7 +1,9 @@
 package flagmaker.overlays.overlaytypes.shapetypes;
 
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.ColorAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
 import javafx.scene.paint.Color;
 
 public abstract class OverlayShape extends Overlay {

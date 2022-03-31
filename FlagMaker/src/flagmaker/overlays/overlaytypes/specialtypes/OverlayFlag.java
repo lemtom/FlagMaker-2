@@ -3,9 +3,6 @@ package flagmaker.overlays.overlaytypes.specialtypes;
 import flagmaker.data.Flag;
 import flagmaker.files.FileHandler;
 import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeater;
-
-import java.io.File;
-import java.util.Locale;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -14,6 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.io.File;
+import java.util.Locale;
 
 public class OverlayFlag extends OverlaySpecial
 {
@@ -102,13 +102,13 @@ public class OverlayFlag extends OverlaySpecial
 			getDoubleAttribute("Width") / maximumX,
 			getDoubleAttribute("Height") / maximumY));
 
-		sb.append(flag.division.exportSvg(width, height));
+		sb.append(flag.getDivision().exportSvg(width, height));
 
-		for (int i = 0; i < flag.overlays.length; i++)
+		for (int i = 0; i < flag.getOverlays().length; i++)
 		{
-			if (i == 0 || !(flag.overlays[i - 1] instanceof OverlayRepeater))
+			if (i == 0 || !(flag.getOverlays()[i - 1] instanceof OverlayRepeater))
 			{
-				sb.append(flag.overlays[i].exportSvg(width, height));
+				sb.append(flag.getOverlays()[i].exportSvg(width, height));
 			}
 		}
 

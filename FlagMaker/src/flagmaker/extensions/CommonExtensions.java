@@ -22,7 +22,7 @@ public class CommonExtensions {
 		return OS.contains("nix") || OS.contains("nux");
 	}
 
-	public static String titleAndVersionString(Class c) {
+	public static String titleAndVersionString(Class<?> c) {
 		Package p = c.getPackage();
 		String version = p.getImplementationVersion() != null ? p.getImplementationVersion() : "";
 		String title = p.getImplementationTitle() != null ? p.getImplementationTitle() : "FlagMaker";

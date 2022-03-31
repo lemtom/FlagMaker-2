@@ -1,6 +1,9 @@
 package flagmaker.data;
 
-import flagmaker.divisions.*;
+import flagmaker.divisions.Division;
+import flagmaker.divisions.DivisionFesses;
+import flagmaker.divisions.DivisionGrid;
+import flagmaker.divisions.DivisionPales;
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.overlays.Overlay;
 import flagmaker.overlays.attributes.Attribute;
@@ -8,20 +11,20 @@ import flagmaker.overlays.attributes.ColorAttribute;
 import flagmaker.overlays.overlaytypes.pathtypes.OverlayPath;
 import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeater;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 public class Flag {
-	public String name;
-	public Ratio ratio;
-	public Ratio gridSize;
-	public Division division;
-	public Overlay[] overlays;
+	private String name;
+	private Ratio ratio;
+	private Ratio gridSize;
+	private Division division;
+	private Overlay[] overlays;
 
 	public Flag(String name, Ratio ratio, Ratio gridSize, Division division, Overlay[] overlays) {
 		this.name = name;
@@ -53,7 +56,7 @@ public class Flag {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(String.format("name=%s\n", name));
-		sb.append(String.format("ratio=%d:%d\n", ratio.height, ratio.width));
+		sb.append(String.format("ratio=%d:%d\n", ratio.getHeight(), ratio.getWidth()));
 		sb.append(String.format("gridSize=%s\n\n", gridSize.toString()));
 		sb.append(String.format("type=%s\n", division.getName()));
 
@@ -89,11 +92,11 @@ public class Flag {
 		}
 
 		for (Overlay overlay : overlays) {
-			for (Attribute a : overlay.attributes) {
+			for (Attribute a : overlay.getAttributes()) {
 				if (a instanceof ColorAttribute) {
 					ColorAttribute c = (ColorAttribute) a;
 
-					if (a.name.equalsIgnoreCase("StrokeColor")) {
+					if (a.getName().equalsIgnoreCase("StrokeColor")) {
 						double strokeWidth = overlay.getDoubleAttribute("Stroke");
 						if (strokeWidth > 0) {
 							c.setValue(getNextColor(c.value, colorsUsed));
@@ -129,7 +132,7 @@ public class Flag {
 					colors.add(p.getColorAttribute("StrokeColor"));
 				}
 			} else {
-				for (Attribute a : overlay.attributes) {
+				for (Attribute a : overlay.getAttributes()) {
 					if (a instanceof ColorAttribute) {
 						colors.add(((ColorAttribute) a).value);
 					}
@@ -160,5 +163,45 @@ public class Flag {
 				repeater.setOverlay(overlays[i]);
 			}
 		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Ratio getRatio() {
+		return ratio;
+	}
+
+	public void setRatio(Ratio ratio) {
+		this.ratio = ratio;
+	}
+
+	public Ratio getGridSize() {
+		return gridSize;
+	}
+
+	public void setGridSize(Ratio gridSize) {
+		this.gridSize = gridSize;
+	}
+
+	public Division getDivision() {
+		return division;
+	}
+
+	public void setDivision(Division division) {
+		this.division = division;
+	}
+
+	public Overlay[] getOverlays() {
+		return overlays;
+	}
+
+	public void setOverlays(Overlay[] overlays) {
+		this.overlays = overlays;
 	}
 }

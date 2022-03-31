@@ -1,15 +1,13 @@
 package flagmaker.overlays;
 
 import flagmaker.MainWindowController;
+import flagmaker.UI;
 import flagmaker.extensions.ControlExtensions;
 import flagmaker.files.LocalizationHandler;
 import flagmaker.overlays.attributes.Attribute;
-import flagmaker.overlays.attributes.sliders.*;
+import flagmaker.overlays.attributes.sliders.AttributeSlider;
+import flagmaker.overlays.attributes.sliders.NumericAttributeSlider;
 import flagmaker.overlays.overlaytypes.pathtypes.OverlayPath;
-import flagmaker.UI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +19,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class OverlayControl extends VBox {
 	@FXML
@@ -131,7 +133,7 @@ public class OverlayControl extends VBox {
 
 	private void addSliders() {
 		pnlSliders.getChildren().clear();
-		for (Attribute a : overlay.attributes) {
+		for (Attribute a : overlay.getAttributes()) {
 			pnlSliders.getChildren().add(a.getSlider(this));
 		}
 	}
@@ -148,7 +150,7 @@ public class OverlayControl extends VBox {
 
 	private Attribute[] saveOldEmblemAttributes(Overlay value) {
 		if (overlay instanceof OverlayPath && value instanceof OverlayPath) {
-			return ((OverlayPath) overlay).attributes;
+			return overlay.getAttributes();
 		}
 
 		return null;

@@ -4,7 +4,7 @@ import flagmaker.overlays.OverlayControl;
 import flagmaker.overlays.attributes.sliders.AttributeSlider;
 import flagmaker.overlays.attributes.sliders.IntegerAttributeSlider;
 
-public class IntegerAttribute extends NumericAttribute<Integer>
+public class IntegerAttribute extends NumericAttribute
 {
 	public int value;
 	

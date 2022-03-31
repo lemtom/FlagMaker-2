@@ -1,7 +1,5 @@
 package flagmaker.overlays.overlaytypes.shapetypes;
 
-import java.util.Locale;
-
 import flagmaker.extensions.ColorExtensions;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -9,6 +7,8 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
+
+import java.util.Locale;
 
 public class OverlayDiamond extends OverlayShape {
 	public OverlayDiamond(int maximumX, int maximumY) {

@@ -1,12 +1,12 @@
 package flagmaker.overlays.overlaytypes.shapetypes;
 
-import java.util.Locale;
-
 import flagmaker.extensions.ColorExtensions;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.util.Locale;
 
 public class OverlayBox extends OverlayShape {
 	public OverlayBox(int maximumX, int maximumY) {

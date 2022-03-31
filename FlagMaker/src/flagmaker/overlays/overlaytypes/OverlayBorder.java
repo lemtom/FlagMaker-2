@@ -2,16 +2,17 @@ package flagmaker.overlays.overlaytypes;
 
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
-
-import java.util.Locale;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.ColorAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.PathElement;
 import javafx.scene.shape.Shape;
+
+import java.util.Locale;
 
 public class OverlayBorder extends Overlay {
 	public OverlayBorder(int maximumX, int maximumY) {

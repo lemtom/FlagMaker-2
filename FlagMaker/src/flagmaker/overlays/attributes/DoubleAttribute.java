@@ -1,13 +1,13 @@
 package flagmaker.overlays.attributes;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
 import flagmaker.overlays.OverlayControl;
 import flagmaker.overlays.attributes.sliders.AttributeSlider;
 import flagmaker.overlays.attributes.sliders.DoubleAttributeSlider;
 
-public class DoubleAttribute extends NumericAttribute<Double>
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
+public class DoubleAttribute extends NumericAttribute
 {
 	public boolean isDiscrete;
 	public double value;

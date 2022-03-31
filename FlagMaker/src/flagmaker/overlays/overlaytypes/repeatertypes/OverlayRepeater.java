@@ -1,12 +1,12 @@
 package flagmaker.overlays.overlaytypes.repeatertypes;
 
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
+import flagmaker.overlays.attributes.Attribute;
 
 public abstract class OverlayRepeater extends Overlay {
 	protected Overlay overlay;
 
-	public OverlayRepeater(String name, Attribute[] attributes, int maximumX, int maximumY) {
+	protected OverlayRepeater(String name, Attribute[] attributes, int maximumX, int maximumY) {
 		super(name, attributes, maximumX, maximumY);
 	}
 

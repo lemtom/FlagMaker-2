@@ -10,12 +10,13 @@ import flagmaker.overlays.overlaytypes.*;
 import flagmaker.overlays.overlaytypes.pathtypes.OverlayPath;
 import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeaterLateral;
 import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeaterRadial;
-import flagmaker.overlays.overlaytypes.shapetypes.*;
+import flagmaker.overlays.overlaytypes.shapetypes.OverlayBox;
+import flagmaker.overlays.overlaytypes.shapetypes.OverlayEllipse;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
 
 public class RandomFlagFactory {
 	private Ratio ratio;
@@ -46,7 +47,7 @@ public class RandomFlagFactory {
 	private void getRatio() {
 		ratio = new Ratio[] { new Ratio(3, 2), new Ratio(5, 3), new Ratio(7, 4), new Ratio(2, 1) }[Randomizer
 				.randomWeighted(new int[] { 6, 2, 3, 4 })];
-		gridSize = new Ratio(ratio.width * 8, ratio.height * 8);
+		gridSize = new Ratio(ratio.getWidth() * 8, ratio.getHeight() * 8);
 	}
 
 	private Division getDivision() {
@@ -116,11 +117,11 @@ public class RandomFlagFactory {
 			}
 
 			double width = hoistElementWidth(false);
-			double cantonHeight = gridSize.height * ((double) ((int) (stripeCount / 2.0) + 1) / stripeCount);
+			double cantonHeight = gridSize.getHeight() * ((double) ((int) (stripeCount / 2.0) + 1) / stripeCount);
 			if (width < cantonHeight)
 				width = cantonHeight;
 
-			overlays.add(new OverlayBox(cantonColor, 0, 0, width, cantonHeight, gridSize.width, gridSize.height));
+			overlays.add(new OverlayBox(cantonColor, 0, 0, width, cantonHeight, gridSize.getWidth(), gridSize.getHeight()));
 
 			if (Randomizer.probabilityOfTrue(0.142857)) {
 				addRepeater(width / 2, cantonHeight / 2, width * 3 / 4.0, cantonHeight * 3 / 4.0, stripeInnerColor,
@@ -177,8 +178,8 @@ public class RandomFlagFactory {
 			}
 		}
 
-		addEmblem(probabilityOfEmblem, emblemInCenter ? gridSize.width / 2.0 : gridSize.width / 6.0,
-				gridSize.height / 2.0, emblemColor, false, Color.WHITE, false);
+		addEmblem(probabilityOfEmblem, emblemInCenter ? gridSize.getWidth() / 2.0 : gridSize.getWidth() / 6.0,
+				gridSize.getHeight() / 2.0, emblemColor, false, Color.WHITE, false);
 		return new DivisionPales(c1, c2, c3, 1, isBalanced ? 1 : 2, 1);
 	}
 
@@ -228,11 +229,11 @@ public class RandomFlagFactory {
 
 					if (hasFimbriations) {
 						overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(),
-								isSpanish ? gridSize.height / 4.0 : gridSize.height / 3.0, gridSize.height / 20.0,
-								gridSize.width, gridSize.height));
+								isSpanish ? gridSize.getHeight() / 4.0 : gridSize.getHeight() / 3.0, gridSize.getHeight() / 20.0,
+								gridSize.getWidth(), gridSize.getHeight()));
 						overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(),
-								isSpanish ? 3 * gridSize.height / 4.0 : 2 * gridSize.height / 3.0,
-								gridSize.height / 20.0, gridSize.width, gridSize.height));
+								isSpanish ? 3 * gridSize.getHeight() / 4.0 : 2 * gridSize.getHeight() / 3.0,
+								gridSize.getHeight() / 20.0, gridSize.getWidth(), gridSize.getHeight()));
 					}
 				} else {
 					c3 = colorScheme.getMetal();
@@ -275,7 +276,7 @@ public class RandomFlagFactory {
 			emblemColor = colorScheme.getMetal();
 			addTriangle(1.0, probabilityOfEmblem, hoistElementWidth(true), hoistColor, emblemColor);
 		} else {
-			addEmblem(probabilityOfEmblem, gridSize.width / 2.0, gridSize.height / 2.0, emblemColor, false,
+			addEmblem(probabilityOfEmblem, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, emblemColor, false,
 					Color.TRANSPARENT, false);
 		}
 
@@ -290,21 +291,21 @@ public class RandomFlagFactory {
 		Color mainColor = backgroundIsMetal ? colorScheme.getColor1()
 				: fimbriate ? colorScheme.getColor2() : colorScheme.getMetal();
 		Color fimbriation = colorScheme.getMetal();
-		double center = gridSize.height / 2.0;
+		double center = gridSize.getHeight() / 2.0;
 
-		int crossWidth = Randomizer.clamp(Randomizer.nextNormalized(gridSize.width / 8.0, gridSize.width / 20.0), 2,
-				gridSize.width / 4, false) - (fimbriate ? 1 : 0);
+		int crossWidth = Randomizer.clamp(Randomizer.nextNormalized(gridSize.getWidth() / 8.0, gridSize.getWidth() / 20.0), 2,
+				gridSize.getWidth() / 4, false) - (fimbriate ? 1 : 0);
 		int fimbriationWidth = crossWidth + 2;
 
 		boolean canSaltire = false;
 
-		double intersection = gridSize.width / 2.0;
+		double intersection = gridSize.getWidth() / 2.0;
 		if (Randomizer.probabilityOfTrue(0.555556)) {
-			intersection = gridSize.width / 3.0;
+			intersection = gridSize.getWidth() / 3.0;
 		} else {
 			if (Randomizer.probabilityOfTrue(0.25)) {
-				overlays.add(new OverlayCross(colorScheme.getMetal(), crossWidth, intersection, center, gridSize.width,
-						gridSize.height));
+				overlays.add(new OverlayCross(colorScheme.getMetal(), crossWidth, intersection, center, gridSize.getWidth(),
+						gridSize.getHeight()));
 				return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 2, 2);
 			}
 
@@ -313,19 +314,19 @@ public class RandomFlagFactory {
 
 		if (canSaltire && Randomizer.probabilityOfTrue(0.5)) {
 			if (fimbriate) {
-				overlays.add(new OverlaySaltire(fimbriation, fimbriationWidth, gridSize.width, gridSize.height));
-				overlays.add(new OverlayHalfSaltire(mainColor, crossWidth + 2, gridSize.width, gridSize.height));
+				overlays.add(new OverlaySaltire(fimbriation, fimbriationWidth, gridSize.getWidth(), gridSize.getHeight()));
+				overlays.add(new OverlayHalfSaltire(mainColor, crossWidth + 2, gridSize.getWidth(), gridSize.getHeight()));
 			} else {
-				overlays.add(new OverlaySaltire(colorScheme.getColor2(), crossWidth, gridSize.width, gridSize.height));
+				overlays.add(new OverlaySaltire(colorScheme.getColor2(), crossWidth, gridSize.getWidth(), gridSize.getHeight()));
 			}
 		}
 
 		if (fimbriate) {
-			overlays.add(new OverlayCross(fimbriation, fimbriationWidth, intersection, center, gridSize.width,
-					gridSize.height));
+			overlays.add(new OverlayCross(fimbriation, fimbriationWidth, intersection, center, gridSize.getWidth(),
+					gridSize.getHeight()));
 		}
 
-		overlays.add(new OverlayCross(mainColor, crossWidth, intersection, center, gridSize.width, gridSize.height));
+		overlays.add(new OverlayCross(mainColor, crossWidth, intersection, center, gridSize.getWidth(), gridSize.getHeight()));
 
 		return new DivisionGrid(background, background, 1, 1);
 	}
@@ -338,21 +339,21 @@ public class RandomFlagFactory {
 			// Canton
 			if (Randomizer.probabilityOfTrue(0.6)) {
 				addFlag(new RandomFlagFactory().generateFlag(colorScheme.swapped()));
-				addEmblem(1.0, 3 * gridSize.width / 4.0, gridSize.height / 2.0, colorScheme.getMetal(), true,
+				addEmblem(1.0, 3 * gridSize.getWidth() / 4.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(), true,
 						colorScheme.getColor2(), false);
 			} else {
 				Color cantonColor = Randomizer.probabilityOfTrue(0.5) ? colorScheme.getColor2()
 						: colorScheme.getMetal();
-				overlays.add(new OverlayBox(cantonColor, 0, 0, gridSize.width / 2.0, gridSize.height / 2.0,
-						gridSize.width, gridSize.height));
+				overlays.add(new OverlayBox(cantonColor, 0, 0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0,
+						gridSize.getWidth(), gridSize.getHeight()));
 
 				if (Randomizer.probabilityOfTrue(0.5)) {
-					addRepeater(gridSize.width / 4.0, gridSize.height / 4.0, gridSize.width / 3.0,
-							gridSize.height / 3.0,
+					addRepeater(gridSize.getWidth() / 4.0, gridSize.getHeight() / 4.0, gridSize.getWidth() / 3.0,
+							gridSize.getHeight() / 3.0,
 							cantonColor == colorScheme.getMetal() ? colorScheme.getColor1() : colorScheme.getMetal(),
 							false);
 				} else {
-					addEmblem(1.0, gridSize.width / 4.0, gridSize.height / 4.0,
+					addEmblem(1.0, gridSize.getWidth() / 4.0, gridSize.getHeight() / 4.0,
 							cantonColor == colorScheme.getMetal() ? colorScheme.getColor1() : colorScheme.getMetal(),
 							true,
 							cantonColor == colorScheme.getMetal() ? colorScheme.getMetal() : colorScheme.getColor1(),
@@ -368,7 +369,7 @@ public class RandomFlagFactory {
 			// Triangle
 			int width = hoistElementWidth(true);
 			if (Randomizer.probabilityOfTrue(0.5)) {
-				addTriangle(1.0, 0.0, width <= gridSize.width / 2.0 ? width * 2 : gridSize.width,
+				addTriangle(1.0, 0.0, width <= gridSize.getWidth() / 2.0 ? width * 2 : gridSize.getWidth(),
 						colorScheme.getMetal(), colorScheme.getMetal());
 			} else {
 				addTriangle(1.0, 0.0, width + 2, colorScheme.getMetal(), colorScheme.getMetal());
@@ -377,10 +378,10 @@ public class RandomFlagFactory {
 			break;
 		case 4:
 			// Rays
-			overlays.add(new OverlayRays(colorScheme.getMetal(), gridSize.width / 2.0, gridSize.height / 2.0, Randomizer
-					.clamp(Randomizer.nextNormalized(gridSize.width * 3 / 4.0, gridSize.width / 10.0), 4, 20, false),
-					gridSize.width / 4.0, gridSize.width, gridSize.height));
-			addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(),
+			overlays.add(new OverlayRays(colorScheme.getMetal(), gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, Randomizer
+					.clamp(Randomizer.nextNormalized(gridSize.getWidth() * 3 / 4.0, gridSize.getWidth() / 10.0), 4, 20, false),
+					gridSize.getWidth() / 4.0, gridSize.getWidth(), gridSize.getHeight()));
+			addCircleEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(),
 					colorScheme.getColor1(), colorScheme.getMetal());
 			break;
 		}
@@ -395,34 +396,34 @@ public class RandomFlagFactory {
 			// Plain
 			boolean isInverted = Randomizer.probabilityOfTrue(0.1);
 			boolean useColor2 = Randomizer.probabilityOfTrue(.11);
-			addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0,
+			addEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0,
 					useColor2 ? colorScheme.getColor2()
 							: (isInverted ? colorScheme.getColor1() : colorScheme.getMetal()),
 					!isInverted, useColor2 ? colorScheme.getMetal() : colorScheme.getColor2(), false);
 			return isInverted ? colorScheme.getMetal() : colorScheme.getColor1();
 		case 2:
 			// Circled
-			addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(),
+			addCircleEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(),
 					colorScheme.getColor1(), colorScheme.getMetal());
 			return colorScheme.getColor1();
 		case 3:
 			// Repeater
-			addRepeater(gridSize.width / 2.0, gridSize.height / 2.0, gridSize.height, 0, colorScheme.getMetal(), true);
+			addRepeater(gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, gridSize.getHeight(), 0, colorScheme.getMetal(), true);
 			return colorScheme.getColor1();
 		case 4:
 			// Border
 			overlays.add(
-					new OverlayBorder(colorScheme.getColor2(), gridSize.width / 8.0, gridSize.width, gridSize.height));
-			addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), true,
+					new OverlayBorder(colorScheme.getColor2(), gridSize.getWidth() / 8.0, gridSize.getWidth(), gridSize.getHeight()));
+			addEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(), true,
 					colorScheme.getColor2(), false);
 			return colorScheme.getColor1();
 		default:
 			// Stripes
-			overlays.add(new OverlayLineHorizontal(colorScheme.getColor1(), gridSize.height * (1 / 6.0),
-					gridSize.height / 8.0, gridSize.width, gridSize.height));
-			overlays.add(new OverlayLineHorizontal(colorScheme.getColor1(), gridSize.height * (5 / 6.0),
-					gridSize.height / 8.0, gridSize.width, gridSize.height));
-			addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getColor1(), false,
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor1(), gridSize.getHeight() * (1 / 6.0),
+					gridSize.getHeight() / 8.0, gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor1(), gridSize.getHeight() * (5 / 6.0),
+					gridSize.getHeight() / 8.0, gridSize.getWidth(), gridSize.getHeight()));
+			addEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getColor1(), false,
 					colorScheme.getColor2(), false);
 			return colorScheme.getMetal();
 		}
@@ -432,17 +433,17 @@ public class RandomFlagFactory {
 		switch (new int[] { 1, 2, 3 }[Randomizer.randomWeighted(new int[] { 2, 1, 3 })]) {
 		case 1:
 			// Color 1 / Metal
-			addEmblem(1.0, Randomizer.probabilityOfTrue(0.5) ? gridSize.width / 2.0 : 3 * gridSize.width / 4.0,
-					gridSize.height / 2.0, colorScheme.getColor2(), false, colorScheme.getMetal(), false);
+			addEmblem(1.0, Randomizer.probabilityOfTrue(0.5) ? gridSize.getWidth() / 2.0 : 3 * gridSize.getWidth() / 4.0,
+					gridSize.getHeight() / 2.0, colorScheme.getColor2(), false, colorScheme.getMetal(), false);
 			return new DivisionGrid(colorScheme.getColor1(), colorScheme.getMetal(), 2, 1);
 		case 2:
 			// Color 1 / Color 2
-			addEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), false,
+			addEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(), false,
 					colorScheme.getMetal(), false);
 			return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor2(), 2, 1);
 		default:
 			// Metal / Color 1
-			addEmblem(0.5, gridSize.width / 4.0, gridSize.height / 4.0, colorScheme.getColor2(), false,
+			addEmblem(0.5, gridSize.getWidth() / 4.0, gridSize.getHeight() / 4.0, colorScheme.getColor2(), false,
 					colorScheme.getMetal(), false);
 			return new DivisionGrid(colorScheme.getMetal(), colorScheme.getColor1(), 2, 1);
 		}
@@ -452,19 +453,19 @@ public class RandomFlagFactory {
 		switch (new int[] { 1, 2, 3 }[Randomizer.randomWeighted(new int[] { 4, 11, 6 })]) {
 		case 1:
 			// Color 1 / Metal
-			addEmblem(0.25, gridSize.width / 4.0, gridSize.height / 4.0, colorScheme.getMetal(), false,
+			addEmblem(0.25, gridSize.getWidth() / 4.0, gridSize.getHeight() / 4.0, colorScheme.getMetal(), false,
 					colorScheme.getMetal(), false);
 			return new DivisionGrid(colorScheme.getColor1(), colorScheme.getMetal(), 1, 2);
 		case 2:
 			// Color 1 / Color 2
 
 			if (Randomizer.probabilityOfTrue(0.181818)) {
-				double width = gridSize.width / 3.0;
+				double width = gridSize.getWidth() / 3.0;
 				addTriangle(1.0, 0.5, (int) width, Color.BLACK, colorScheme.getMetal());
-				overlays.add(new OverlayPall(colorScheme.getMetal(), width, gridSize.width / 8.0, gridSize.width,
-						gridSize.height));
-				overlays.add(new OverlayPall(colorScheme.getColor3(), width, gridSize.width / 5.0, gridSize.width,
-						gridSize.height));
+				overlays.add(new OverlayPall(colorScheme.getMetal(), width, gridSize.getWidth() / 8.0, gridSize.getWidth(),
+						gridSize.getHeight()));
+				overlays.add(new OverlayPall(colorScheme.getColor3(), width, gridSize.getWidth() / 5.0, gridSize.getWidth(),
+						gridSize.getHeight()));
 			} else {
 				if (Randomizer.probabilityOfTrue(0.1111)) {
 					addHoistForHorizontal(false, true);
@@ -476,7 +477,7 @@ public class RandomFlagFactory {
 				} else {
 					// Plain with emblem
 					double offset = Randomizer.probabilityOfTrue(0.25) ? 4.0 : 2.0;
-					addEmblem(1.0, gridSize.width / offset, gridSize.height / offset, colorScheme.getMetal(), false,
+					addEmblem(1.0, gridSize.getWidth() / offset, gridSize.getHeight() / offset, colorScheme.getMetal(), false,
 							colorScheme.getMetal(), false);
 				}
 			}
@@ -494,8 +495,8 @@ public class RandomFlagFactory {
 	private void addHoistForHorizontal(boolean isHalfSize, boolean isMetal) {
 		int width = hoistElementWidth(false);
 		overlays.add(new OverlayBox(isMetal ? colorScheme.getMetal() : colorScheme.getColor2(), 0, 0, width,
-				isHalfSize ? gridSize.height / 2.0 : gridSize.height, gridSize.width, gridSize.height));
-		addEmblem(1.0, width / 2.0, isHalfSize ? gridSize.height / 4.0 : gridSize.height / 2.0,
+				isHalfSize ? gridSize.getHeight() / 2.0 : gridSize.getHeight(), gridSize.getWidth(), gridSize.getHeight()));
+		addEmblem(1.0, width / 2.0, isHalfSize ? gridSize.getHeight() / 4.0 : gridSize.getHeight() / 2.0,
 				isMetal ? colorScheme.getColor1() : colorScheme.getMetal(), false, colorScheme.getMetal(), false);
 	}
 
@@ -529,24 +530,24 @@ public class RandomFlagFactory {
 		if (hasStripe) {
 			if (hasFimbriation) {
 				if (isForward) {
-					overlays.add(new OverlayFimbriationForward(fimbriationColor, gridSize.width / 3.0, gridSize.width,
-							gridSize.height));
+					overlays.add(new OverlayFimbriationForward(fimbriationColor, gridSize.getWidth() / 3.0, gridSize.getWidth(),
+							gridSize.getHeight()));
 				} else {
-					overlays.add(new OverlayFimbriationBackward(fimbriationColor, gridSize.width / 3.0, gridSize.width,
-							gridSize.height));
+					overlays.add(new OverlayFimbriationBackward(fimbriationColor, gridSize.getWidth() / 3.0, gridSize.getWidth(),
+							gridSize.getHeight()));
 				}
 			}
 			if (isForward) {
-				overlays.add(new OverlayFimbriationForward(stripeColor, gridSize.width / 4.0, gridSize.width,
-						gridSize.height));
+				overlays.add(new OverlayFimbriationForward(stripeColor, gridSize.getWidth() / 4.0, gridSize.getWidth(),
+						gridSize.getHeight()));
 			} else {
-				overlays.add(new OverlayFimbriationBackward(stripeColor, gridSize.width / 4.0, gridSize.width,
-						gridSize.height));
+				overlays.add(new OverlayFimbriationBackward(stripeColor, gridSize.getWidth() / 4.0, gridSize.getWidth(),
+						gridSize.getHeight()));
 			}
 		}
 
-		double emblemLeft = hasStripe ? (isForward ? 1.0 : 5.0) * gridSize.width / 6.0 : gridSize.width / 2.0;
-		double emblemTop = hasStripe ? gridSize.height / 4.0 : gridSize.height / 2.0;
+		double emblemLeft = hasStripe ? (isForward ? 1.0 : 5.0) * gridSize.getWidth() / 6.0 : gridSize.getWidth() / 2.0;
+		double emblemTop = hasStripe ? gridSize.getHeight() / 4.0 : gridSize.getHeight() / 2.0;
 		addEmblem(1.0, emblemLeft, emblemTop, emblemColor, false, emblemColor, false);
 
 		if (isForward) {
@@ -562,17 +563,17 @@ public class RandomFlagFactory {
 
 	private DivisionGrid getSingleStripe() {
 		if (Randomizer.probabilityOfTrue(0.142)) {
-			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height / 2.0, gridSize.height / 6.0,
-					gridSize.width, gridSize.height));
-			addEmblem(0.75, gridSize.width / 3.0, gridSize.height / 1.333, colorScheme.getMetal(), false,
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.getHeight() / 2.0, gridSize.getHeight() / 6.0,
+					gridSize.getWidth(), gridSize.getHeight()));
+			addEmblem(0.75, gridSize.getWidth() / 3.0, gridSize.getHeight() / 1.333, colorScheme.getMetal(), false,
 					colorScheme.getMetal(), false);
 		} else {
 			boolean isThick = Randomizer.probabilityOfTrue(0.66667);
-			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height / 2.0,
-					gridSize.height / (isThick ? 1.5 : 3.0), gridSize.width, gridSize.height));
-			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.height / 2.0,
-					gridSize.height / (isThick ? 3.0 : 4.0), gridSize.width, gridSize.height));
-			addEmblem(isThick ? 0.5 : 0.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(), false,
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.getHeight() / 2.0,
+					gridSize.getHeight() / (isThick ? 1.5 : 3.0), gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.getHeight() / 2.0,
+					gridSize.getHeight() / (isThick ? 3.0 : 4.0), gridSize.getWidth(), gridSize.getHeight()));
+			addEmblem(isThick ? 0.5 : 0.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(), false,
 					colorScheme.getMetal(), false);
 		}
 
@@ -584,36 +585,36 @@ public class RandomFlagFactory {
 			// Symmetric
 			boolean swap = Randomizer.probabilityOfTrue(0.5);
 			overlays.add(new OverlayLineHorizontal(swap ? colorScheme.getColor2() : colorScheme.getMetal(),
-					gridSize.height / 2.0, gridSize.height / 1.4, gridSize.width, gridSize.height));
+					gridSize.getHeight() / 2.0, gridSize.getHeight() / 1.4, gridSize.getWidth(), gridSize.getHeight()));
 			overlays.add(new OverlayLineHorizontal(swap ? colorScheme.getMetal() : colorScheme.getColor2(),
-					gridSize.height / 2.0, gridSize.height / 2.3333, gridSize.width, gridSize.height));
-			overlays.add(new OverlayLineHorizontal(colorScheme.getColor3(), gridSize.height / 2.0,
-					gridSize.height / 7.0, gridSize.width, gridSize.height));
+					gridSize.getHeight() / 2.0, gridSize.getHeight() / 2.3333, gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor3(), gridSize.getHeight() / 2.0,
+					gridSize.getHeight() / 7.0, gridSize.getWidth(), gridSize.getHeight()));
 		} else if (Randomizer.probabilityOfTrue(0.75)) {
 			// Asymmetric
 			boolean swap = Randomizer.probabilityOfTrue(0.3333);
 			overlays.add(new OverlayBox(swap ? colorScheme.getColor2() : colorScheme.getMetal(), 0,
-					gridSize.height / 4.0, gridSize.width, gridSize.height * 3 / 4.0, gridSize.width, gridSize.height));
+					gridSize.getHeight() / 4.0, gridSize.getWidth(), gridSize.getHeight() * 3 / 4.0, gridSize.getWidth(), gridSize.getHeight()));
 			overlays.add(new OverlayBox(swap ? colorScheme.getMetal() : colorScheme.getColor2(), 0,
-					gridSize.height / 2.0, gridSize.width, gridSize.height * 2.0, gridSize.width, gridSize.height));
-			overlays.add(new OverlayBox(colorScheme.getColor3(), 0, gridSize.height * 3 / 4.0, gridSize.width,
-					gridSize.height / 4.0, gridSize.width, gridSize.height));
+					gridSize.getHeight() / 2.0, gridSize.getWidth(), gridSize.getHeight() * 2.0, gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayBox(colorScheme.getColor3(), 0, gridSize.getHeight() * 3 / 4.0, gridSize.getWidth(),
+					gridSize.getHeight() / 4.0, gridSize.getWidth(), gridSize.getHeight()));
 		} else {
 			// Uganda
-			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height * 3 / 12.0,
-					gridSize.height / 6.0, gridSize.width, gridSize.height));
-			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.height * 5 / 12.0,
-					gridSize.height / 6.0, gridSize.width, gridSize.height));
-			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.height * 9 / 12.0,
-					gridSize.height / 6.0, gridSize.width, gridSize.height));
-			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.height * 11 / 12.0,
-					gridSize.height / 6.0, gridSize.width, gridSize.height));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.getHeight() * 3 / 12.0,
+					gridSize.getHeight() / 6.0, gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.getHeight() * 5 / 12.0,
+					gridSize.getHeight() / 6.0, gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getMetal(), gridSize.getHeight() * 9 / 12.0,
+					gridSize.getHeight() / 6.0, gridSize.getWidth(), gridSize.getHeight()));
+			overlays.add(new OverlayLineHorizontal(colorScheme.getColor2(), gridSize.getHeight() * 11 / 12.0,
+					gridSize.getHeight() / 6.0, gridSize.getWidth(), gridSize.getHeight()));
 		}
 
 		if (Randomizer.probabilityOfTrue(0.4)) {
 			addTriangle(1.0, 1.0, hoistElementWidth(true), colorScheme.getMetal(), colorScheme.getColor1());
 		} else {
-			addCircleEmblem(0.5, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(),
+			addCircleEmblem(0.5, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(),
 					colorScheme.getColor1(), colorScheme.getMetal());
 		}
 
@@ -625,48 +626,48 @@ public class RandomFlagFactory {
 		case 1:
 			// Two-color, fimbriation
 			overlays.add(
-					new OverlaySaltire(colorScheme.getMetal(), gridSize.width / 6.0, gridSize.width, gridSize.height));
-			addCircleEmblem(0.5, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(),
+					new OverlaySaltire(colorScheme.getMetal(), gridSize.getWidth() / 6.0, gridSize.getWidth(), gridSize.getHeight()));
+			addCircleEmblem(0.5, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(),
 					colorScheme.getColor1(), colorScheme.getColor1());
 			return new DivisionX(colorScheme.getColor1(), colorScheme.getColor2());
 		case 2:
 			// Two-color, no fimbriation
-			addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getColor2(),
+			addCircleEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getColor2(),
 					colorScheme.getMetal(), colorScheme.getMetal());
 			if (Randomizer.probabilityOfTrue(0.5)) {
-				overlays.add(new OverlayBorder(colorScheme.getColor2(), gridSize.width / 8.0, gridSize.width,
-						gridSize.height));
+				overlays.add(new OverlayBorder(colorScheme.getColor2(), gridSize.getWidth() / 8.0, gridSize.getWidth(),
+						gridSize.getHeight()));
 			}
 			return new DivisionX(colorScheme.getColor1(), colorScheme.getMetal());
 		default:
 			// One-color
 			overlays.add(
-					new OverlaySaltire(colorScheme.getMetal(), gridSize.width / 6.0, gridSize.width, gridSize.height));
+					new OverlaySaltire(colorScheme.getMetal(), gridSize.getWidth() / 6.0, gridSize.getWidth(), gridSize.getHeight()));
 			return new DivisionGrid(colorScheme.getColor1(), colorScheme.getColor1(), 1, 1);
 		}
 	}
 
 	private DivisionGrid getRay() {
-		overlays.add(new OverlayRays(colorScheme.getColor1(), gridSize.width / 2.0, gridSize.height / 2.0, 20,
-				gridSize.width / 4.0, gridSize.width, gridSize.height));
-		addCircleEmblem(1.0, gridSize.width / 2.0, gridSize.height / 2.0, colorScheme.getMetal(),
+		overlays.add(new OverlayRays(colorScheme.getColor1(), gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, 20,
+				gridSize.getWidth() / 4.0, gridSize.getWidth(), gridSize.getHeight()));
+		addCircleEmblem(1.0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0, colorScheme.getMetal(),
 				colorScheme.getColor1(), colorScheme.getMetal());
 		return new DivisionGrid(colorScheme.getMetal(), colorScheme.getMetal(), 1, 1);
 	}
 
 	private int hoistElementWidth(boolean isTriangle) {
-		return (int) (gridSize.width * Randomizer.nextNormalized(isTriangle ? 0.45 : 0.35, 0.05));
+		return (int) (gridSize.getWidth() * Randomizer.nextNormalized(isTriangle ? 0.45 : 0.35, 0.05));
 	}
 
 	private void addTriangle(double probability, double probabilityOfEmblem, int width, Color color,
 			Color emblemColor) {
 		if (!Randomizer.probabilityOfTrue(probability))
 			return;
-		overlays.add(new OverlayTriangle(color, 0, 0, width, gridSize.height / 2.0, 0, gridSize.height, gridSize.width,
-				gridSize.height));
+		overlays.add(new OverlayTriangle(color, 0, 0, width, gridSize.getHeight() / 2.0, 0, gridSize.getHeight(), gridSize.getWidth(),
+				gridSize.getHeight()));
 
 		if (Randomizer.probabilityOfTrue(probabilityOfEmblem)) {
-			addEmblem(1.0, width / 3.0, gridSize.height / 2.0, emblemColor, false, Color.WHITE, false);
+			addEmblem(1.0, width / 3.0, gridSize.getHeight() / 2.0, emblemColor, false, Color.WHITE, false);
 		}
 	}
 
@@ -675,12 +676,12 @@ public class RandomFlagFactory {
 		if (!forceRadial && Randomizer.probabilityOfTrue(0.5)) {
 			overlays.add(new OverlayRepeaterLateral(x, y, width, height,
 					Randomizer.clamp(Randomizer.nextNormalized(5, 2), 2, 8, false),
-					Randomizer.clamp(Randomizer.nextNormalized(4, 2), 2, 8, false), gridSize.width, gridSize.height));
+					Randomizer.clamp(Randomizer.nextNormalized(4, 2), 2, 8, false), gridSize.getWidth(), gridSize.getHeight()));
 		} else {
 			big = true;
 			overlays.add(new OverlayRepeaterRadial(x, y, width / 3.0,
 					Randomizer.clamp(Randomizer.nextNormalized(12, 4), 4, 25, false), Randomizer.probabilityOfTrue(0.5),
-					gridSize.width, gridSize.height));
+					gridSize.getWidth(), gridSize.getHeight()));
 		}
 
 		addEmblem(1, 0, 0, color, false, color, big);
@@ -691,7 +692,7 @@ public class RandomFlagFactory {
 		if (!Randomizer.probabilityOfTrue(probability))
 			return;
 
-		overlays.add(new OverlayEllipse(circleColor, x, y, gridSize.width / 4.0, 0.0, gridSize.width, gridSize.height));
+		overlays.add(new OverlayEllipse(circleColor, x, y, gridSize.getWidth() / 4.0, 0.0, gridSize.getWidth(), gridSize.getHeight()));
 
 		addEmblem(1.0, x, y, emblemColor, true, colorIfStroke, false);
 	}
@@ -702,10 +703,10 @@ public class RandomFlagFactory {
 			return;
 
 		OverlayPath emblem = (OverlayPath) emblems[Randomizer.next(emblems.length)];
-		emblem.setMaximum(gridSize.width, gridSize.height);
+		emblem.setMaximum(gridSize.getWidth(), gridSize.getHeight());
 		emblem.setAttribute("X", x);
 		emblem.setAttribute("Y", y);
-		emblem.setAttribute("Size", gridSize.width / (isBig ? 3.0 : 6.0));
+		emblem.setAttribute("Size", gridSize.getWidth() / (isBig ? 3.0 : 6.0));
 		emblem.setAttribute("Rotation", 0.0);
 
 		if (canStroke && Randomizer.probabilityOfTrue(0.1)) {
@@ -722,7 +723,7 @@ public class RandomFlagFactory {
 	}
 
 	private void addFlag(Flag flag) {
-		overlays.add(new OverlayFlag(flag, new File(""), 0, 0, gridSize.width / 2.0, gridSize.height / 2.0,
-				gridSize.width, gridSize.height));
+		overlays.add(new OverlayFlag(flag, new File(""), 0, 0, gridSize.getWidth() / 2.0, gridSize.getHeight() / 2.0,
+				gridSize.getWidth(), gridSize.getHeight()));
 	}
 }

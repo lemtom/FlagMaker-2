@@ -1,11 +1,11 @@
 package flagmaker.files;
 
+import flagmaker.overlays.Overlay;
+import flagmaker.overlays.OverlayFactory;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import flagmaker.overlays.Overlay;
-import flagmaker.overlays.OverlayFactory;
 
 public class TempOverlay {
 	public String type;

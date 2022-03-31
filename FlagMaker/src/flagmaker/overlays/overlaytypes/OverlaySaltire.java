@@ -2,14 +2,16 @@ package flagmaker.overlays.overlaytypes;
 
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
-
-import java.util.Locale;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.ColorAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+
+import java.util.Locale;
 
 public class OverlaySaltire extends Overlay {
 	public OverlaySaltire(int maximumX, int maximumY) {

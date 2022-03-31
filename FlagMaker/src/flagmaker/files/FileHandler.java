@@ -4,27 +4,13 @@ import flagmaker.data.Flag;
 import flagmaker.data.Ratio;
 import flagmaker.data.Size;
 import flagmaker.data.Vector;
-import flagmaker.divisions.Division;
-import flagmaker.divisions.DivisionBendsBackward;
-import flagmaker.divisions.DivisionBendsForward;
-import flagmaker.divisions.DivisionFesses;
-import flagmaker.divisions.DivisionGrid;
-import flagmaker.divisions.DivisionPales;
-import flagmaker.divisions.DivisionX;
+import flagmaker.divisions.*;
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.extensions.CommonExtensions;
 import flagmaker.extensions.StringExtensions;
 import flagmaker.overlays.Overlay;
 import flagmaker.overlays.overlaytypes.pathtypes.OverlayPath;
 import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeater;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -33,7 +19,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 import javax.imageio.ImageIO;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class FileHandler {
 	private FileHandler() {
@@ -48,7 +38,7 @@ public class FileHandler {
 
 	public static void exportFlagToSvg(Flag flag, File file) throws IOException {
 		final int width = 600;
-		int height = (int) (((double) flag.ratio.height / flag.ratio.width) * width);
+		int height = (int) (((double) flag.getRatio().getHeight() / flag.getRatio().getWidth()) * width);
 
 		try (FileWriter writer = new FileWriter(file, false); PrintWriter printLine = new PrintWriter(writer)) {
 			printLine.printf("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n");
@@ -58,15 +48,15 @@ public class FileHandler {
 					"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"%s\" height=\"%s\">\n",
 					width, height);
 
-			printLine.printf("%s\n", flag.division.exportSvg(width, height));
+			printLine.printf("%s\n", flag.getDivision().exportSvg(width, height));
 
 			flag.setRepeaterOverlays();
 
-			for (int i = 0; i < flag.overlays.length; i++) {
-				if (i > 0 && flag.overlays[i - 1] instanceof OverlayRepeater)
+			for (int i = 0; i < flag.getOverlays().length; i++) {
+				if (i > 0 && flag.getOverlays()[i - 1] instanceof OverlayRepeater)
 					continue;
 
-				Overlay overlay = flag.overlays[i];
+				Overlay overlay = flag.getOverlays()[i];
 				if (!overlay.isEnabled)
 					continue;
 				printLine.printf(overlay.exportSvg(width, height));
@@ -78,8 +68,8 @@ public class FileHandler {
 
 	public static void exportFlagToPng(Flag flag, Size size, File path) throws IOException {
 		AnchorPane a = new AnchorPane();
-		Scene s = new Scene(a, size.x, size.y);
-		Rectangle clip = new Rectangle(size.x, size.y);
+		Scene s = new Scene(a, size.getX(), size.getY());
+		Rectangle clip = new Rectangle(size.getX(), size.getY());
 		Pane p = new Pane();
 		p.setClip(clip);
 		s.setRoot(p);
@@ -102,7 +92,7 @@ public class FileHandler {
 
 		ArrayList<Overlay> overlays = new ArrayList<>();
 		for (int i = 2; i < groups.size(); i++) {
-			overlays.add(readOverlay(groups.get(i), gridRatio.width, gridRatio.height, file.getParent()));
+			overlays.add(readOverlay(groups.get(i), gridRatio.getWidth(), gridRatio.getHeight(), file.getParent()));
 		}
 
 		Overlay[] finalOverlays = new Overlay[] {};

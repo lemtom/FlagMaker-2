@@ -1,7 +1,7 @@
 package flagmaker.divisions;
 
 import flagmaker.extensions.ColorExtensions;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 

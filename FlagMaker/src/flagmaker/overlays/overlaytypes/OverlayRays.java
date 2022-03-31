@@ -3,14 +3,17 @@ package flagmaker.overlays.overlaytypes;
 import flagmaker.data.Vector;
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
-
-import java.util.ArrayList;
-import java.util.Locale;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.ColorAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
+import flagmaker.overlays.attributes.IntegerAttribute;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class OverlayRays extends Overlay {
 	public OverlayRays(int maximumX, int maximumY) {
@@ -76,20 +79,20 @@ public class OverlayRays extends Overlay {
 
 			// If points lie on different sides, add corner
 			String point3 = "";
-			if (point1.x != point2.x && point1.y != point2.y) {
-				if (point1.y == 0) {
+			if (point1.getX() != point2.getX() && point1.getY() != point2.getY()) {
+				if (point1.getY() == 0) {
 					point3 = "0,0 ";
-				} else if (point1.x == 0) {
+				} else if (point1.getX() == 0) {
 					point3 = String.format(Locale.US, "0,%.3f ", height);
-				} else if (point1.y == height) {
+				} else if (point1.getY() == height) {
 					point3 = String.format(Locale.US, "%.3f,%.3f ", width, height);
-				} else if (point1.x == width) {
+				} else if (point1.getX() == width) {
 					point3 = String.format(Locale.US, "%.3f,0 ", width);
 				}
 			}
 
-			returnValue.add(String.format(Locale.US, "M %.3f,%.3f %.3f,%.3f %s%.3f,%.3f Z", centerX, centerY, point1.x,
-					point1.y, point3, point2.x, point2.y));
+			returnValue.add(String.format(Locale.US, "M %.3f,%.3f %.3f,%.3f %s%.3f,%.3f Z", centerX, centerY, point1.getX(),
+					point1.getY(), point3, point2.getX(), point2.getY()));
 		}
 
 		String[] rv = new String[] {};
@@ -136,6 +139,6 @@ public class OverlayRays extends Overlay {
 	}
 
 	private static double length(Vector p1, Vector p2) {
-		return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+		return Math.sqrt(Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2));
 	}
 }

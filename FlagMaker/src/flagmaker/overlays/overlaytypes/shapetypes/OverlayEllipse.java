@@ -1,12 +1,12 @@
 package flagmaker.overlays.overlaytypes.shapetypes;
 
-import java.util.Locale;
-
 import flagmaker.extensions.ColorExtensions;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
+
+import java.util.Locale;
 
 public class OverlayEllipse extends OverlayShape {
 	public OverlayEllipse(int maximumX, int maximumY) {

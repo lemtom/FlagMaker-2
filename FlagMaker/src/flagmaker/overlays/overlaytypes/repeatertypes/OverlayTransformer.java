@@ -1,7 +1,5 @@
 package flagmaker.overlays.overlaytypes.repeatertypes;
 
-import java.util.Locale;
-
 import flagmaker.overlays.attributes.Attribute;
 import flagmaker.overlays.attributes.DoubleAttribute;
 import javafx.scene.Scene;
@@ -14,6 +12,8 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Shear;
 import javafx.scene.transform.Transform;
+
+import java.util.Locale;
 
 public class OverlayTransformer extends OverlayRepeater {
 	public OverlayTransformer(int maximumX, int maximumY) {

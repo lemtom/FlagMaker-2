@@ -5,9 +5,14 @@ import flagmaker.files.FileHandler;
 import flagmaker.files.LocalizationHandler;
 import flagmaker.overlays.overlaytypes.*;
 import flagmaker.overlays.overlaytypes.pathtypes.*;
-import flagmaker.overlays.overlaytypes.repeatertypes.*;
-import flagmaker.overlays.overlaytypes.shapetypes.*;
-import flagmaker.overlays.overlaytypes.specialtypes.*;
+import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeaterLateral;
+import flagmaker.overlays.overlaytypes.repeatertypes.OverlayRepeaterRadial;
+import flagmaker.overlays.overlaytypes.repeatertypes.OverlayTransformer;
+import flagmaker.overlays.overlaytypes.shapetypes.OverlayBox;
+import flagmaker.overlays.overlaytypes.shapetypes.OverlayDiamond;
+import flagmaker.overlays.overlaytypes.shapetypes.OverlayEllipse;
+import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
+import flagmaker.overlays.overlaytypes.specialtypes.OverlayImage;
 
 import java.io.File;
 import java.lang.reflect.Constructor;

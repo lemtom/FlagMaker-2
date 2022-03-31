@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.PathElement;
 import javafx.scene.shape.Rectangle;
 
 public class DivisionBendsForward extends Division {

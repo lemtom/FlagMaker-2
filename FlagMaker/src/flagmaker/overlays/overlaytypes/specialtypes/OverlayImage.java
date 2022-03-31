@@ -4,14 +4,6 @@ import flagmaker.extensions.StringExtensions;
 import flagmaker.overlays.Overlay;
 import flagmaker.overlays.attributes.Attribute;
 import flagmaker.overlays.attributes.DoubleAttribute;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Files;
-import java.util.Base64;
-import java.util.Locale;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -21,6 +13,14 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Files;
+import java.util.Base64;
+import java.util.Locale;
 
 public class OverlayImage extends Overlay
 {

@@ -4,7 +4,7 @@ import flagmaker.overlays.OverlayControl;
 import flagmaker.overlays.attributes.sliders.AttributeSlider;
 import flagmaker.overlays.attributes.sliders.BooleanAttributeSlider;
 
-public class BooleanAttribute extends Attribute<Boolean>
+public class BooleanAttribute extends Attribute
 {
 	public boolean value;
 	

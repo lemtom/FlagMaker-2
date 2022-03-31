@@ -3,15 +3,20 @@ package flagmaker.overlays.overlaytypes.pathtypes;
 import flagmaker.data.Vector;
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
-
-import java.util.Locale;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.BooleanAttribute;
+import flagmaker.overlays.attributes.ColorAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineJoin;
-import javafx.scene.transform.*;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
+
+import java.util.Locale;
 
 public class OverlayPath extends Overlay {
 	private Vector pathSize;
@@ -59,7 +64,7 @@ public class OverlayPath extends Overlay {
 	@Override
 	protected Shape[] thumbnail() {
 		final double thumbSize = 30.0;
-		double scaleFactor = thumbSize / Math.max(pathSize.x, pathSize.y);
+		double scaleFactor = thumbSize / Math.max(pathSize.getX(), pathSize.getY());
 		SVGPath path = new SVGPath();
 		path.setContent(this.path);
 
@@ -104,8 +109,8 @@ public class OverlayPath extends Overlay {
 			rotate.setPivotY(0);
 
 			Translate translate = new Translate();
-			translate.setX(finalCenterPoint.x);
-			translate.setY(finalCenterPoint.y);
+			translate.setX(finalCenterPoint.getX());
+			translate.setY(finalCenterPoint.getY());
 
 			Scale scale = new Scale();
 			scale.setX(scaleFactor);
@@ -139,7 +144,7 @@ public class OverlayPath extends Overlay {
 
 		return String.format(Locale.US,
 				"<g transform=\"translate(%.3f,%.3f) rotate(%.3f) scale(%.3f)\"><path d=\"%s\" %s %s /></g>",
-				finalCenterPoint.x, finalCenterPoint.y, rotate, scaleFactor(width, height), path,
+				finalCenterPoint.getX(), finalCenterPoint.getY(), rotate, scaleFactor(width, height), path,
 				ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color")),
 				strokeThickness > 0
 						? String.format(Locale.US, "stroke=\"#%s\" stroke-width=\"$.3f\" stroke-linejoin=\"%s\"",
@@ -158,6 +163,6 @@ public class OverlayPath extends Overlay {
 
 	private double scaleFactor(double canvasWidth, double canvasHeight) {
 		double idealPixelSize = getDoubleAttribute("Size") / maximumX * Math.max(canvasWidth, canvasHeight);
-		return idealPixelSize / Math.max(pathSize.x, pathSize.y);
+		return idealPixelSize / Math.max(pathSize.getX(), pathSize.getY());
 	}
 }

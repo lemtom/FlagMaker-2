@@ -3,19 +3,15 @@ package flagmaker.overlays.attributes.sliders;
 import flagmaker.extensions.ControlExtensions;
 import flagmaker.files.LocalizationHandler;
 import flagmaker.overlays.OverlayControl;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class DoubleAttributeSlider extends NumericAttributeSlider {
 	@FXML
@@ -199,6 +195,8 @@ public class DoubleAttributeSlider extends NumericAttributeSlider {
 				slider.setValue(value);
 			} catch (Exception ex) {
 			}
+			break;
+		default:
 			break;
 		}
 	}

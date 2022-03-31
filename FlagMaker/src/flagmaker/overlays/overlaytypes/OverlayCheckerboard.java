@@ -2,14 +2,17 @@ package flagmaker.overlays.overlaytypes;
 
 import flagmaker.extensions.ColorExtensions;
 import flagmaker.overlays.Overlay;
-import flagmaker.overlays.attributes.*;
-
-import java.util.ArrayList;
-import java.util.Locale;
+import flagmaker.overlays.attributes.Attribute;
+import flagmaker.overlays.attributes.ColorAttribute;
+import flagmaker.overlays.attributes.DoubleAttribute;
+import flagmaker.overlays.attributes.IntegerAttribute;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class OverlayCheckerboard extends Overlay {
 	public OverlayCheckerboard(int maximumX, int maximumY) {

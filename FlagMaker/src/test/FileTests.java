@@ -2,20 +2,21 @@ package test;
 
 import flagmaker.data.Flag;
 import flagmaker.data.Ratio;
-import flagmaker.divisions.*;
+import flagmaker.divisions.DivisionGrid;
 import flagmaker.files.FileHandler;
 import flagmaker.overlays.OverlayFactory;
 import flagmaker.overlays.overlaytypes.pathtypes.OverlayStar;
 import flagmaker.overlays.overlaytypes.specialtypes.OverlayFlag;
+import javafx.scene.paint.Color;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javafx.scene.paint.Color;
-import org.junit.Test;
+
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 
 public class FileTests {
 	private final Ratio ratio = new Ratio(5, 3);
@@ -66,20 +67,20 @@ public class FileTests {
 			fail(ex.getMessage());
 		}
 
-		assertEquals(flag.ratio.width, ratio.width);
-		assertEquals(flag.ratio.height, ratio.height);
-		assertEquals(flag.gridSize.width, ratio.width);
-		assertEquals(flag.gridSize.height, ratio.height);
+		assertEquals(flag.getRatio().getWidth(), ratio.getWidth());
+		assertEquals(flag.getRatio().getHeight(), ratio.getHeight());
+		assertEquals(flag.getGridSize().getWidth(), ratio.getWidth());
+		assertEquals(flag.getGridSize().getHeight(), ratio.getHeight());
 
-		assertTrue(flag.division instanceof DivisionGrid);
-		assertEquals(Color.RED, flag.division.colors[0]);
-		assertEquals(Color.WHITE, flag.division.colors[1]);
-		assertEquals(2, flag.division.values[0]);
-		assertEquals(2, flag.division.values[1]);
+		assertTrue(flag.getDivision() instanceof DivisionGrid);
+		assertEquals(Color.RED, flag.getDivision().colors[0]);
+		assertEquals(Color.WHITE, flag.getDivision().colors[1]);
+		assertEquals(2, flag.getDivision().values[0]);
+		assertEquals(2, flag.getDivision().values[1]);
 
-		assertEquals(1, flag.overlays.length);
-		assertTrue(flag.overlays[0] instanceof OverlayFlag);
-		OverlayFlag f = (OverlayFlag) flag.overlays[0];
+		assertEquals(1, flag.getOverlays().length);
+		assertTrue(flag.getOverlays()[0] instanceof OverlayFlag);
+		OverlayFlag f = (OverlayFlag) flag.getOverlays()[0];
 		assertEquals(0, f.getDoubleAttribute("X"), 0.001);
 		assertEquals(0, f.getDoubleAttribute("Y"), 0.001);
 		assertEquals(2.5, f.getDoubleAttribute("Width"), 0.001);
@@ -89,20 +90,20 @@ public class FileTests {
 	}
 
 	private void assertBasicFlag(Flag flag) {
-		assertEquals(flag.ratio.width, ratio.width);
-		assertEquals(flag.ratio.height, ratio.height);
-		assertEquals(flag.gridSize.width, ratio.width);
-		assertEquals(flag.gridSize.height, ratio.height);
+		assertEquals(flag.getRatio().getWidth(), ratio.getWidth());
+		assertEquals(flag.getRatio().getHeight(), ratio.getHeight());
+		assertEquals(flag.getGridSize().getWidth(), ratio.getWidth());
+		assertEquals(flag.getGridSize().getHeight(), ratio.getHeight());
 
-		assertTrue(flag.division instanceof DivisionGrid);
-		assertEquals(Color.RED, flag.division.colors[0]);
-		assertEquals(Color.WHITE, flag.division.colors[1]);
-		assertEquals(2, flag.division.values[0]);
-		assertEquals(2, flag.division.values[1]);
+		assertTrue(flag.getDivision() instanceof DivisionGrid);
+		assertEquals(Color.RED, flag.getDivision().colors[0]);
+		assertEquals(Color.WHITE, flag.getDivision().colors[1]);
+		assertEquals(2, flag.getDivision().values[0]);
+		assertEquals(2, flag.getDivision().values[1]);
 
-		assertEquals(1, flag.overlays.length);
-		assertTrue(flag.overlays[0] instanceof OverlayStar);
-		OverlayStar s = (OverlayStar) flag.overlays[0];
+		assertEquals(1, flag.getOverlays().length);
+		assertTrue(flag.getOverlays()[0] instanceof OverlayStar);
+		OverlayStar s = (OverlayStar) flag.getOverlays()[0];
 		assertEquals(2.5, s.getDoubleAttribute("X"), 0.001);
 		assertEquals(1.5, s.getDoubleAttribute("Y"), 0.001);
 		assertEquals(1, s.getDoubleAttribute("Size"), 0.001);
@@ -133,7 +134,7 @@ public class FileTests {
 		sb.append("stroke=0\n");
 		sb.append("strokecolor=000000\n");
 		sb.append("strokecurved=false\n");
-		
+
 		return saveFlagFile(sb.toString());
 	}
 
