@@ -4,17 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
-	<FlowPane orientation="HORIZONTAL">
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flagmaker.overlays.OverlayControl">
+	<FlowPane>
 		<Button onAction="#setCollapsed">
 			<tooltip>
 				<Tooltip fx:id="ttpExpandCollapse" />
 			</tooltip>
 			<graphic>
 				<ImageView fx:id="btnExpandCollapse" fitHeight="24.0" fitWidth="24.0">
-					<image>
-						<Image url="@../images/collapse.png" />
-					</image>
+					<Image url="@../images/collapse.png"/>
 				</ImageView>
 			</graphic>
 		</Button>
@@ -29,9 +27,7 @@
 			</tooltip>
 			<graphic>
 				<ImageView fx:id="btnVisibility" fitHeight="24.0" fitWidth="24.0">
-					<image>
-						<Image url="@../images/check_on.png" />
-					</image>
+					<Image url="@../images/check_on.png"/>
 				</ImageView>
 			</graphic>
 		</Button>
@@ -41,9 +37,7 @@
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<image>
-						<Image url="@../images/remove.png" />
-					</image>
+					<Image url="@../images/remove.png"/>
 				</ImageView>
 			</graphic>
 		</Button>
@@ -53,9 +47,7 @@
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<image>
-						<Image url="@../images/moveup.png" />
-					</image>
+					<Image url="@../images/moveup.png"/>
 				</ImageView>
 			</graphic>
 		</Button>
@@ -65,9 +57,7 @@
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<image>
-						<Image url="@../images/movedown.png" />
-					</image>
+					<Image url="@../images/movedown.png"/>
 				</ImageView>
 			</graphic>
 		</Button>
@@ -77,9 +67,7 @@
 			</tooltip>
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<image>
-						<Image url="@../images/clone.png" />
-					</image>
+					<Image url="@../images/clone.png"/>
 				</ImageView>
 			</graphic>
 		</Button>

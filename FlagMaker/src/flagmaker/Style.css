@@ -2,8 +2,8 @@
 	-fx-background-color: linear-gradient(#F0F0F0, #D0D0D0);
 }
 
-.scroll-pane, .scroll-pane > .viewport {
-   -fx-background-color: transparent;
+.scroll-pane, .scroll-pane>.viewport {
+	-fx-background-color: transparent;
 }
 
 .toggle_button, .button, .transparent {

@@ -76,7 +76,7 @@ public class OverlayHalfSaltire extends Overlay {
 
 		String c = ColorExtensions.toSvgFillWithOpacity(getColorAttribute("Color"));
 
-        String sb = String.format(Locale.US, "<polygon points=\"0,0 %1$.3f,%2$.3f %3$.3f,%2$.3f 0,%4$.3f\" %5$s />",
+        return String.format(Locale.US, "<polygon points=\"0,0 %1$.3f,%2$.3f %3$.3f,%2$.3f 0,%4$.3f\" %5$s />",
                 centerX, centerY, centerX - wX, wY, c) +
                 String.format(Locale.US, "<polygon points=\"%1$.3f,%2$.3f %1$.3f,%3$.3f %4$.3f,0 %5$d,0\" %6$s />",
                         centerX, centerY, centerY - wY, width - wX, width, c) +
@@ -85,6 +85,5 @@ public class OverlayHalfSaltire extends Overlay {
                 String.format(Locale.US,
                         "<polygon points=\"%1$.3f,%2$.3f %3$.3f,%2$.3f %4$d,%5$.3f %4$d,%6$d\" %7$s />", centerX, centerY,
                         centerX + wX, width, height - wY, height, c);
-        return sb;
 	}
 }

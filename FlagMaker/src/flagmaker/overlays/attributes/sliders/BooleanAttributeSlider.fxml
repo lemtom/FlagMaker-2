@@ -3,9 +3,8 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-<fx:root prefHeight="32" prefWidth="300.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<Label fx:id="lblName" text="Width" prefWidth="100" HBox.hgrow="NEVER" />
-		<CheckBox fx:id="chkEnabled" HBox.hgrow="NEVER" />
-	</children>
+<fx:root prefHeight="32" prefWidth="300.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="flagmaker.overlays.attributes.sliders.BooleanAttributeSlider">
+    <Label fx:id="lblName" text="Width" prefWidth="100" HBox.hgrow="NEVER"/>
+    <CheckBox fx:id="chkEnabled" HBox.hgrow="NEVER"/>
 </fx:root>

@@ -54,7 +54,7 @@ public class DivisionFesses extends Division {
 
 		// Bottom
 
-        String sb = String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
+        return String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
                 ColorExtensions.toSvgFillWithOpacity(colors[2])) +
 
                 // Middle
@@ -64,6 +64,5 @@ public class DivisionFesses extends Division {
                 // Top
                 String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />", width, r1Size,
                         ColorExtensions.toSvgFillWithOpacity(colors[0]));
-        return sb;
 	}
 }

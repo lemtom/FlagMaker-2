@@ -3,11 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.*?>
-<fx:root type="javafx.scene.layout.VBox" id="vbox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<TabPane fx:id="tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" />
-		<AnchorPane VBox.vgrow="NEVER">
-			<Button fx:id="btnCancel" onAction="#cancel" cancelButton="true" AnchorPane.rightAnchor="0"  />
-		</AnchorPane>
-	</children>
+<fx:root type="javafx.scene.layout.VBox" id="vbox" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="flagmaker.overlays.OverlaySelector">
+    <TabPane fx:id="tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS"/>
+    <AnchorPane VBox.vgrow="NEVER">
+        <Button fx:id="btnCancel" onAction="#cancel" cancelButton="true" AnchorPane.rightAnchor="0"/>
+    </AnchorPane>
 </fx:root>

@@ -2,33 +2,20 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<fx:root id="vbox" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<TabPane fx:id="tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-			<tabs>
-				<Tab fx:id="tabCredits">
-					<content>
-						<ScrollPane fitToWidth="true">
-							<content>
-								<VBox fx:id="creditBox" styleClass="padding">
-									<children>
-										<Label styleClass="header" fx:id="lblVersion" />
-									</children>
-								</VBox>
-							</content>
-						</ScrollPane>
-					</content>
-				</Tab>
-				<Tab fx:id="tabHistory">
-					<content>
-						<ScrollPane fitToWidth="true">
-							<content>
-								<VBox fx:id="historyBox" styleClass="padding" />
-							</content>
-						</ScrollPane>
-					</content>
-				</Tab>
-			</tabs>
-		</TabPane>
-	</children>
+<fx:root id="vbox" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8"
+		 xmlns:fx="http://javafx.com/fxml/1">
+	<TabPane fx:id="tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+		<Tab fx:id="tabCredits">
+			<ScrollPane fitToWidth="true">
+				<VBox fx:id="creditBox" styleClass="padding">
+					<Label styleClass="header" fx:id="lblVersion"/>
+				</VBox>
+			</ScrollPane>
+		</Tab>
+		<Tab fx:id="tabHistory">
+			<ScrollPane fitToWidth="true">
+				<VBox fx:id="historyBox" styleClass="padding"/>
+			</ScrollPane>
+		</Tab>
+	</TabPane>
 </fx:root>

@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColorList {
+	
+	private ColorList() {
+	    throw new IllegalStateException("Utility class");
+	  }
+	
 	public static List<NamedColor> flagsOfTheWorld() {
 		List<NamedColor> list = new ArrayList<>();
 		list.add(new NamedColor(new Color(1, 0.4, 0.4, 1), "Very light red"));

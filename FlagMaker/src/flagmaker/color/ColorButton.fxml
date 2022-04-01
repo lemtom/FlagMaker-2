@@ -4,11 +4,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
-    <Button onAction="#onClicked">
+<fx:root type="javafx.scene.layout.VBox"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="flagmaker.color.ColorButton">
+	<Button onAction="#onClicked">
 		<graphic>
 			<Pane>
-				<Rectangle fx:id="rect" fill="RED" height="16" width="20" stroke="SILVER" strokeWidth="1" />
+				<Rectangle fx:id="rect" fill="RED" height="16" width="20"
+					stroke="SILVER" />
 			</Pane>
 		</graphic>
 	</Button>
