@@ -40,25 +40,21 @@ public class FileTests {
 	public void loadFlagFromStringWithFlagOverlayTest() {
 		File inner = saveBasicFlag();
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("name=Test\n");
-		sb.append("ratio=3:5\n");
-		sb.append("gridsize=3:5\n\n");
-
-		sb.append("type=grid\n");
-		sb.append("color1=ff0000\n");
-		sb.append("color2=ffffff\n");
-		sb.append("size1=2\n");
-		sb.append("size2=2\n\n");
-
-		sb.append("type=flag\n");
-		sb.append(String.format("path=%s\n", inner.getName()));
-		sb.append("x=0\n");
-		sb.append("y=0\n");
-		sb.append("width=2.5\n");
-		sb.append("height=1.5\n");
-
-		File file = saveFlagFile(sb.toString());
+		String sb = "name=Test\n" +
+				"ratio=3:5\n" +
+				"gridsize=3:5\n\n" +
+				"type=grid\n" +
+				"color1=ff0000\n" +
+				"color2=ffffff\n" +
+				"size1=2\n" +
+				"size2=2\n\n" +
+				"type=flag\n" +
+				String.format("path=%s\n", inner.getName()) +
+				"x=0\n" +
+				"y=0\n" +
+				"width=2.5\n" +
+				"height=1.5\n";
+		File file = saveFlagFile(sb);
 		Flag flag = null;
 
 		try {
@@ -114,28 +110,25 @@ public class FileTests {
 	}
 
 	private File saveBasicFlag() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("name=Test\n");
-		sb.append("ratio=3:5\n");
-		sb.append("gridsize=3:5\n\n");
 
-		sb.append("type=grid\n");
-		sb.append("color1=ff0000\n");
-		sb.append("color2=ffffff\n");
-		sb.append("size1=2\n");
-		sb.append("size2=2\n\n");
-
-		sb.append("type=star\n");
-		sb.append("color=00ff00\n");
-		sb.append("x=2.5\n");
-		sb.append("y=1.5\n");
-		sb.append("size=1\n");
-		sb.append("rotation=0\n");
-		sb.append("stroke=0\n");
-		sb.append("strokecolor=000000\n");
-		sb.append("strokecurved=false\n");
-
-		return saveFlagFile(sb.toString());
+		String sb = "name=Test\n" +
+				"ratio=3:5\n" +
+				"gridsize=3:5\n\n" +
+				"type=grid\n" +
+				"color1=ff0000\n" +
+				"color2=ffffff\n" +
+				"size1=2\n" +
+				"size2=2\n\n" +
+				"type=star\n" +
+				"color=00ff00\n" +
+				"x=2.5\n" +
+				"y=1.5\n" +
+				"size=1\n" +
+				"rotation=0\n" +
+				"stroke=0\n" +
+				"strokecolor=000000\n" +
+				"strokecurved=false\n";
+		return saveFlagFile(sb);
 	}
 
 	private File saveFlagFile(String data) {

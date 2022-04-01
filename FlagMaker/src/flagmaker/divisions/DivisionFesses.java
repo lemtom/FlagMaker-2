@@ -47,24 +47,23 @@ public class DivisionFesses extends Division {
 
 	@Override
 	public String exportSvg(int width, int height) {
-		StringBuilder sb = new StringBuilder();
 
-		double sizeSum = values[0] + values[1] + values[2];
+        double sizeSum = values[0] + values[1] + values[2];
 		double r1Size = height * values[0] / sizeSum;
 		double r2Size = height * (values[0] + values[1]) / sizeSum;
 
 		// Bottom
-		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
-				ColorExtensions.toSvgFillWithOpacity(colors[2])));
 
-		// Middle
-		sb.append(String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />", width, r2Size,
-				ColorExtensions.toSvgFillWithOpacity(colors[1])));
+        String sb = String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
+                ColorExtensions.toSvgFillWithOpacity(colors[2])) +
 
-		// Top
-		sb.append(String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />", width, r1Size,
-				ColorExtensions.toSvgFillWithOpacity(colors[0])));
+                // Middle
+                String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />", width, r2Size,
+                        ColorExtensions.toSvgFillWithOpacity(colors[1])) +
 
-		return sb.toString();
+                // Top
+                String.format("<rect width=\"%d\" height=\"%.3f\" x=\"0\" y=\"0\" %s />", width, r1Size,
+                        ColorExtensions.toSvgFillWithOpacity(colors[0]));
+        return sb;
 	}
 }

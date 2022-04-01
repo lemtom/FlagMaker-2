@@ -44,11 +44,10 @@ public class DivisionBendsBackward extends Division {
 
 	@Override
 	public String exportSvg(int width, int height) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
-				ColorExtensions.toSvgFillWithOpacity(colors[0])));
-		sb.append(String.format("<polygon points=\"0,0 0,%1$d %1$d,%2$d\" %3$s />", width, height,
-				ColorExtensions.toSvgFillWithOpacity(colors[1])));
-		return sb.toString();
+		String sb = String.format("<rect width=\"%d\" height=\"%d\" x=\"0\" y=\"0\" %s />", width, height,
+				ColorExtensions.toSvgFillWithOpacity(colors[0])) +
+				String.format("<polygon points=\"0,0 0,%1$d %1$d,%2$d\" %3$s />", width, height,
+						ColorExtensions.toSvgFillWithOpacity(colors[1]));
+		return sb;
 	}
 }
