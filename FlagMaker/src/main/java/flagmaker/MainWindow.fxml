@@ -6,6 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox prefHeight="600.0" prefWidth="800.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="flagmaker.MainWindowController">
@@ -82,9 +83,7 @@
 				<Tooltip fx:id="ttpShuffleColors" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="32.0" fitWidth="32.0">
-					<Image url="@./images/rotate.png" />
-				</ImageView>
+				<FontIcon iconLiteral="fas-palette" iconSize="25" iconColor="GRAY" />
 			</graphic>
 		</Button>
 		<Button onAction="#toggleTexture">
@@ -92,9 +91,7 @@
 				<Tooltip fx:id="ttpToggleTexture" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="32.0" fitWidth="51.0">
-					<Image url="@./images/texture/1.png" />
-				</ImageView>
+				<FontIcon iconLiteral="fas-flag-checkered" iconSize="25" iconColor="GRAY" />
 			</graphic>
 		</Button>
 		<Button onAction="#generateRandomFlag">
@@ -102,9 +99,7 @@
 				<Tooltip fx:id="ttpRandomFlag" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="32.0" fitWidth="32.0">
-					<Image url="@./images/die.png" />
-				</ImageView>
+				<FontIcon iconLiteral="fas-dice" iconSize="25" iconColor="GRAY" />
 			</graphic>
 		</Button>
 	</ToolBar>
@@ -296,9 +291,8 @@
 						<Tooltip fx:id="ttpOverlayAddNew" />
 					</tooltip>
 					<graphic>
-						<ImageView fitHeight="32.0" fitWidth="32.0">
-							<Image url="@./images/add.png" />
-						</ImageView>
+						<FontIcon iconLiteral="fas-plus-circle" iconSize="28"
+							iconColor="green" />
 					</graphic>
 				</Button>
 				<Button onAction="#overlaysExpandAll">
@@ -309,9 +303,8 @@
 						<Tooltip fx:id="ttpOverlaysExpandAll" />
 					</tooltip>
 					<graphic>
-						<ImageView fitHeight="32.0" fitWidth="32.0">
-							<Image url="@./images/expand.png" />
-						</ImageView>
+						<FontIcon iconLiteral="fas-plus-square" iconSize="28"
+							iconColor="blue" />
 					</graphic>
 				</Button>
 				<Button onAction="#overlaysCollapseAll">
@@ -322,9 +315,8 @@
 						<Tooltip fx:id="ttpOverlaysCollapseAll" />
 					</tooltip>
 					<graphic>
-						<ImageView fitHeight="32.0" fitWidth="32.0">
-							<Image url="@./images/collapse.png" />
-						</ImageView>
+						<FontIcon iconLiteral="fas-minus-square" iconSize="28"
+							iconColor="blue" />
 					</graphic>
 				</Button>
 			</HBox>

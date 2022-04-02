@@ -12,8 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,15 +22,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.kordamp.ikonli.javafx.FontIcon;
+
 public class OverlayControl extends VBox {
 	@FXML
 	private Button btnOverlay;
 	@FXML
 	private VBox pnlSliders;
 	@FXML
-	private ImageView btnExpandCollapse;
+	private FontIcon btnExpandCollapse;
 	@FXML
-	private ImageView btnVisibility;
+	private FontIcon btnVisibility;
 
 	@FXML
 	private Tooltip ttpExpandCollapse;
@@ -106,13 +106,13 @@ public class OverlayControl extends VBox {
 
 	public void expand() {
 		ControlExtensions.showControl(pnlSliders);
-		setCollapseButton("flagmaker/images/collapse.png");
+		setCollapseButton("fas-minus-square");
 		ttpExpandCollapse.setText(LocalizationHandler.get("Collapse"));
 	}
 
 	public void collapse() {
 		ControlExtensions.hideControl(pnlSliders);
-		setCollapseButton("flagmaker/images/expand.png");
+		setCollapseButton("fas-plus-square");
 		ttpExpandCollapse.setText(LocalizationHandler.get("Expand"));
 	}
 
@@ -238,12 +238,11 @@ public class OverlayControl extends VBox {
 	}
 
 	private void setCollapseButton(String icon) {
-		btnExpandCollapse.setImage(new Image(icon));
+		btnExpandCollapse.setIconLiteral(icon);
 	}
 
 	private void setVisibilityButton() {
-		btnVisibility.setImage(
-				new Image(overlay.isEnabled ? "flagmaker/images/check_on.png" : "flagmaker/images/check_off.png"));
+		btnVisibility.setIconLiteral(overlay.isEnabled ? "fas-check-square" : "fas-square");
 	}
 
 	private void load(Stage stage) {

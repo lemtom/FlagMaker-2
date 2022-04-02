@@ -4,19 +4,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<fx:root type="javafx.scene.layout.VBox"
+	xmlns:fx="http://javafx.com/fxml/1">
 	<FlowPane>
 		<Button onAction="#setCollapsed">
 			<tooltip>
 				<Tooltip fx:id="ttpExpandCollapse" />
 			</tooltip>
 			<graphic>
-				<ImageView fx:id="btnExpandCollapse" fitHeight="24.0" fitWidth="24.0">
-					<Image url="@../images/collapse.png"/>
-				</ImageView>
+				<FontIcon fx:id="btnExpandCollapse"
+					iconLiteral="fas-minus-square" iconSize="24" iconColor="blue" />
 			</graphic>
 		</Button>
-		<Button fx:id="btnOverlay" onAction="#overlaySelect" prefWidth="24.0" prefHeight="24.0">
+		<Button fx:id="btnOverlay" onAction="#overlaySelect"
+			prefWidth="24.0" prefHeight="24.0">
 			<tooltip>
 				<Tooltip fx:id="ttpChangeType" />
 			</tooltip>
@@ -26,9 +28,8 @@
 				<Tooltip fx:id="ttpVisibility" />
 			</tooltip>
 			<graphic>
-				<ImageView fx:id="btnVisibility" fitHeight="24.0" fitWidth="24.0">
-					<Image url="@../images/check_on.png"/>
-				</ImageView>
+				<FontIcon fx:id="btnVisibility"
+					iconLiteral="fas-check-square" iconSize="24" iconColor="blue" />
 			</graphic>
 		</Button>
 		<Button onAction="#remove">
@@ -36,9 +37,8 @@
 				<Tooltip fx:id="ttpRemove" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<Image url="@../images/remove.png"/>
-				</ImageView>
+				<FontIcon iconLiteral="fas-minus-circle" iconSize="24"
+					iconColor="red" />
 			</graphic>
 		</Button>
 		<Button onAction="#moveUp">
@@ -46,9 +46,8 @@
 				<Tooltip fx:id="ttpMoveUp" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<Image url="@../images/moveup.png"/>
-				</ImageView>
+				<FontIcon iconLiteral="fas-caret-up" iconSize="24"
+					iconColor="orange" />
 			</graphic>
 		</Button>
 		<Button onAction="#moveDown">
@@ -56,9 +55,8 @@
 				<Tooltip fx:id="ttpMoveDown" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<Image url="@../images/movedown.png"/>
-				</ImageView>
+				<FontIcon iconLiteral="fas-caret-down" iconSize="24"
+					iconColor="orange" />
 			</graphic>
 		</Button>
 		<Button onAction="#cloneThis">
@@ -66,13 +64,12 @@
 				<Tooltip fx:id="ttpClone" />
 			</tooltip>
 			<graphic>
-				<ImageView fitHeight="24.0" fitWidth="24.0">
-					<Image url="@../images/clone.png"/>
-				</ImageView>
+				<FontIcon iconLiteral="fas-clone" iconSize="24"
+					iconColor="blue" />
 			</graphic>
 		</Button>
 	</FlowPane>
-	
+
 	<VBox fx:id="pnlSliders">
 		<VBox.margin>
 			<Insets top="10.0" />

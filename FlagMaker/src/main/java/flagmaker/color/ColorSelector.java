@@ -162,8 +162,8 @@ public class ColorSelector extends VBox {
 	private void setAdvanced(Color currentColor) {
 		tempColor = currentColor;
 		shouldTrigger = true;
-		colorCircle = new Image("flagmaker/images/flagmaker.color-circle.png");
-		colorTriangles = new Image("flagmaker/images/flagmaker.color-triangles.png");
+		colorCircle = new Image("flagmaker/images/color-circle.png");
+		colorTriangles = new Image("flagmaker/images/color-triangles.png");
 		fillSatLightCanvas(tempColor);
 		setColorCircle(tempColor);
 		setColorTriangles(tempColor);
